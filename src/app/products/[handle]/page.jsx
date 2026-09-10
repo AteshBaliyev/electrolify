@@ -55,19 +55,19 @@ export default async function ProductPage({ params }) {
   }
 
   return (
-    <div className="bg-[#050505] text-white min-h-screen pb-24 sm:pb-20">
+    <div className="bg-[#F8F9FA] text-neutral-900 min-h-screen pb-24 sm:pb-20">
       <div className="max-w-7xl mx-auto px-4 py-6 md:py-10">
         {/* Breadcrumb Naviqasiya (SSR) */}
-        <nav className="flex items-center gap-2 text-xs text-neutral-400 mb-6 overflow-x-auto whitespace-nowrap pb-1">
-          <Link href="/" className="hover:text-white transition-colors">
+        <nav className="flex items-center gap-2 text-xs text-neutral-500 mb-6 overflow-x-auto whitespace-nowrap pb-1">
+          <Link href="/" className="hover:text-neutral-900 transition-colors">
             Ana Səhifə
           </Link>
-          <ChevronRight className="w-3.5 h-3.5 text-neutral-600 shrink-0" />
-          <Link href="/#bestsellers" className="hover:text-white transition-colors">
+          <ChevronRight className="w-3.5 h-3.5 text-neutral-400 shrink-0" />
+          <Link href="/#bestsellers" className="hover:text-neutral-900 transition-colors">
             Elektronika
           </Link>
-          <ChevronRight className="w-3.5 h-3.5 text-neutral-600 shrink-0" />
-          <span className="text-neutral-200 font-medium truncate max-w-xs">
+          <ChevronRight className="w-3.5 h-3.5 text-neutral-400 shrink-0" />
+          <span className="text-neutral-800 font-semibold truncate max-w-xs">
             {product.title}
           </span>
         </nav>
@@ -90,18 +90,18 @@ export default async function ProductPage({ params }) {
                 <span className="text-[11px] font-mono uppercase tracking-widest text-[#FF5B00] bg-[#FF5B00]/10 px-2.5 py-0.5 rounded-full border border-[#FF5B00]/20 font-bold">
                   Orijinal Seçim
                 </span>
-                <div className="flex items-center gap-1.5 text-xs text-neutral-300">
+                <div className="flex items-center gap-1.5 text-xs text-neutral-600">
                   <div className="flex text-yellow-400">
                     {[...Array(5)].map((_, i) => (
                       <Star key={i} className="w-3.5 h-3.5 fill-yellow-400" />
                     ))}
                   </div>
-                  <span className="font-black text-white">4.9</span>
+                  <span className="font-black text-neutral-900">4.9</span>
                   <span className="text-neutral-500 text-[11px]">(184 təsdiqlənmiş rəy)</span>
                 </div>
               </div>
 
-              <h1 className="text-2xl sm:text-3xl font-black text-white tracking-tight leading-tight">
+              <h1 className="text-2xl sm:text-3xl font-black text-neutral-900 tracking-tight leading-tight">
                 {product.title}
               </h1>
 

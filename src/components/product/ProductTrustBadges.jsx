@@ -7,19 +7,19 @@ export default function ProductTrustBadges() {
       title: 'Sürətli Çatdırılma',
       icon: Truck,
       color: 'text-[#FF5B00]',
-      borderColor: 'border-[#FF5B00]/25',
+      borderColor: 'border-orange-200',
     },
     {
       title: 'Qapıda Ödəniş',
       icon: Banknote,
       color: 'text-[#10B981]',
-      borderColor: 'border-[#10B981]/25',
+      borderColor: 'border-emerald-200',
     },
     {
       title: '100% Zəmanət',
       icon: ShieldCheck,
-      color: 'text-blue-400',
-      borderColor: 'border-blue-500/25',
+      color: 'text-blue-600',
+      borderColor: 'border-blue-200',
     },
   ];
 
@@ -30,10 +30,10 @@ export default function ProductTrustBadges() {
         return (
           <div
             key={idx}
-            className={`flex items-center justify-center gap-1.5 py-2 px-2 rounded-xl bg-[#0D0D0D] border ${b.borderColor} text-center`}
+            className={`flex items-center justify-center gap-1.5 py-2 px-2 rounded-xl bg-white border ${b.borderColor} text-center shadow-sm`}
           >
             <Icon className={`w-3.5 h-3.5 ${b.color} shrink-0`} />
-            <span className="text-[10px] sm:text-xs font-bold text-neutral-200 truncate">
+            <span className="text-[10px] sm:text-xs font-bold text-neutral-800 truncate">
               {b.title}
             </span>
           </div>

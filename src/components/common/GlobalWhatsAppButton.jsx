@@ -14,7 +14,7 @@ export default function GlobalWhatsAppButton() {
       className="fixed bottom-20 sm:bottom-6 right-4 sm:right-6 z-[60] flex items-center group pointer-events-auto animate-in fade-in zoom-in-75 duration-300"
     >
       {/* Desktop Tooltip */}
-      <span className="hidden sm:inline-flex items-center gap-1.5 mr-2.5 px-3 py-1.5 rounded-full bg-[#111111]/95 text-white text-xs font-semibold border border-[#25D366]/30 shadow-lg opacity-0 group-hover:opacity-100 transition-opacity duration-200 pointer-events-none whitespace-nowrap">
+      <span className="hidden sm:inline-flex items-center gap-1.5 mr-2.5 px-3 py-1.5 rounded-full bg-white text-neutral-900 text-xs font-semibold border border-neutral-200 shadow-lg opacity-0 group-hover:opacity-100 transition-opacity duration-200 pointer-events-none whitespace-nowrap">
         <span className="w-2 h-2 rounded-full bg-[#25D366] animate-pulse" />
         Bizə WhatsApp ilə yazın
       </span>
@@ -31,7 +31,7 @@ export default function GlobalWhatsAppButton() {
         <span className="absolute -inset-1 rounded-full bg-[#25D366] opacity-30 animate-ping pointer-events-none" />
 
         {/* Canlı Online Yaşıl Nöqtə */}
-        <span className="absolute top-0 right-0 w-3.5 h-3.5 bg-white rounded-full flex items-center justify-center border border-neutral-800">
+        <span className="absolute top-0 right-0 w-3.5 h-3.5 bg-white rounded-full flex items-center justify-center border border-neutral-200 shadow-sm">
           <span className="w-2 h-2 bg-emerald-500 rounded-full" />
         </span>
 

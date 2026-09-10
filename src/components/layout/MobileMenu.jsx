@@ -75,19 +75,19 @@ export default function MobileMenu({ isOpen, onClose, searchQuery, setSearchQuer
 
       {/* Tam Ekran Mobil Menyu */}
       <div
-        className="fixed inset-0 w-full h-full bg-[#0A0A0A] z-50 flex flex-col md:hidden overflow-y-auto animate-in slide-in-from-top-4 duration-200"
+        className="fixed inset-0 w-full h-full bg-white z-50 flex flex-col md:hidden overflow-y-auto animate-in slide-in-from-top-4 duration-200"
       >
             {/* Menyu Başlığı (Min 48px toxunma sahəsi) */}
-            <div className="p-4 sm:p-5 border-b border-[#1A1A1A] flex items-center justify-between bg-[#0D0D0D] shrink-0">
+            <div className="p-4 sm:p-5 border-b border-neutral-200 flex items-center justify-between bg-white shrink-0">
               <div className="flex items-center gap-2.5">
                 <div className="w-10 h-10 rounded-xl bg-gradient-to-tr from-[#FF5B00] via-[#FF6E1A] to-yellow-500 flex items-center justify-center text-white font-black shadow-md">
                   <Zap className="w-6 h-6 fill-white text-white" />
                 </div>
                 <div className="flex flex-col">
-                  <span className="font-black text-xl tracking-tight text-white">
+                  <span className="font-black text-xl tracking-tight text-neutral-900">
                     ELECTROLIFY<span className="text-[#FF5B00]">.AZ</span>
                   </span>
-                  <span className="text-[10px] text-neutral-400 font-semibold tracking-wider uppercase">
+                  <span className="text-[10px] text-neutral-500 font-semibold tracking-wider uppercase">
                     Ağıllı Elektronika
                   </span>
                 </div>
@@ -96,14 +96,14 @@ export default function MobileMenu({ isOpen, onClose, searchQuery, setSearchQuer
               <button
                 onClick={onClose}
                 aria-label="Menyunu bağla"
-                className="min-w-[48px] min-h-[48px] rounded-xl bg-[#141414] hover:bg-[#1E1E1E] border border-[#262626] flex items-center justify-center text-white transition-colors"
+                className="min-w-[48px] min-h-[48px] rounded-xl bg-neutral-100 hover:bg-neutral-200 border border-neutral-200 flex items-center justify-center text-neutral-800 transition-colors"
               >
                 <X className="w-6 h-6" />
               </button>
             </div>
 
-            {/* Mobil Axtarış Zolağı (Klaviatura açıldıqda deformasiyaya uğramayan text-base input) */}
-            <div className="p-4 border-b border-[#161616] bg-[#0A0A0A] shrink-0">
+            {/* Mobil Axtarış Zolağı */}
+            <div className="p-4 border-b border-neutral-200 bg-white shrink-0">
               <form
                 onSubmit={(e) => {
                   e.preventDefault();
@@ -117,15 +117,15 @@ export default function MobileMenu({ isOpen, onClose, searchQuery, setSearchQuer
                   placeholder="Məhsul və ya model axtar..."
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
-                  className="w-full bg-[#141414] border border-[#2A2A2A] focus:border-[#FF5B00] rounded-xl min-h-[48px] py-3 pl-11 pr-4 text-base text-white placeholder-neutral-500 focus:outline-none transition-colors"
+                  className="w-full bg-neutral-100 border border-neutral-200 focus:border-[#FF5B00] focus:bg-white rounded-xl min-h-[48px] py-3 pl-11 pr-4 text-base text-neutral-900 placeholder-neutral-500 focus:outline-none transition-colors"
                 />
                 <Search className="w-5 h-5 text-neutral-400 absolute left-3.5 top-1/2 -translate-y-1/2" />
               </form>
             </div>
 
-            {/* Kateqoriyalar Siyahısı (Böyük, rahat toxunulan kartlar) */}
+            {/* Kateqoriyalar Siyahısı */}
             <div className="p-4 flex-1 space-y-2.5">
-              <span className="text-[11px] font-bold text-neutral-400 uppercase tracking-widest block mb-2 px-1">
+              <span className="text-[11px] font-bold text-neutral-500 uppercase tracking-widest block mb-2 px-1">
                 Bütün Bölmələr
               </span>
               <div className="flex flex-col gap-2.5">
@@ -138,33 +138,33 @@ export default function MobileMenu({ isOpen, onClose, searchQuery, setSearchQuer
                       onClick={onClose}
                       className={`min-h-[54px] flex items-center justify-between p-3.5 rounded-2xl border transition-all active:scale-[0.99] ${
                         cat.highlight
-                          ? 'bg-gradient-to-r from-red-950/40 via-[#161616] to-[#121212] border-red-500/40 text-white shadow-lg'
-                          : 'bg-[#121212] hover:bg-[#181818] border-[#222222] text-neutral-200'
+                          ? 'bg-red-50 border-red-200 text-red-900 shadow-sm'
+                          : 'bg-neutral-50 hover:bg-neutral-100 border-neutral-200 text-neutral-800'
                       }`}
                     >
                       <div className="flex items-center gap-3.5">
-                        <div className={`p-2.5 rounded-xl bg-black/50 ${cat.color} shrink-0`}>
+                        <div className={`p-2.5 rounded-xl bg-white shadow-sm border border-neutral-200 ${cat.color} shrink-0`}>
                           <Icon className="w-5 h-5" />
                         </div>
                         <div>
                           <div className="flex items-center gap-2">
-                            <span className="text-sm font-bold text-white">{cat.title}</span>
+                            <span className="text-sm font-bold text-neutral-900">{cat.title}</span>
                             {cat.badge && (
                               <span
                                 className={`text-[10px] font-black px-2 py-0.5 rounded-md ${
                                   cat.highlight
                                     ? 'bg-red-500 text-white animate-pulse'
-                                    : 'bg-[#FF5B00]/20 text-[#FF5B00]'
+                                    : 'bg-[#FF5B00]/10 text-[#FF5B00]'
                                 }`}
                               >
                                 {cat.badge}
                               </span>
                             )}
                           </div>
-                          <span className="text-xs text-neutral-400 block mt-0.5">{cat.desc}</span>
+                          <span className="text-xs text-neutral-500 block mt-0.5">{cat.desc}</span>
                         </div>
                       </div>
-                      <ChevronRight className="w-5 h-5 text-neutral-500 shrink-0" />
+                      <ChevronRight className="w-5 h-5 text-neutral-400 shrink-0" />
                     </Link>
                   );
                 })}
@@ -173,45 +173,45 @@ export default function MobileMenu({ isOpen, onClose, searchQuery, setSearchQuer
                 <Link
                   href="/support"
                   onClick={onClose}
-                  className="min-h-[54px] flex items-center justify-between p-3.5 rounded-2xl border bg-[#121212] hover:bg-[#181818] border-[#222222] text-neutral-200 transition-all active:scale-[0.99]"
+                  className="min-h-[54px] flex items-center justify-between p-3.5 rounded-2xl border bg-neutral-50 hover:bg-neutral-100 border-neutral-200 text-neutral-800 transition-all active:scale-[0.99]"
                 >
                   <div className="flex items-center gap-3.5">
-                    <div className="p-2.5 rounded-xl bg-black/50 text-blue-400 shrink-0">
+                    <div className="p-2.5 rounded-xl bg-white shadow-sm border border-neutral-200 text-blue-500 shrink-0">
                       <ShieldCheck className="w-5 h-5" />
                     </div>
                     <div>
-                      <span className="text-sm font-bold text-white block">Müştəri Dəstəyi (FAQ)</span>
-                      <span className="text-xs text-neutral-400 block mt-0.5">Çatdırılma, Qapıda Ödəniş, Zəmanət</span>
+                      <span className="text-sm font-bold text-neutral-900 block">Müştəri Dəstəyi (FAQ)</span>
+                      <span className="text-xs text-neutral-500 block mt-0.5">Çatdırılma, Qapıda Ödəniş, Zəmanət</span>
                     </div>
                   </div>
-                  <ChevronRight className="w-5 h-5 text-neutral-500 shrink-0" />
+                  <ChevronRight className="w-5 h-5 text-neutral-400 shrink-0" />
                 </Link>
               </div>
             </div>
 
-            {/* WhatsApp ilə Birbaşa Sürətli Sifariş (Yüksək Konversiya & Safe Area Inset) */}
-            <div className="p-4 sm:p-5 border-t border-[#1C1C1C] bg-[#0E0E0E] flex flex-col gap-3 shrink-0 pb-[calc(1rem+env(safe-area-inset-bottom,0px))]">
+            {/* WhatsApp ilə Birbaşa Sürətli Sifariş */}
+            <div className="p-4 sm:p-5 border-t border-neutral-200 bg-neutral-50 flex flex-col gap-3 shrink-0 pb-[calc(1rem+env(safe-area-inset-bottom,0px))]">
               <a
                 href="https://wa.me/994556422545?text=Salam,%20Electrolify.az-dan%20sifari%C5%9F%20verm%C9%99k%20ist%C9%99yir%C9%99m"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="w-full min-h-[52px] py-3.5 px-4 rounded-2xl bg-[#25D366] hover:bg-[#20bd5a] text-black font-black text-sm uppercase tracking-wide flex items-center justify-center gap-2.5 shadow-lg shadow-[#25D366]/20 transition-transform active:scale-95"
+                className="w-full min-h-[52px] py-3.5 px-4 rounded-2xl bg-[#25D366] hover:bg-[#20bd5a] text-white font-black text-sm uppercase tracking-wide flex items-center justify-center gap-2.5 shadow-md transition-transform active:scale-95"
               >
-                <MessageCircle className="w-5 h-5 fill-black" />
+                <MessageCircle className="w-5 h-5 fill-white" />
                 <span>WhatsApp ilə Dərhal Əlaqə</span>
               </a>
 
               <a
                 href="tel:+994556422545"
-                className="min-h-[48px] flex items-center justify-between text-xs text-neutral-300 bg-[#141414] border border-[#242424] px-4 py-2.5 rounded-xl"
+                className="min-h-[48px] flex items-center justify-between text-xs text-neutral-700 bg-white border border-neutral-200 px-4 py-2.5 rounded-xl shadow-sm"
               >
-                <span className="flex items-center gap-2 font-bold text-white">
+                <span className="flex items-center gap-2 font-bold text-neutral-900">
                   <PhoneCall className="w-4 h-4 text-[#FF5B00]" /> 055 642 25 45
                 </span>
-                <span className="text-[11px] text-emerald-400 font-semibold">Hər gün: 09:00 - 22:00</span>
+                <span className="text-[11px] text-emerald-600 font-semibold">Hər gün: 09:00 - 22:00</span>
               </a>
 
-              <div className="pt-2 border-t border-[#1C1C1C] flex items-center justify-around text-xs text-neutral-400">
+              <div className="pt-2 border-t border-neutral-200 flex items-center justify-around text-xs text-neutral-500">
                 <span className="flex items-center gap-1.5">
                   <Truck className="w-3.5 h-3.5 text-[#FF5B00]" /> 24 Saat Çatdırılma
                 </span>

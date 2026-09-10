@@ -28,11 +28,11 @@ export default function ProductCard({ product, badge = null, discount = null }) 
   };
 
   return (
-    <div className="group relative flex flex-col justify-between rounded-2xl sm:rounded-3xl bg-[#0D0D0D] border border-[#202020] hover:border-[#FF5B00]/50 transition-all duration-300 overflow-hidden shadow-lg hover:shadow-2xl">
+    <div className="group relative flex flex-col justify-between rounded-2xl sm:rounded-3xl bg-white border border-neutral-200 hover:border-[#FF5B00]/50 transition-all duration-300 overflow-hidden shadow-sm hover:shadow-xl">
       {/* Üst Şəkil Çərçivəsi (Kliklənən Link) */}
       <Link
         href={`/products/${product.handle}`}
-        className="block relative aspect-square bg-[#141414] overflow-hidden cursor-pointer"
+        className="block relative aspect-square bg-neutral-50 overflow-hidden cursor-pointer"
         aria-label={product.title}
       >
         {/* Endirim və ya Xüsusi Nişan */}
@@ -79,13 +79,13 @@ export default function ProductCard({ product, badge = null, discount = null }) 
                 <Star key={i} className="w-3 h-3 sm:w-3.5 sm:h-3.5 fill-yellow-400" />
               ))}
             </div>
-            <span className="text-[10px] sm:text-[11px] font-bold text-white">4.9</span>
+            <span className="text-[10px] sm:text-[11px] font-bold text-neutral-900">4.9</span>
             <span className="text-[9px] sm:text-[10px] text-neutral-500">(184)</span>
           </div>
 
           {/* Başlıq */}
           <Link href={`/products/${product.handle}`} className="block group/title">
-            <h4 className="text-xs sm:text-sm font-bold text-white group-hover/title:text-[#FF5B00] transition-colors line-clamp-2 leading-snug">
+            <h4 className="text-xs sm:text-sm font-bold text-neutral-900 group-hover/title:text-[#FF5B00] transition-colors line-clamp-2 leading-snug">
               {product.title}
             </h4>
           </Link>
@@ -93,22 +93,22 @@ export default function ProductCard({ product, badge = null, discount = null }) 
 
         <div>
           {/* Qiymət Bloku */}
-          <div className="flex items-baseline gap-1.5 sm:gap-2 pt-1 border-t border-[#1C1C1C]">
+          <div className="flex items-baseline gap-1.5 sm:gap-2 pt-1 border-t border-neutral-100">
             <span className="text-sm sm:text-lg md:text-xl font-black text-[#FF5B00]">
               {currentPrice} AZN
             </span>
             {comparePrice && (
-              <span className="text-[10px] sm:text-xs text-neutral-500 line-through font-medium">
+              <span className="text-[10px] sm:text-xs text-neutral-400 line-through font-medium">
                 {comparePrice} AZN
               </span>
             )}
           </div>
 
-          {/* Səbətə Əlavə Et Düyməsi (Mobildə və Masaüstündə tam toxunulan sahə) */}
+          {/* Səbətə Əlavə Et Düyməsi */}
           <div className="pt-2">
             <button
               onClick={handleQuickAdd}
-              className="w-full min-h-[42px] sm:min-h-[46px] py-2 sm:py-2.5 px-2.5 sm:px-4 rounded-xl bg-[#161616] hover:bg-[#FF5B00] hover:text-white hover:border-[#FF5B00] text-white border border-[#282828] font-black text-[11px] sm:text-xs uppercase tracking-wider flex items-center justify-center gap-1.5 sm:gap-2 transition-all active:scale-95 shadow-sm cursor-pointer"
+              className="w-full min-h-[42px] sm:min-h-[46px] py-2 sm:py-2.5 px-2.5 sm:px-4 rounded-xl bg-neutral-900 hover:bg-[#FF5B00] text-white font-black text-[11px] sm:text-xs uppercase tracking-wider flex items-center justify-center gap-1.5 sm:gap-2 transition-all active:scale-95 shadow-sm cursor-pointer"
             >
               <ShoppingBag className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-white" />
               <span>Səbətə At</span>

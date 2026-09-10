@@ -55,19 +55,19 @@ export default function ProductPurchaseClient({ product }) {
       />
 
       {/* Dinamik Qiymət Bloku */}
-      <div className="p-3.5 sm:p-4 rounded-2xl bg-[#0D0D0D] border border-[#222222] flex items-center justify-between gap-3">
+      <div className="p-3.5 sm:p-4 rounded-2xl bg-white border border-neutral-200 shadow-sm flex items-center justify-between gap-3">
         <div className="flex items-baseline gap-2.5 flex-wrap">
           <span className="text-3xl sm:text-4xl font-black text-[#FF5B00] tracking-tight">
             {currentPrice} AZN
           </span>
           {comparePrice && (
-            <span className="text-base sm:text-lg text-neutral-500 line-through font-semibold">
+            <span className="text-base sm:text-lg text-neutral-400 line-through font-semibold">
               {comparePrice} AZN
             </span>
           )}
         </div>
         {comparePrice && (
-          <span className="text-xs font-black text-black bg-[#10B981] px-2.5 py-1 rounded-lg uppercase tracking-wider shrink-0">
+          <span className="text-xs font-black text-white bg-[#10B981] px-2.5 py-1 rounded-lg uppercase tracking-wider shrink-0">
             QƏNAƏT: {Math.max(0, parseInt(comparePrice) - parseInt(currentPrice))} AZN
           </span>
         )}
@@ -75,9 +75,9 @@ export default function ProductPurchaseClient({ product }) {
 
       {/* Yığcam Variant Seçimi (Pill Design - Yan-yana kompakt düymələr) */}
       {variants.length > 0 && (
-        <div className="flex flex-col gap-2 p-3 rounded-2xl bg-[#0C0C0C] border border-[#1E1E1E]">
+        <div className="flex flex-col gap-2 p-3 rounded-2xl bg-white border border-neutral-200 shadow-sm">
           <div className="flex items-center justify-between text-xs">
-            <span className="font-bold text-neutral-300">
+            <span className="font-bold text-neutral-700">
               Variant: <span className="text-[#FF5B00] font-black">{selectedVariant?.title}</span>
             </span>
             <span className="text-[#10B981] font-semibold text-[11px] flex items-center gap-1">
@@ -95,15 +95,15 @@ export default function ProductPurchaseClient({ product }) {
                   onClick={() => setSelectedVariant(v)}
                   className={`min-h-[40px] px-3.5 py-1.5 rounded-xl text-xs font-bold transition-all border flex items-center gap-2 active:scale-95 cursor-pointer ${
                     isSelected
-                      ? 'bg-[#FF5B00] text-white border-[#FF5B00] shadow-md shadow-[#FF5B00]/25 font-black'
-                      : 'bg-[#141414] text-neutral-200 border-[#262626] hover:border-[#444444]'
+                      ? 'bg-[#FF5B00] text-white border-[#FF5B00] shadow-sm font-black'
+                      : 'bg-neutral-100 text-neutral-800 border-neutral-200 hover:border-neutral-300 hover:bg-neutral-200/60'
                   }`}
                 >
                   <span>{v.title}</span>
                   {v.price?.amount && (
                     <span
                       className={`text-[11px] font-mono ${
-                        isSelected ? 'text-white/90 font-bold' : 'text-neutral-400'
+                        isSelected ? 'text-white/90 font-bold' : 'text-neutral-500'
                       }`}
                     >
                       {v.price.amount} AZN
@@ -120,22 +120,22 @@ export default function ProductPurchaseClient({ product }) {
       <div className="flex flex-col gap-2.5">
         {/* Say seçici və Əsas COD Sifariş Düyməsi */}
         <div className="flex items-center gap-2">
-          <div className="flex items-center bg-[#121212] border border-[#242424] rounded-2xl p-1 shrink-0 h-[52px]">
+          <div className="flex items-center bg-white border border-neutral-200 shadow-sm rounded-2xl p-1 shrink-0 h-[52px]">
             <button
               type="button"
               onClick={() => setQuantity((q) => Math.max(1, q - 1))}
-              className="w-10 h-10 rounded-xl bg-[#1A1A1A] hover:bg-[#252525] text-white flex items-center justify-center transition-colors active:scale-95 cursor-pointer"
+              className="w-10 h-10 rounded-xl bg-neutral-100 hover:bg-neutral-200 text-neutral-800 flex items-center justify-center transition-colors active:scale-95 cursor-pointer"
               aria-label="Sayı azalt"
             >
               <Minus className="w-4 h-4" />
             </button>
-            <span className="w-10 text-center text-sm font-black text-white">
+            <span className="w-10 text-center text-sm font-black text-neutral-900">
               {quantity}
             </span>
             <button
               type="button"
               onClick={() => setQuantity((q) => q + 1)}
-              className="w-10 h-10 rounded-xl bg-[#1A1A1A] hover:bg-[#252525] text-white flex items-center justify-center transition-colors active:scale-95 cursor-pointer"
+              className="w-10 h-10 rounded-xl bg-neutral-100 hover:bg-neutral-200 text-neutral-800 flex items-center justify-center transition-colors active:scale-95 cursor-pointer"
               aria-label="Sayı artır"
             >
               <Plus className="w-4 h-4" />
@@ -157,7 +157,7 @@ export default function ProductPurchaseClient({ product }) {
         <div className="grid grid-cols-2 gap-2">
           <button
             onClick={handleAddToCart}
-            className="min-h-[46px] py-2.5 px-3 rounded-xl bg-[#141414] hover:bg-[#1E1E1E] border border-[#2E2E2E] text-white font-bold text-xs flex items-center justify-center gap-2 transition-colors active:scale-98 cursor-pointer"
+            className="min-h-[46px] py-2.5 px-3 rounded-xl bg-white hover:bg-neutral-50 border border-neutral-200 text-neutral-800 font-bold text-xs flex items-center justify-center gap-2 shadow-sm transition-colors active:scale-98 cursor-pointer"
           >
             <ShoppingBag className="w-4 h-4 text-[#FF5B00] shrink-0" />
             <span className="truncate">Səbətə At</span>
@@ -171,15 +171,15 @@ export default function ProductPurchaseClient({ product }) {
             )})%20sifari%C5%9F%20etm%C9%99k%20ist%C9%99yir%C9%99m.`}
             target="_blank"
             rel="noopener noreferrer"
-            className="min-h-[46px] py-2.5 px-3 rounded-xl bg-[#25D366] hover:bg-[#20bd5a] text-black font-black text-xs flex items-center justify-center gap-2 shadow-md transition-all active:scale-98"
+            className="min-h-[46px] py-2.5 px-3 rounded-xl bg-[#25D366] hover:bg-[#20bd5a] text-white font-black text-xs flex items-center justify-center gap-2 shadow-md transition-all active:scale-98"
           >
-            <MessageCircle className="w-4 h-4 fill-black shrink-0" />
+            <MessageCircle className="w-4 h-4 fill-white shrink-0" />
             <span className="truncate">WhatsApp</span>
           </a>
         </div>
 
         {/* Mikro güvən xətti */}
-        <div className="py-1.5 px-3 rounded-xl bg-[#0A0A0A] border border-[#1A1A1A] flex items-center justify-between text-[11px] text-neutral-400">
+        <div className="py-1.5 px-3 rounded-xl bg-white border border-neutral-200 flex items-center justify-between text-[11px] text-neutral-600 shadow-sm">
           <span className="flex items-center gap-1.5">
             <Check className="w-3.5 h-3.5 text-[#10B981]" /> Qeydiyyatsız Qapıda Ödəniş
           </span>
@@ -191,11 +191,11 @@ export default function ProductPurchaseClient({ product }) {
 
       {/* Sürətli Qapıda Sifariş Təsdiq Modalı (Saf CSS ilə) */}
       {isSuccessModalOpen && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm animate-in fade-in duration-200">
-          <div className="bg-[#0F0F0F] border border-[#262626] rounded-3xl p-6 md:p-8 max-w-md w-full shadow-2xl relative">
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm animate-in fade-in duration-200">
+          <div className="bg-white border border-neutral-200 rounded-3xl p-6 md:p-8 max-w-md w-full shadow-2xl relative text-neutral-900">
             <button
               onClick={() => setIsSuccessModalOpen(false)}
-              className="absolute top-4 right-4 text-neutral-400 hover:text-white p-2 cursor-pointer"
+              className="absolute top-4 right-4 text-neutral-400 hover:text-neutral-700 p-2 cursor-pointer"
             >
               <X className="w-5 h-5" />
             </button>
@@ -204,23 +204,23 @@ export default function ProductPurchaseClient({ product }) {
               <Check className="w-7 h-7" />
             </div>
 
-            <h3 className="text-xl font-black text-center text-white">
+            <h3 className="text-xl font-black text-center text-neutral-900">
               Sifarişiniz Qəbul Edildi!
             </h3>
-            <p className="text-xs text-neutral-400 text-center mt-1 leading-relaxed">
+            <p className="text-xs text-neutral-600 text-center mt-1 leading-relaxed">
               Təbrik edirik! Operatorumuz 5 dəqiqə ərzində sizinlə əlaqə saxlayaraq çatdırılma ünvanını təsdiqləyəcək.
             </p>
 
-            <div className="my-5 p-3.5 rounded-2xl bg-[#141414] border border-[#222222] text-xs">
-              <div className="flex justify-between text-neutral-400 mb-1">
+            <div className="my-5 p-3.5 rounded-2xl bg-neutral-50 border border-neutral-200 text-xs">
+              <div className="flex justify-between text-neutral-600 mb-1">
                 <span>Məhsul:</span>
-                <strong className="text-white truncate max-w-[200px]">{product.title}</strong>
+                <strong className="text-neutral-900 truncate max-w-[200px]">{product.title}</strong>
               </div>
-              <div className="flex justify-between text-neutral-400 mb-1">
+              <div className="flex justify-between text-neutral-600 mb-1">
                 <span>Variant:</span>
-                <strong className="text-white">{selectedVariant?.title}</strong>
+                <strong className="text-neutral-900">{selectedVariant?.title}</strong>
               </div>
-              <div className="flex justify-between text-neutral-400">
+              <div className="flex justify-between text-neutral-600">
                 <span>Məbləğ (Qapıda):</span>
                 <strong className="text-[#FF5B00] font-black text-sm">
                   {parseInt(currentPrice) * quantity} AZN

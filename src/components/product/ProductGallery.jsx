@@ -57,21 +57,21 @@ export default function ProductGallery({ images = [], title = '' }) {
         onTouchStart={onTouchStart}
         onTouchMove={onTouchMove}
         onTouchEnd={onTouchEnd}
-        className="relative aspect-square w-full rounded-3xl bg-[#0F0F0F] border border-[#222222] overflow-hidden group select-none shadow-2xl touch-pan-y"
+        className="relative aspect-square w-full rounded-3xl bg-white border border-neutral-200 overflow-hidden group select-none shadow-sm touch-pan-y"
       >
         {/* Yüksək Konversiya Təcili Endirim Nişanı */}
         <div className="absolute top-3.5 left-3.5 z-20 flex flex-col gap-1.5 pointer-events-none">
-          <span className="bg-[#FF5B00] text-white text-[11px] md:text-xs font-black px-3 py-1 rounded-full uppercase tracking-wider shadow-lg flex items-center gap-1">
+          <span className="bg-[#FF5B00] text-white text-[11px] md:text-xs font-black px-3 py-1 rounded-full uppercase tracking-wider shadow-md flex items-center gap-1">
             <Flame className="w-3.5 h-3.5 fill-white text-white" /> -44% ENDİRİM
           </span>
-          <span className="bg-black/80 backdrop-blur-md border border-red-500/30 text-red-400 text-[11px] font-bold px-2.5 py-1 rounded-full flex items-center gap-1.5 shadow-md">
+          <span className="bg-white/90 backdrop-blur-md border border-red-200 text-red-600 text-[11px] font-bold px-2.5 py-1 rounded-full flex items-center gap-1.5 shadow-sm">
             <Clock className="w-3.5 h-3.5 text-red-500 animate-pulse" />
             <span>Bitməsinə: 02:47:18</span>
           </span>
         </div>
 
         {/* Şəkil Sayğacı */}
-        <div className="absolute top-3.5 right-3.5 z-20 bg-black/70 backdrop-blur-md px-3 py-1 rounded-full border border-white/10 text-[11px] text-white/90 font-mono">
+        <div className="absolute top-3.5 right-3.5 z-20 bg-neutral-900/70 backdrop-blur-md px-3 py-1 rounded-full text-[11px] text-white font-mono">
           {currentIndex + 1} / {imageList.length}
         </div>
 
@@ -104,14 +104,14 @@ export default function ProductGallery({ images = [], title = '' }) {
             <button
               onClick={handlePrev}
               aria-label="Əvvəlki şəkil"
-              className="absolute left-3 top-1/2 -translate-y-1/2 z-20 min-w-[48px] min-h-[48px] rounded-full bg-black/70 hover:bg-[#FF5B00] text-white hover:text-white border border-white/10 flex items-center justify-center backdrop-blur-md transition-all active:scale-90 cursor-pointer"
+              className="absolute left-3 top-1/2 -translate-y-1/2 z-20 min-w-[48px] min-h-[48px] rounded-full bg-white/90 hover:bg-[#FF5B00] text-neutral-800 hover:text-white border border-neutral-200 shadow-md flex items-center justify-center backdrop-blur-md transition-all active:scale-90 cursor-pointer"
             >
               <ChevronLeft className="w-6 h-6" />
             </button>
             <button
               onClick={handleNext}
               aria-label="Növbəti şəkil"
-              className="absolute right-3 top-1/2 -translate-y-1/2 z-20 min-w-[48px] min-h-[48px] rounded-full bg-black/70 hover:bg-[#FF5B00] text-white hover:text-white border border-white/10 flex items-center justify-center backdrop-blur-md transition-all active:scale-90 cursor-pointer"
+              className="absolute right-3 top-1/2 -translate-y-1/2 z-20 min-w-[48px] min-h-[48px] rounded-full bg-white/90 hover:bg-[#FF5B00] text-neutral-800 hover:text-white border border-neutral-200 shadow-md flex items-center justify-center backdrop-blur-md transition-all active:scale-90 cursor-pointer"
             >
               <ChevronRight className="w-6 h-6" />
             </button>
@@ -126,10 +126,10 @@ export default function ProductGallery({ images = [], title = '' }) {
             <button
               key={idx}
               onClick={() => setCurrentIndex(idx)}
-              className={`relative min-w-[60px] min-h-[60px] w-16 h-16 md:w-20 md:h-20 rounded-2xl overflow-hidden shrink-0 border-2 transition-all p-1 bg-[#121212] cursor-pointer ${
+              className={`relative min-w-[60px] min-h-[60px] w-16 h-16 md:w-20 md:h-20 rounded-2xl overflow-hidden shrink-0 border-2 transition-all p-1 bg-white cursor-pointer ${
                 currentIndex === idx
                   ? 'border-[#FF5B00] ring-2 ring-[#FF5B00]/40 scale-105'
-                  : 'border-[#222222] opacity-60 hover:opacity-100 hover:border-neutral-500'
+                  : 'border-neutral-200 hover:border-neutral-400'
               }`}
             >
               <div className="relative w-full h-full">

@@ -17,7 +17,7 @@ const SLIDES = [
     link: '/products/electrolify-pro-watch-series-9',
     image: 'https://images.unsplash.com/photo-1579586337278-3befd40fd17a?w=1000&q=85',
     ctaText: 'İndi Sifariş Et',
-    bgGradient: 'from-[#1A0B02] via-[#0D0D0D] to-[#050505]',
+    bgGradient: 'from-orange-50 via-white to-amber-50/50',
   },
   {
     id: 2,
@@ -30,7 +30,7 @@ const SLIDES = [
     link: '/products/aurapod-anc-pro',
     image: 'https://images.unsplash.com/photo-1590658268037-6bf12165a8df?w=1000&q=85',
     ctaText: 'Fürsəti Kəşf Et',
-    bgGradient: 'from-[#05111A] via-[#0D0D0D] to-[#050505]',
+    bgGradient: 'from-sky-50 via-white to-neutral-50',
   },
   {
     id: 3,
@@ -43,7 +43,7 @@ const SLIDES = [
     link: '/products/voltpulse-3in1-magsafe',
     image: 'https://images.unsplash.com/photo-1622445262464-84b1456045b6?w=1000&q=85',
     ctaText: 'Paketi Əldə Et',
-    bgGradient: 'from-[#121005] via-[#0D0D0D] to-[#050505]',
+    bgGradient: 'from-amber-50 via-white to-orange-50/50',
   },
 ];
 
@@ -57,9 +57,9 @@ export default function HeroSlider({ products = [] }) {
         const comparePrice = prod.compareAtPriceRange?.minVariantPrice?.amount;
         const badges = ['🔥 HƏFTƏNİN MEQA FÜRSƏTİ', '⚡ ÇOX SATAN MƏHSUL', '✨ YENİ GƏLƏN'];
         const gradients = [
-          'from-[#1A0B02] via-[#0D0D0D] to-[#050505]',
-          'from-[#05111A] via-[#0D0D0D] to-[#050505]',
-          'from-[#121005] via-[#0D0D0D] to-[#050505]',
+          'from-orange-50/90 via-white to-amber-50/50',
+          'from-sky-50/90 via-white to-neutral-50',
+          'from-amber-50/90 via-white to-orange-50/50',
         ];
         let discount = 'XÜSUSİ TƏKLİF';
         if (comparePrice && parseFloat(comparePrice) > parseFloat(price)) {
@@ -135,7 +135,7 @@ export default function HeroSlider({ products = [] }) {
       onTouchStart={onTouchStart}
       onTouchMove={onTouchMove}
       onTouchEnd={onTouchEnd}
-      className="relative w-full overflow-hidden rounded-3xl border border-[#222222] bg-[#0A0A0A] select-none shadow-2xl touch-pan-y"
+      className="relative w-full overflow-hidden rounded-3xl border border-neutral-200 bg-white select-none shadow-xl touch-pan-y"
     >
       <div
         key={slide.id}
@@ -148,16 +148,16 @@ export default function HeroSlider({ products = [] }) {
               <span className="text-[11px] font-black bg-[#FF5B00] text-white px-3 py-1 rounded-full uppercase tracking-wider shadow-md">
                 {slide.badge}
               </span>
-              <span className="text-[11px] font-bold text-[#10B981] bg-[#10B981]/15 px-2.5 py-0.5 rounded-full flex items-center gap-1">
-                <ShieldCheck className="w-3.5 h-3.5" /> Qapıda Ödəniş
+              <span className="text-[11px] font-bold text-[#10B981] bg-emerald-50 border border-emerald-200 px-2.5 py-0.5 rounded-full flex items-center gap-1 shadow-sm">
+                <ShieldCheck className="w-3.5 h-3.5 text-[#10B981]" /> Qapıda Ödəniş
               </span>
             </div>
 
-            <h1 className="text-2xl sm:text-4xl md:text-5xl font-black text-white tracking-tight leading-tight">
+            <h1 className="text-2xl sm:text-4xl md:text-5xl font-black text-neutral-900 tracking-tight leading-tight">
               {slide.title}
             </h1>
 
-            <p className="text-xs sm:text-sm text-neutral-300 leading-relaxed max-w-lg">
+            <p className="text-xs sm:text-sm text-neutral-600 leading-relaxed max-w-lg">
               {slide.subtitle}
             </p>
 
@@ -166,15 +166,17 @@ export default function HeroSlider({ products = [] }) {
               <span className="text-2xl sm:text-4xl font-black text-[#FF5B00]">
                 {slide.price}
               </span>
-              <span className="text-sm sm:text-lg text-neutral-500 line-through font-semibold">
-                {slide.comparePrice}
-              </span>
-              <span className="text-xs font-black bg-red-600 text-white px-2 py-0.5 rounded">
+              {slide.comparePrice && (
+                <span className="text-sm sm:text-lg text-neutral-400 line-through font-semibold">
+                  {slide.comparePrice}
+                </span>
+              )}
+              <span className="text-xs font-black bg-red-600 text-white px-2 py-0.5 rounded shadow-sm">
                 {slide.discount}
               </span>
             </div>
 
-            {/* CTA Düyməsi (Min 50px toxunma sahəsi) */}
+            {/* CTA Düyməsi */}
             <div className="pt-2">
               <Link
                 href={slide.link}
@@ -187,12 +189,12 @@ export default function HeroSlider({ products = [] }) {
             </div>
           </div>
 
-          {/* Şəkil Qutusu - Kliklənən Link və Next.js Image ilə LCP Optimizasiyası */}
+          {/* Şəkil Qutusu */}
           <div className="md:col-span-5 flex items-center justify-center relative">
             <Link
               href={slide.link}
               aria-label={slide.title}
-              className="relative w-52 h-52 sm:w-72 sm:h-72 md:w-80 md:h-80 rounded-3xl overflow-hidden bg-[#161616]/80 border border-white/10 shadow-2xl p-2 flex items-center justify-center group cursor-pointer block"
+              className="relative w-52 h-52 sm:w-72 sm:h-72 md:w-80 md:h-80 rounded-3xl overflow-hidden bg-white/80 border border-neutral-200 shadow-xl p-2 flex items-center justify-center group cursor-pointer block"
             >
               <div className="relative w-full h-full rounded-2xl overflow-hidden">
                 <Image
@@ -209,18 +211,18 @@ export default function HeroSlider({ products = [] }) {
         </div>
       </div>
 
-      {/* Keçid Oxları (Min 48px toxunma sahəsi) */}
+      {/* Keçid Oxları */}
       <button
         onClick={handlePrev}
         aria-label="Əvvəlki slayd"
-        className="absolute left-3 top-1/2 -translate-y-1/2 z-20 min-w-[48px] min-h-[48px] rounded-full bg-black/60 hover:bg-[#FF5B00] text-white hover:text-white border border-white/10 flex items-center justify-center backdrop-blur-md transition-all active:scale-90"
+        className="absolute left-3 top-1/2 -translate-y-1/2 z-20 min-w-[48px] min-h-[48px] rounded-full bg-white/90 hover:bg-[#FF5B00] text-neutral-800 hover:text-white border border-neutral-200 flex items-center justify-center shadow-md transition-all active:scale-90"
       >
         <ChevronLeft className="w-6 h-6" />
       </button>
       <button
         onClick={handleNext}
         aria-label="Növbəti slayd"
-        className="absolute right-3 top-1/2 -translate-y-1/2 z-20 min-w-[48px] min-h-[48px] rounded-full bg-black/60 hover:bg-[#FF5B00] text-white hover:text-white border border-white/10 flex items-center justify-center backdrop-blur-md transition-all active:scale-90"
+        className="absolute right-3 top-1/2 -translate-y-1/2 z-20 min-w-[48px] min-h-[48px] rounded-full bg-white/90 hover:bg-[#FF5B00] text-neutral-800 hover:text-white border border-neutral-200 flex items-center justify-center shadow-md transition-all active:scale-90"
       >
         <ChevronRight className="w-6 h-6" />
       </button>
@@ -232,7 +234,7 @@ export default function HeroSlider({ products = [] }) {
             key={idx}
             onClick={() => setCurrentSlide(idx)}
             className={`h-2 rounded-full transition-all ${
-              currentSlide === idx ? 'w-8 bg-[#FF5B00]' : 'w-2 bg-white/30 hover:bg-white/60'
+              currentSlide === idx ? 'w-8 bg-[#FF5B00]' : 'w-2 bg-neutral-300 hover:bg-neutral-400'
             }`}
           />
         ))}

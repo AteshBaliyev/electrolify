@@ -49,17 +49,17 @@ export default function ProductCrossSell({ mainProduct, currentVariant }) {
   };
 
   return (
-    <section className="w-full my-12 p-5 sm:p-7 rounded-3xl bg-[#0B0B0B] border border-[#222222] shadow-xl">
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 pb-5 border-b border-[#1A1A1A]">
+    <section className="w-full my-12 p-5 sm:p-7 rounded-3xl bg-white border border-neutral-200 shadow-sm">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 pb-5 border-b border-neutral-100">
         <div>
           <span className="text-[11px] font-mono uppercase tracking-widest text-[#FF5B00] flex items-center gap-1.5 mb-1 font-bold">
             <Zap className="w-3.5 h-3.5 fill-[#FF5B00]" /> Xüsusi Dəst Təklifi (AOV Boost)
           </span>
-          <h3 className="text-lg sm:text-xl font-black text-white tracking-tight">
+          <h3 className="text-lg sm:text-xl font-black text-neutral-900 tracking-tight">
             Bununla Birlikdə Tez-tez Alınırlar
           </h3>
         </div>
-        <span className="text-xs text-neutral-400 bg-[#141414] border border-[#242424] px-3 py-1.5 rounded-full">
+        <span className="text-xs text-neutral-700 bg-neutral-100 border border-neutral-200 px-3 py-1.5 rounded-full">
           🔥 Dəst halında alarkən <strong>əlavə 20% qənaət</strong>
         </span>
       </div>
@@ -74,8 +74,8 @@ export default function ProductCrossSell({ mainProduct, currentVariant }) {
               onClick={() => toggleAddon(cross.id)}
               className={`p-3.5 rounded-2xl border transition-all cursor-pointer flex flex-col justify-between select-none ${
                 isSelected
-                  ? 'bg-[#140D08] border-[#FF5B00] shadow-md shadow-[#FF5B00]/10'
-                  : 'bg-[#111111] border-[#222222] hover:border-[#333333] opacity-80'
+                  ? 'bg-orange-50/50 border-[#FF5B00] shadow-sm'
+                  : 'bg-neutral-50 border-neutral-200 hover:border-neutral-300'
               }`}
             >
               <div>
@@ -84,17 +84,17 @@ export default function ProductCrossSell({ mainProduct, currentVariant }) {
                     className={`w-5 h-5 rounded-md border flex items-center justify-center transition-colors ${
                       isSelected
                         ? 'bg-[#FF5B00] border-[#FF5B00] text-white'
-                        : 'border-neutral-600 bg-[#161616]'
+                        : 'border-neutral-300 bg-white'
                     }`}
                   >
                     {isSelected && <Check className="w-3.5 h-3.5 stroke-[3]" />}
                   </div>
-                  <span className="text-[10px] font-black text-black bg-[#10B981] px-1.5 py-0.2 rounded">
+                  <span className="text-[10px] font-black text-white bg-[#10B981] px-1.5 py-0.2 rounded">
                     {cross.discount}
                   </span>
                 </div>
 
-                <div className="relative aspect-square rounded-xl bg-[#181818] overflow-hidden mb-3 border border-white/5">
+                <div className="relative aspect-square rounded-xl bg-white overflow-hidden mb-3 border border-neutral-200">
                   <Image
                     src={cross.image}
                     alt={cross.title}
@@ -105,19 +105,19 @@ export default function ProductCrossSell({ mainProduct, currentVariant }) {
                   />
                 </div>
 
-                <h4 className="text-xs font-bold text-white leading-snug line-clamp-2">
+                <h4 className="text-xs font-bold text-neutral-900 leading-snug line-clamp-2">
                   {cross.title}
                 </h4>
-                <p className="text-[10px] text-neutral-400 mt-1 line-clamp-1">
+                <p className="text-[10px] text-neutral-500 mt-1 line-clamp-1">
                   {cross.description}
                 </p>
               </div>
 
-              <div className="flex items-baseline justify-between mt-3 pt-2 border-t border-white/5">
+              <div className="flex items-baseline justify-between mt-3 pt-2 border-t border-neutral-200">
                 <span className="text-xs font-black text-[#FF5B00]">
                   {cross.price.toFixed(2)} AZN
                 </span>
-                <span className="text-[10px] text-neutral-500 line-through">
+                <span className="text-[10px] text-neutral-400 line-through">
                   {cross.compareAtPrice.toFixed(2)} AZN
                 </span>
               </div>
@@ -127,19 +127,19 @@ export default function ProductCrossSell({ mainProduct, currentVariant }) {
       </div>
 
       {/* Dəst Cəmi və Səbətə At Düyməsi */}
-      <div className="p-4 rounded-2xl bg-[#121212] border border-[#242424] flex flex-col sm:flex-row items-center justify-between gap-4">
+      <div className="p-4 rounded-2xl bg-neutral-50 border border-neutral-200 flex flex-col sm:flex-row items-center justify-between gap-4">
         <div>
-          <span className="text-xs text-neutral-400 block">
+          <span className="text-xs text-neutral-600 block">
             Seçilmiş məhsullarla ümumi dəst qiyməti:
           </span>
           <div className="flex items-baseline gap-3 mt-0.5">
             <span className="text-2xl font-black text-[#FF5B00]">
               {bundleTotalPrice} AZN
             </span>
-            <span className="text-sm text-neutral-500 line-through">
+            <span className="text-sm text-neutral-400 line-through">
               {bundleComparePrice} AZN
             </span>
-            <span className="text-xs font-bold text-[#10B981] bg-[#10B981]/15 px-2 py-0.5 rounded">
+            <span className="text-xs font-bold text-emerald-700 bg-emerald-100 px-2 py-0.5 rounded">
               {(bundleComparePrice - bundleTotalPrice).toFixed(2)} AZN Qənaət
             </span>
           </div>

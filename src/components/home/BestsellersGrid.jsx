@@ -30,7 +30,7 @@ export default function BestsellersGrid({ products = MOCK_PRODUCTS }) {
   return (
     <section className="w-full my-8 sm:my-12">
       {/* Bölmə Başlığı */}
-      <div className="flex flex-col md:flex-row md:items-center justify-between gap-3 sm:gap-4 mb-6 sm:mb-8 pb-3 sm:pb-4 border-b border-[#1C1C1C]">
+      <div className="flex flex-col md:flex-row md:items-center justify-between gap-3 sm:gap-4 mb-6 sm:mb-8 pb-3 sm:pb-4 border-b border-neutral-200">
         <div>
           <div className="flex items-center gap-2 mb-1">
             <TrendingUp className="w-4 h-4 sm:w-5 sm:h-5 text-[#FF5B00]" />
@@ -38,12 +38,12 @@ export default function BestsellersGrid({ products = MOCK_PRODUCTS }) {
               Hit Məhsullar
             </span>
           </div>
-          <h2 className="text-xl sm:text-3xl font-black text-white tracking-tight">
+          <h2 className="text-xl sm:text-3xl font-black text-neutral-900 tracking-tight">
             Ən Çox Satanlar
           </h2>
         </div>
 
-        {/* Filtr Düymələri (Mobildə rahat barmaqla sürüşdürülən və toxunulan tablar) */}
+        {/* Filtr Düymələri */}
         <div className="flex items-center gap-2 overflow-x-auto pb-2 scrollbar-none touch-pan-x">
           {tabs.map((tab) => (
             <button
@@ -52,7 +52,7 @@ export default function BestsellersGrid({ products = MOCK_PRODUCTS }) {
               className={`min-h-[40px] sm:min-h-[44px] py-2 px-3.5 sm:px-5 rounded-xl text-xs font-bold transition-all whitespace-nowrap select-none flex items-center justify-center cursor-pointer ${
                 activeTab === tab.id
                   ? 'bg-[#FF5B00] text-white font-black shadow-md shadow-[#FF5B00]/25 scale-105'
-                  : 'bg-[#121212] text-neutral-300 hover:text-white border border-[#222222]'
+                  : 'bg-white text-neutral-700 hover:text-neutral-900 border border-neutral-200 hover:bg-neutral-50 shadow-sm'
               }`}
             >
               {tab.label}

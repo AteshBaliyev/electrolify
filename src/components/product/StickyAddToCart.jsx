@@ -12,12 +12,12 @@ export default function StickyAddToCart({ product, selectedVariant, onOrderClick
   const imageUrl = product.images?.edges?.[0]?.node?.url;
 
   return (
-    <div className="fixed bottom-0 inset-x-0 z-40 bg-[#0A0A0A]/95 backdrop-blur-xl border-t border-[#222222] py-2 sm:py-3 pb-[calc(0.6rem+env(safe-area-inset-bottom,0px))] px-3 md:px-6 shadow-[0_-10px_35px_rgba(0,0,0,0.85)] transition-all duration-300">
+    <div className="fixed bottom-0 inset-x-0 z-40 bg-white/95 backdrop-blur-xl border-t border-neutral-200 py-2 sm:py-3 pb-[calc(0.6rem+env(safe-area-inset-bottom,0px))] px-3 md:px-6 shadow-[0_-5px_25px_rgba(0,0,0,0.08)] transition-all duration-300">
       <div className="max-w-7xl mx-auto flex items-center justify-between gap-3">
         {/* Məhsul Məlumatı (Thumbnail + Adı + Seçilmiş Variant + Qiymət) */}
         <div className="flex items-center gap-2.5 sm:gap-3 min-w-0">
           {imageUrl && (
-            <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-xl bg-[#161616] border border-[#2B2B2B] overflow-hidden shrink-0 relative flex items-center justify-center shadow-inner">
+            <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-xl bg-white border border-neutral-200 overflow-hidden shrink-0 relative flex items-center justify-center shadow-sm">
               <Image
                 src={imageUrl}
                 alt={product.title}
@@ -28,18 +28,18 @@ export default function StickyAddToCart({ product, selectedVariant, onOrderClick
             </div>
           )}
           <div className="min-w-0">
-            <h4 className="text-xs sm:text-sm font-bold text-white truncate max-w-[125px] sm:max-w-[260px] md:max-w-md">
+            <h4 className="text-xs sm:text-sm font-bold text-neutral-900 truncate max-w-[125px] sm:max-w-[260px] md:max-w-md">
               {product.title}
             </h4>
             <div className="flex items-center gap-2 mt-0.5">
-              <span className="text-[11px] sm:text-xs text-neutral-400 font-medium truncate max-w-[85px] sm:max-w-[120px]">
+              <span className="text-[11px] sm:text-xs text-neutral-500 font-medium truncate max-w-[85px] sm:max-w-[120px]">
                 {selectedVariant.title}
               </span>
               <span className="text-xs sm:text-sm font-black text-[#FF5B00]">
                 {currentPrice} AZN
               </span>
               {comparePrice && (
-                <span className="hidden sm:inline-block text-[11px] text-neutral-500 line-through">
+                <span className="hidden sm:inline-block text-[11px] text-neutral-400 line-through">
                   {comparePrice} AZN
                 </span>
               )}

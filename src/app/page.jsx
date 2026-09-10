@@ -23,7 +23,7 @@ export default async function HomePage() {
   }
 
   return (
-    <div className="bg-[#050505] text-white min-h-screen">
+    <div className="bg-[#F8F9FA] text-neutral-900 min-h-screen">
       <div className="max-w-7xl mx-auto px-2.5 sm:px-4 pt-3 sm:pt-4 pb-12 w-full space-y-6 sm:space-y-8">
         {/* 1. Ən Üstdə Slider (Hero Banner) - Kampaniyalar və Endirimlər üçün */}
         <HeroSlider products={products} />

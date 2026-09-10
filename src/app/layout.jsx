@@ -22,8 +22,8 @@ export const metadata = {
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="az" className="dark">
-      <body className="min-h-screen bg-background text-white selection:bg-conversion-orange selection:text-white flex flex-col">
+    <html lang="az">
+      <body className="min-h-screen bg-[#F8F9FA] text-neutral-900 selection:bg-[#FF5B00] selection:text-white flex flex-col">
         <CartProvider>
           <AnnouncementBar />
           <Header />
