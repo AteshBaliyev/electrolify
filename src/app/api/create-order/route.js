@@ -1,4 +1,5 @@
 import { NextResponse } from 'next/server';
+import { createShopifyAdminOrder } from '@/lib/shopifyAdmin';
 
 /**
  * WhatsApp Bildiriş Funksiyası
@@ -71,7 +72,6 @@ export async function POST(request) {
     const postalCode = customer.postalCode?.trim() || '';
     const email = customer.email?.trim() || '';
     const shippingMethod = customer.shippingMethod || 'Standart Çatdırılma';
-    const fullAddress = `${city}, Poçt İndeksi: ${postalCode}`;
 
     if (!phone || !city) {
       return NextResponse.json(
@@ -88,103 +88,30 @@ export async function POST(request) {
     // Unikal Sifariş Kodu
     const orderNumber = `EL-${Math.floor(10000 + Math.random() * 90000)}`;
 
-    // Shopify Admin API inteqrasiyası
-    const rawStoreDomain = process.env.SHOPIFY_STORE_DOMAIN || 'zi73g2-zx.myshopify.com';
-    const storeDomain = rawStoreDomain.replace(/^https?:\/\//, '').replace(/\/$/, '');
-    const adminAccessToken = process.env.SHOPIFY_ADMIN_ACCESS_TOKEN;
-    const apiVersion = process.env.SHOPIFY_API_VERSION || '2024-04';
-
-    // Telefon nömrəsini E.164 (+994) formatına uyğunlaşdırırıq
-    const digitsOnly = phone.replace(/\D/g, '');
-    let formattedPhone = phone;
-    if (digitsOnly.startsWith('994')) {
-      formattedPhone = `+${digitsOnly}`;
-    } else if (digitsOnly.startsWith('0')) {
-      formattedPhone = `+994${digitsOnly.slice(1)}`;
-    } else if (digitsOnly.length === 9) {
-      formattedPhone = `+994${digitsOnly}`;
-    }
-
+    // Shopify Admin API inteqrasiyası (Avtomatik token yeniləmə və Shopify panelinə yazma)
     let shopifyOrderId = null;
     let shopifyOrderName = null;
 
-    const isRealAdminConfigured =
-      Boolean(storeDomain) &&
-      Boolean(adminAccessToken) &&
-      !storeDomain.includes('your-store-name') &&
-      !adminAccessToken.includes('your_shopify_admin_api_token');
+    try {
+      const shopifyResult = await createShopifyAdminOrder({
+        customer,
+        items,
+        subtotal,
+        shippingFee,
+        total,
+        paymentType,
+        orderNumber,
+      });
 
-    if (isRealAdminConfigured) {
-      try {
-        const adminEndpoint = `https://${storeDomain}/admin/api/${apiVersion}/orders.json`;
-        const shopifyOrderPayload = {
-          order: {
-            line_items: items.map((item) => {
-              const line = {
-                title: item.title,
-                quantity: Number(item.quantity) || 1,
-                price: String(item.price),
-                name: `${item.title} - ${item.variantTitle || 'Standart'}`,
-              };
-              const numVariant = item.variantId ? String(item.variantId).replace(/\D/g, '') : '';
-              if (numVariant && numVariant.length > 5) {
-                line.variant_id = Number(numVariant);
-              }
-              return line;
-            }),
-            customer: {
-              first_name: firstName,
-              last_name: lastName,
-              phone: formattedPhone,
-              email: email || undefined,
-            },
-            shipping_address: {
-              first_name: firstName,
-              last_name: lastName,
-              address1: fullAddress,
-              city: city,
-              zip: postalCode || 'AZ1000',
-              phone: formattedPhone,
-              country: 'Azerbaijan',
-            },
-            shipping_lines: [
-              {
-                title: shippingMethod || 'Standart Çatdırılma',
-                price: String(shippingFee || 0),
-                code: 'COD_SHIPPING',
-              },
-            ],
-            financial_status: 'pending', // Qapıda ödəniş olduğu üçün gözləmədə
-            gateway: 'Cash on Delivery (Qapıda Nağd Ödəniş)',
-            note: `Electrolify Web COD Sifarişi\nAd: ${customerFullName}\nTelefon: ${formattedPhone}\nŞəhər: ${city}\nPoçt: ${postalCode}\nÇatdırılma: ${shippingMethod} (${shippingFee} AZN)\nÖdəniş: ${paymentType}`,
-            tags: 'Electrolify, COD, NextJS, Web',
-          },
-        };
-
-        const shopifyRes = await fetch(adminEndpoint, {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-            'X-Shopify-Access-Token': adminAccessToken,
-          },
-          body: JSON.stringify(shopifyOrderPayload),
-        });
-
-        const shopifyJson = await shopifyRes.json();
-        if (shopifyJson.order?.id) {
-          shopifyOrderId = shopifyJson.order.id;
-          shopifyOrderName = shopifyJson.order.name;
-          console.log(`[Shopify Admin API Uğurlu]: Sifariş Shopify-a yazıldı! ID: ${shopifyOrderId}, Ad: ${shopifyOrderName}`);
-        } else {
-          console.warn('[Shopify Admin API Xəbərdarlıq]:', JSON.stringify(shopifyJson));
-        }
-      } catch (adminErr) {
-        console.error('[Shopify Admin API Xətası]:', adminErr.message);
+      if (shopifyResult.success) {
+        shopifyOrderId = shopifyResult.shopifyOrderId;
+        shopifyOrderName = shopifyResult.shopifyOrderName;
+        console.log(`[Shopify İnteqrasiyası]: Sifariş ${shopifyOrderName} (ID: ${shopifyOrderId}) panelə düşdü!`);
+      } else {
+        console.warn('[Shopify İnteqrasiyası Xəbərdarlıq]:', shopifyResult.error);
       }
-    } else {
-      console.log(
-        '[Electrolify Backend]: SHOPIFY_ADMIN_ACCESS_TOKEN təyin edilməyib. Əgər Shopify Admin -> Develop apps bölməsindən token əlavə etsəniz, sifariş birbaşa Shopify panelinizə düşəcək.'
-      );
+    } catch (shopifyErr) {
+      console.error('[Shopify İnteqrasiya Xətası]:', shopifyErr.message);
     }
 
     // WhatsApp Bildirişini göndər və konsola yaz
