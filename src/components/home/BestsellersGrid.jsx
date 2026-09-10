@@ -25,6 +25,8 @@ export default function BestsellersGrid({ products = MOCK_PRODUCTS }) {
     return true;
   });
 
+  const displayProducts = filteredProducts.length > 0 ? filteredProducts : sourceProducts;
+
   return (
     <section className="w-full my-8 sm:my-12">
       {/* Bölmə Başlığı */}
@@ -61,7 +63,7 @@ export default function BestsellersGrid({ products = MOCK_PRODUCTS }) {
 
       {/* Məhsul Şəbəkəsi: Mobildə yan-yana 2-li, planşetdə 2-li/3-lü, böyük ekranlarda 4-lü */}
       <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2.5 sm:gap-4 md:gap-5">
-        {filteredProducts.map((product, idx) => {
+        {displayProducts.map((product, idx) => {
           const badges = ['TOP 1', 'Çox Satan', 'Populyar'];
           const discounts = ['-44%', '-47%', '-40%'];
 

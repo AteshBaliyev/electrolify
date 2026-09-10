@@ -47,7 +47,43 @@ const SLIDES = [
   },
 ];
 
-export default function HeroSlider() {
+export default function HeroSlider({ products = [] }) {
+  // Əgər real Shopify məhsulları varsa, onlardan avtomatik dinamik slaydlar yarat
+  const slides = React.useMemo(() => {
+    if (products && products.length > 0) {
+      return products.slice(0, 3).map((prod, index) => {
+        const imgUrl = prod.images?.edges?.[0]?.node?.url || SLIDES[index % SLIDES.length].image;
+        const price = prod.priceRange?.minVariantPrice?.amount || '0.00';
+        const comparePrice = prod.compareAtPriceRange?.minVariantPrice?.amount;
+        const badges = ['🔥 HƏFTƏNİN MEQA FÜRSƏTİ', '⚡ ÇOX SATAN MƏHSUL', '✨ YENİ GƏLƏN'];
+        const gradients = [
+          'from-[#1A0B02] via-[#0D0D0D] to-[#050505]',
+          'from-[#05111A] via-[#0D0D0D] to-[#050505]',
+          'from-[#121005] via-[#0D0D0D] to-[#050505]',
+        ];
+        let discount = 'XÜSUSİ TƏKLİF';
+        if (comparePrice && parseFloat(comparePrice) > parseFloat(price)) {
+          discount = `-${Math.round((1 - parseFloat(price) / parseFloat(comparePrice)) * 100)}% ENDİRİM`;
+        }
+
+        return {
+          id: prod.id || index + 1,
+          badge: badges[index % badges.length],
+          title: prod.title,
+          subtitle: prod.description ? prod.description.slice(0, 95) + '...' : 'Məhdud sayda xüsusi qiymətlə. 24 saatda çatdırılma.',
+          discount,
+          price: `${price} AZN`,
+          comparePrice: comparePrice ? `${comparePrice} AZN` : null,
+          link: `/products/${encodeURIComponent(prod.handle)}`,
+          image: imgUrl,
+          ctaText: 'İndi Sifariş Et',
+          bgGradient: gradients[index % gradients.length],
+        };
+      });
+    }
+    return SLIDES;
+  }, [products]);
+
   const [currentSlide, setCurrentSlide] = useState(0);
   const [touchStart, setTouchStart] = useState(null);
   const [touchEnd, setTouchEnd] = useState(null);
@@ -55,17 +91,17 @@ export default function HeroSlider() {
   // Avtomatik slayd keçidi (hər 5.5 saniyədən bir)
   useEffect(() => {
     const timer = setInterval(() => {
-      setCurrentSlide((prev) => (prev + 1) % SLIDES.length);
+      setCurrentSlide((prev) => (prev + 1) % slides.length);
     }, 5500);
     return () => clearInterval(timer);
-  }, []);
+  }, [slides.length]);
 
   const handlePrev = () => {
-    setCurrentSlide((prev) => (prev === 0 ? SLIDES.length - 1 : prev - 1));
+    setCurrentSlide((prev) => (prev === 0 ? slides.length - 1 : prev - 1));
   };
 
   const handleNext = () => {
-    setCurrentSlide((prev) => (prev + 1) % SLIDES.length);
+    setCurrentSlide((prev) => (prev + 1) % slides.length);
   };
 
   // Barmaqla sürüşdürmə (Touch Swipe Gestures for Mobile)
@@ -92,7 +128,7 @@ export default function HeroSlider() {
     }
   };
 
-  const slide = SLIDES[currentSlide];
+  const slide = slides[currentSlide] || slides[0];
 
   return (
     <div
@@ -191,7 +227,7 @@ export default function HeroSlider() {
 
       {/* Slayd Nöqtələri (Pagination) */}
       <div className="absolute bottom-4 left-1/2 -translate-x-1/2 z-20 flex items-center gap-2">
-        {SLIDES.map((_, idx) => (
+        {slides.map((_, idx) => (
           <button
             key={idx}
             onClick={() => setCurrentSlide(idx)}

@@ -213,43 +213,131 @@ export const CREATE_CART_MUTATION = /* GraphQL */ `
 // -------------------------------------------------------------
 
 /**
- * Mağazadakı məhsulları əldə edir
+ * Shopify REST/JSON məhsulunu Headless GraphQL formatına çevirir
+ */
+export function transformShopifyJsonProduct(p) {
+  const minPrice = p.variants?.[0]?.price || '0';
+  const maxPrice = p.variants?.[p.variants.length - 1]?.price || minPrice;
+  const comparePrice = p.variants?.[0]?.compare_at_price || null;
+
+  return {
+    id: String(p.id),
+    title: p.title,
+    handle: p.handle,
+    description: p.body_html ? p.body_html.replace(/<[^>]*>?/gm, '').trim() : '',
+    descriptionHtml: p.body_html || '',
+    availableForSale: p.variants ? p.variants.some((v) => v.available !== false) : true,
+    priceRange: {
+      minVariantPrice: { amount: String(minPrice), currencyCode: 'AZN' },
+      maxVariantPrice: { amount: String(maxPrice), currencyCode: 'AZN' },
+    },
+    compareAtPriceRange: {
+      minVariantPrice: { amount: String(comparePrice || minPrice), currencyCode: 'AZN' },
+    },
+    images: {
+      edges: (p.images && p.images.length > 0
+        ? p.images
+        : [{ src: 'https://images.unsplash.com/photo-1579586337278-3befd40fd17a?w=800&q=80' }]
+      ).map((img) => ({
+        node: {
+          url: typeof img === 'string' ? img : img.src,
+          altText: (typeof img === 'object' && img.alt) || p.title,
+          width: (typeof img === 'object' && img.width) || 800,
+          height: (typeof img === 'object' && img.height) || 800,
+        },
+      })),
+    },
+    variants: {
+      edges: (p.variants || []).map((v) => ({
+        node: {
+          id: String(v.id),
+          title: v.title === 'Default Title' ? 'Standart' : v.title,
+          availableForSale: v.available !== false,
+          price: { amount: String(v.price), currencyCode: 'AZN' },
+          compareAtPrice: v.compare_at_price
+            ? { amount: String(v.compare_at_price), currencyCode: 'AZN' }
+            : null,
+        },
+      })),
+    },
+  };
+}
+
+/**
+ * Shopify mağazasından canlı məhsulları (products.json) çəkir
+ */
+export async function fetchLiveShopifyProducts() {
+  try {
+    const storeDomain = process.env.SHOPIFY_STORE_DOMAIN || 'electrolify.com';
+    const cleanDomain = storeDomain.replace(/^https?:\/\//, '').replace(/\/$/, '');
+    const res = await fetch(`https://${cleanDomain}/products.json?limit=250`, {
+      next: { revalidate: 60, tags: ['products'] },
+      headers: { 'User-Agent': 'Electrolify-NextJS/1.0' },
+    });
+    if (!res.ok) return null;
+    const data = await res.json();
+    if (data.products && Array.isArray(data.products) && data.products.length > 0) {
+      return data.products.map(transformShopifyJsonProduct);
+    }
+    return null;
+  } catch (err) {
+    console.warn('[Live Shopify Fetch Error]:', err.message);
+    return null;
+  }
+}
+
+/**
+ * Mağazadakı məhsulları əldə edir (Real Shopify mağazası ilə inteqrasiya olunmuş)
  */
 export async function getProducts(first = 20) {
-  if (!isShopifyConfigured()) {
-    return MOCK_PRODUCTS;
+  if (isShopifyConfigured()) {
+    const { data, error } = await shopifyFetch({
+      query: PRODUCTS_QUERY,
+      variables: { first },
+    });
+    if (!error && data?.products?.edges) {
+      return data.products.edges.map((edge) => edge.node);
+    }
   }
 
-  const { data, error } = await shopifyFetch({
-    query: PRODUCTS_QUERY,
-    variables: { first },
-  });
-
-  if (error || !data?.products?.edges) {
-    return MOCK_PRODUCTS;
+  // Shopify mağazasından real məhsulları çək
+  const live = await fetchLiveShopifyProducts();
+  if (live && live.length > 0) {
+    return live.slice(0, first);
   }
 
-  return data.products.edges.map((edge) => edge.node);
+  return MOCK_PRODUCTS.slice(0, first);
 }
 
 /**
  * Handle əsasında tək məhsul məlumatını əldə edir
  */
 export async function getProductByHandle(handle) {
-  if (!isShopifyConfigured()) {
-    return MOCK_PRODUCTS.find((p) => p.handle === handle) || MOCK_PRODUCTS[0];
+  const decodedHandle = decodeURIComponent(handle || '').toLowerCase();
+
+  if (isShopifyConfigured()) {
+    const { data, error } = await shopifyFetch({
+      query: PRODUCT_BY_HANDLE_QUERY,
+      variables: { handle: decodedHandle },
+    });
+    if (!error && data?.product) {
+      return data.product;
+    }
   }
 
-  const { data, error } = await shopifyFetch({
-    query: PRODUCT_BY_HANDLE_QUERY,
-    variables: { handle },
-  });
-
-  if (error || !data?.product) {
-    return MOCK_PRODUCTS.find((p) => p.handle === handle) || null;
+  const live = await fetchLiveShopifyProducts();
+  if (live && live.length > 0) {
+    const match = live.find((p) => {
+      const pHandle = decodeURIComponent(p.handle || '').toLowerCase();
+      return pHandle === decodedHandle;
+    });
+    if (match) return match;
   }
 
-  return data.product;
+  return MOCK_PRODUCTS.find((p) => {
+    const pHandle = decodeURIComponent(p.handle || '').toLowerCase();
+    return pHandle === decodedHandle;
+  }) || null;
 }
 
 /**
