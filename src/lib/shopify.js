@@ -307,7 +307,11 @@ export async function getProducts(first = 20) {
   // Shopify mağazasından real məhsulları çək
   const live = await fetchLiveShopifyProducts();
   if (live && live.length > 0) {
-    return live.slice(0, first);
+    const liveHandles = new Set(live.map((p) => (p.handle || '').toLowerCase()));
+    const additional = MOCK_PRODUCTS.filter(
+      (p) => !liveHandles.has((p.handle || '').toLowerCase())
+    );
+    return [...live, ...additional].slice(0, first);
   }
 
   return MOCK_PRODUCTS.slice(0, first);

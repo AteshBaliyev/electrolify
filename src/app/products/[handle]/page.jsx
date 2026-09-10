@@ -5,7 +5,7 @@ import {
   Star,
   ChevronRight,
 } from 'lucide-react';
-import { getProductByHandle, MOCK_PRODUCTS } from '@/lib/shopify';
+import { getProductByHandle, getProducts, MOCK_PRODUCTS } from '@/lib/shopify';
 import ProductGallery from '@/components/product/ProductGallery';
 import ProductDescription from '@/components/product/ProductDescription';
 import ProductPurchaseClient from '@/components/product/ProductPurchaseClient';
@@ -53,6 +53,12 @@ export default async function ProductPage({ params }) {
   if (!product) {
     product = MOCK_PRODUCTS.find((p) => p.handle === handle) || MOCK_PRODUCTS[0];
   }
+
+  // Mağazanın digər real məhsullarını çək (Tövsiyə olunan / Cross-sell üçün)
+  const allProducts = await getProducts(20);
+  const recommendedStoreProducts = (allProducts || []).filter(
+    (p) => String(p.id) !== String(product.id) && p.handle !== product.handle
+  );
 
   return (
     <div className="bg-[#F8F9FA] text-neutral-900 min-h-screen pb-24 sm:pb-20">
@@ -120,14 +126,15 @@ export default async function ProductPage({ params }) {
           </div>
         </div>
 
-        {/* Bununla Birlikdə Tez-tez Alınırlar (Cross-sell / Bundle) */}
+        {/* Bununla Birlikdə Tez-tez Alınırlar (Mağazanın digər real məhsullarından ibarət dəst) */}
         <ProductCrossSell
           mainProduct={product}
           currentVariant={product.variants?.edges?.[0]?.node}
+          recommendedProducts={recommendedStoreProducts}
         />
 
-        {/* Müştəri Rəyləri Bölməsi (Təmiz SSR Server Component) */}
-        <ProductReviews />
+        {/* Müştəri Rəyləri Bölməsi - Məhsula xüsusi rəylər */}
+        <ProductReviews product={product} />
       </div>
     </div>
   );

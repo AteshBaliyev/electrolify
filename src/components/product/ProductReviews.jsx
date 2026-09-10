@@ -1,61 +1,11 @@
+'use client';
+
 import React from 'react';
 import { Star, CheckCircle, ThumbsUp, ShieldCheck, MessageSquare } from 'lucide-react';
+import { getProductReviews } from '@/data/productReviews';
 
-export default function ProductReviews() {
-  const reviews = [
-    {
-      id: 1,
-      name: 'Rəşad Məmmədov',
-      city: 'Bakı',
-      date: '2 gün əvvəl',
-      rating: 5,
-      title: 'Gözlədiyimdən qat-qat keyfiyyətli və sürətli kuryer!',
-      comment:
-        'Sifariş verdikdən 24 saat tamam olmamış kuryer birbaşa qapıma çatdırdı. Qapıda kartla ödəniş etdim, kuryer aparat gətirmişdi. Məhsulun keyfiyyəti, ekran parlaqlığı və materialı inanılmaz dərəcədə premiumdur. Qutuda rəsmi zəmanət talonu da var idi.',
-      verified: true,
-      helpful: 24,
-      avatarColor: 'bg-emerald-500',
-    },
-    {
-      id: 2,
-      name: 'Aysel Qasımova',
-      city: 'Sumqayıt',
-      date: '4 gün əvvəl',
-      rating: 5,
-      title: '100% orijinal, səs və dizayn mükəmməldir',
-      comment:
-        'Açığı əvvəlcə onlayn sifariş etməkdən bir az çəkinirdim, lakin qapıda yoxlayıb təhvil aldıqdan sonra bütün şübhələrim aradan qalxdı. Qablaşdırma tam toxunulmaz və orijinal idi. Qulaqlığın dərin bası və səs izolyasiyası sözün əsl mənasında möhtəşəmdir!',
-      verified: true,
-      helpful: 19,
-      avatarColor: 'bg-[#FF5B00]',
-    },
-    {
-      id: 3,
-      name: 'Elvin Tağıyev',
-      city: 'Gəncə',
-      date: '1 həftə əvvəl',
-      rating: 5,
-      title: 'Rayona cəmi 2 günə çatdırıldı, zəmanətli məhsul',
-      comment:
-        'Gəncəyə sürətli poçtla cəmi 2 günə gəldi. Batareya ömrü tam deyildiyi kimidir, günlərlə şarj etmədən istifadə edirəm. Qiymətinə görə Azərbaycanda ala biləcəyiniz ən yaxşı elektronika məhsuludur. Təşəkkürlər Electrolify!',
-      verified: true,
-      helpful: 15,
-      avatarColor: 'bg-blue-500',
-    },
-    {
-      id: 4,
-      name: 'Nərmin Əliyeva',
-      city: 'Bakı',
-      date: '10 gün əvvəl',
-      rating: 5,
-      title: 'Hədiyyə üçün almışdım, çox razı qaldıq',
-      comment:
-        'Hədiyyəlik qutusu və korpusu o qədər zərif və bahalı görünür ki, hamı heyran qaldı. WhatsApp operatoru da sifariş zamanı çox kömək etdi və bütün detalları izah etdi. Hər kəsə tərəddüdsüz tövsiyə edirəm.',
-      verified: true,
-      helpful: 11,
-      avatarColor: 'bg-purple-500',
-    },
-  ];
+export default function ProductReviews({ product }) {
+  const reviews = getProductReviews(product);
 
   return (
     <section className="w-full mt-16 pt-10 border-t border-neutral-200">
@@ -68,7 +18,7 @@ export default function ProductReviews() {
             </h2>
           </div>
           <p className="text-xs text-neutral-600">
-            Yalnız məhsulu təhvil almış real və təsdiqlənmiş alıcıların rəyləri
+            {product?.title ? `"${product.title}" üçün yalnız təhvil almış təsdiqlənmiş alıcıların rəyləri` : 'Yalnız məhsulu təhvil almış real və təsdiqlənmiş alıcıların rəyləri'}
           </p>
         </div>
 
@@ -143,7 +93,7 @@ export default function ProductReviews() {
             {/* Faydalılıq Nişanı */}
             <div className="pt-4 mt-4 border-t border-neutral-100 flex items-center justify-between text-[11px] text-neutral-500">
               <span className="text-[10px] text-neutral-500">Rəsmi Qapıda Ödənişlə alınıb</span>
-              <button className="flex items-center gap-1.5 hover:text-neutral-900 transition-colors">
+              <button className="flex items-center gap-1.5 hover:text-neutral-900 transition-colors cursor-pointer">
                 <ThumbsUp className="w-3 h-3 text-neutral-400" />
                 <span>Bu rəy faydalı oldu ({rev.helpful})</span>
               </button>

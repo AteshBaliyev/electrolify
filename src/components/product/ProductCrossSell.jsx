@@ -1,17 +1,75 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import Image from 'next/image';
-import { Plus, Check, Zap, Sparkles, ShoppingBag } from 'lucide-react';
+import Link from 'next/link';
+import { Check, Zap, ChevronRight } from 'lucide-react';
 import { useCart } from '@/context/CartContext';
 import { CROSS_SELL_PRODUCTS } from '@/data/crossSellProducts';
 
-export default function ProductCrossSell({ mainProduct, currentVariant }) {
-  const { addToCart, addCrossSellItem } = useCart();
-
-  // Seçilmiş cross-sell məhsulları (default: ilk 2 aksesuar seçilidir)
-  const [selectedAddons, setSelectedAddons] = useState(['cross-1', 'cross-2']);
+export default function ProductCrossSell({
+  mainProduct,
+  currentVariant,
+  recommendedProducts = [],
+}) {
+  const { addToCart, addCrossSellItem, openCart } = useCart();
+  const [selectedAddons, setSelectedAddons] = useState([]);
   const [isBundleAdded, setIsBundleAdded] = useState(false);
+
+  // Mağazanın digər məhsullarından dəst siyahısını formalaşdır
+  const bundleItems = useMemo(() => {
+    if (recommendedProducts && recommendedProducts.length > 0) {
+      return recommendedProducts.slice(0, 4).map((p, idx) => {
+        const price = parseFloat(
+          p.priceRange?.minVariantPrice?.amount || p.price || 0
+        );
+        const compareAtPrice = parseFloat(
+          p.compareAtPriceRange?.minVariantPrice?.amount ||
+            p.compareAtPrice ||
+            (price > 0 ? (price * 1.45).toFixed(2) : 0)
+        );
+        const discountVal =
+          compareAtPrice > price
+            ? Math.round(((compareAtPrice - price) / compareAtPrice) * 100)
+            : 20;
+
+        const imageUrl =
+          p.images?.edges?.[0]?.node?.url ||
+          p.image ||
+          'https://images.unsplash.com/photo-1579586337278-3befd40fd17a?w=800&q=80';
+
+        return {
+          id: String(p.id || `rec-${idx}`),
+          title: p.title,
+          category: 'Electrolify Seçimi',
+          price,
+          compareAtPrice,
+          discount: `-${discountVal}%`,
+          image: imageUrl,
+          description: p.description
+            ? p.description.slice(0, 75).trim() + '...'
+            : 'Rəsmi zəmanətli mağaza məhsulu',
+          handle: p.handle,
+          rawProduct: p,
+        };
+      });
+    }
+
+    // Əgər serverdən gəlməyibsə, cari məhsulu çıxmaqla CROSS_SELL_PRODUCTS-dən istifadə et
+    return CROSS_SELL_PRODUCTS.filter((item) => {
+      if (!mainProduct) return true;
+      const mainHandle = (mainProduct.handle || '').toLowerCase();
+      const itemHandle = (item.handle || '').toLowerCase();
+      return itemHandle !== mainHandle;
+    }).slice(0, 4);
+  }, [recommendedProducts, mainProduct]);
+
+  // İlk tövsiyə olunan mağaza məhsulunu avtomatik seç
+  useEffect(() => {
+    if (bundleItems.length > 0) {
+      setSelectedAddons([bundleItems[0].id]);
+    }
+  }, [bundleItems]);
 
   const mainPrice = parseFloat(
     currentVariant?.price?.amount || mainProduct?.priceRange?.minVariantPrice?.amount || 0
@@ -23,50 +81,70 @@ export default function ProductCrossSell({ mainProduct, currentVariant }) {
     );
   };
 
-  // Paket cəmi
-  const selectedCrossItems = CROSS_SELL_PRODUCTS.filter((item) =>
+  // Seçilmiş dəst məhsulları və yekun qiymət hesabı
+  const selectedCrossItems = bundleItems.filter((item) =>
     selectedAddons.includes(item.id)
   );
   const addonsTotal = selectedCrossItems.reduce((acc, item) => acc + item.price, 0);
   const bundleTotalPrice = (mainPrice + addonsTotal).toFixed(2);
   const bundleComparePrice = (
-    parseFloat(currentVariant?.compareAtPrice?.amount || mainPrice + 50) +
-    selectedCrossItems.reduce((acc, item) => acc + item.compareAtPrice, 0)
+    parseFloat(
+      currentVariant?.compareAtPrice?.amount ||
+        mainProduct?.compareAtPriceRange?.minVariantPrice?.amount ||
+        mainPrice * 1.35
+    ) + selectedCrossItems.reduce((acc, item) => acc + item.compareAtPrice, 0)
   ).toFixed(2);
 
   const handleAddBundle = () => {
-    // 1. Əsas məhsulu əlavə et
-    if (mainProduct && currentVariant) {
-      addToCart(mainProduct, currentVariant, 1);
+    // 1. Əsas məhsulu səbətə əlavə et
+    if (mainProduct) {
+      const variant = currentVariant || mainProduct.variants?.edges?.[0]?.node;
+      addToCart(mainProduct, variant, 1, false);
     }
-    // 2. Seçilmiş aksesuarları əlavə et
+
+    // 2. Seçilmiş tövsiyə olunan mağaza məhsullarını səbətə əlavə et
     selectedCrossItems.forEach((cross) => {
-      addCrossSellItem(cross);
+      if (cross.rawProduct) {
+        const variant =
+          cross.rawProduct.variants?.edges?.[0]?.node || {
+            id: cross.rawProduct.id,
+            title: 'Standart',
+            price: { amount: String(cross.price), currencyCode: 'AZN' },
+          };
+        addToCart(cross.rawProduct, variant, 1, false);
+      } else {
+        addCrossSellItem(cross);
+      }
     });
 
     setIsBundleAdded(true);
-    setTimeout(() => setIsBundleAdded(false), 2000);
+    setTimeout(() => {
+      setIsBundleAdded(false);
+      openCart();
+    }, 600);
   };
+
+  if (bundleItems.length === 0) return null;
 
   return (
     <section className="w-full my-12 p-5 sm:p-7 rounded-3xl bg-white border border-neutral-200 shadow-sm">
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 pb-5 border-b border-neutral-100">
         <div>
           <span className="text-[11px] font-mono uppercase tracking-widest text-[#FF5B00] flex items-center gap-1.5 mb-1 font-bold">
-            <Zap className="w-3.5 h-3.5 fill-[#FF5B00]" /> Xüsusi Dəst Təklifi (AOV Boost)
+            <Zap className="w-3.5 h-3.5 fill-[#FF5B00]" /> Mağazamızın Digər Məhsulları ilə Xüsusi Dəst
           </span>
           <h3 className="text-lg sm:text-xl font-black text-neutral-900 tracking-tight">
             Bununla Birlikdə Tez-tez Alınırlar
           </h3>
         </div>
-        <span className="text-xs text-neutral-700 bg-neutral-100 border border-neutral-200 px-3 py-1.5 rounded-full">
-          🔥 Dəst halında alarkən <strong>əlavə 20% qənaət</strong>
+        <span className="text-xs text-neutral-700 bg-neutral-100 border border-neutral-200 px-3 py-1.5 rounded-full font-medium">
+          🔥 Birlikdə alarkən <strong>əlavə xüsusi qənaət</strong>
         </span>
       </div>
 
-      {/* Aksesuarlar Siyahısı */}
+      {/* Tövsiyə Olunan Mağaza Məhsulları */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3.5 my-6">
-        {CROSS_SELL_PRODUCTS.map((cross) => {
+        {bundleItems.map((cross) => {
           const isSelected = selectedAddons.includes(cross.id);
           return (
             <div
@@ -89,7 +167,7 @@ export default function ProductCrossSell({ mainProduct, currentVariant }) {
                   >
                     {isSelected && <Check className="w-3.5 h-3.5 stroke-[3]" />}
                   </div>
-                  <span className="text-[10px] font-black text-white bg-[#10B981] px-1.5 py-0.2 rounded">
+                  <span className="text-[10px] font-black text-white bg-[#10B981] px-1.5 py-0.5 rounded">
                     {cross.discount}
                   </span>
                 </div>
@@ -99,7 +177,7 @@ export default function ProductCrossSell({ mainProduct, currentVariant }) {
                     src={cross.image}
                     alt={cross.title}
                     fill
-                    sizes="120px"
+                    sizes="140px"
                     className="object-cover"
                     loading="lazy"
                   />
@@ -113,13 +191,25 @@ export default function ProductCrossSell({ mainProduct, currentVariant }) {
                 </p>
               </div>
 
-              <div className="flex items-baseline justify-between mt-3 pt-2 border-t border-neutral-200">
-                <span className="text-xs font-black text-[#FF5B00]">
-                  {cross.price.toFixed(2)} AZN
-                </span>
-                <span className="text-[10px] text-neutral-400 line-through">
-                  {cross.compareAtPrice.toFixed(2)} AZN
-                </span>
+              <div className="mt-3 pt-2 border-t border-neutral-200">
+                <div className="flex items-baseline justify-between">
+                  <span className="text-xs font-black text-[#FF5B00]">
+                    {cross.price.toFixed(2)} AZN
+                  </span>
+                  <span className="text-[10px] text-neutral-400 line-through">
+                    {cross.compareAtPrice.toFixed(2)} AZN
+                  </span>
+                </div>
+
+                {cross.handle && (
+                  <Link
+                    href={`/products/${cross.handle}`}
+                    onClick={(e) => e.stopPropagation()}
+                    className="mt-2 text-[10px] font-bold text-[#FF5B00] hover:text-[#E64D00] inline-flex items-center gap-0.5 transition-colors"
+                  >
+                    Məhsula bax <ChevronRight className="w-2.5 h-2.5" />
+                  </Link>
+                )}
               </div>
             </div>
           );
@@ -139,15 +229,17 @@ export default function ProductCrossSell({ mainProduct, currentVariant }) {
             <span className="text-sm text-neutral-400 line-through">
               {bundleComparePrice} AZN
             </span>
-            <span className="text-xs font-bold text-emerald-700 bg-emerald-100 px-2 py-0.5 rounded">
-              {(bundleComparePrice - bundleTotalPrice).toFixed(2)} AZN Qənaət
-            </span>
+            {parseFloat(bundleComparePrice) > parseFloat(bundleTotalPrice) && (
+              <span className="text-xs font-bold text-emerald-700 bg-emerald-100 px-2 py-0.5 rounded">
+                {(bundleComparePrice - bundleTotalPrice).toFixed(2)} AZN Qənaət
+              </span>
+            )}
           </div>
         </div>
 
         <button
           onClick={handleAddBundle}
-          className="w-full sm:w-auto min-h-[48px] py-3.5 px-8 rounded-xl bg-[#FF5B00] hover:bg-[#E64D00] text-white font-black text-xs sm:text-sm uppercase tracking-wider flex items-center justify-center gap-2.5 shadow-lg shadow-[#FF5B00]/25 transition-all active:scale-95 glow-orange"
+          className="w-full sm:w-auto min-h-[48px] py-3.5 px-8 rounded-xl bg-[#FF5B00] hover:bg-[#E64D00] text-white font-black text-xs sm:text-sm uppercase tracking-wider flex items-center justify-center gap-2.5 shadow-lg shadow-[#FF5B00]/25 transition-all active:scale-95 glow-orange cursor-pointer"
         >
           {isBundleAdded ? (
             <>
