@@ -169,11 +169,7 @@ export default function CheckoutPage() {
   if (orderResult) {
     return (
       <div className="min-h-screen bg-[#050505] text-white py-12 px-4 flex items-center justify-center">
-        <motion.div
-          initial={{ scale: 0.95, opacity: 0 }}
-          animate={{ scale: 1, opacity: 1 }}
-          className="max-w-lg w-full bg-[#0E0E0E] border border-[#262626] rounded-3xl p-6 md:p-8 shadow-2xl text-center"
-        >
+        <div className="max-w-lg w-full bg-[#0E0E0E] border border-[#262626] rounded-3xl p-6 md:p-8 shadow-2xl text-center animate-in fade-in zoom-in-95 duration-300">
           <div className="w-16 h-16 rounded-3xl bg-[#10B981]/15 text-[#10B981] flex items-center justify-center mx-auto mb-5 shadow-lg shadow-[#10B981]/20">
             <CheckCircle2 className="w-9 h-9" />
           </div>
@@ -237,7 +233,7 @@ export default function CheckoutPage() {
               Ana Səhifəyə Qayıt
             </Link>
           </div>
-        </motion.div>
+        </div>
       </div>
     );
   }
