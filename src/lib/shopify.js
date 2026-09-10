@@ -268,7 +268,11 @@ export function transformShopifyJsonProduct(p) {
  */
 export async function fetchLiveShopifyProducts() {
   try {
-    const storeDomain = process.env.SHOPIFY_STORE_DOMAIN || 'electrolify.com';
+    const rawStoreDomain = process.env.SHOPIFY_STORE_DOMAIN;
+    const storeDomain =
+      !rawStoreDomain || rawStoreDomain.includes('your-store-name')
+        ? 'electrolify.com'
+        : rawStoreDomain;
     const cleanDomain = storeDomain.replace(/^https?:\/\//, '').replace(/\/$/, '');
     const res = await fetch(`https://${cleanDomain}/products.json?limit=250`, {
       next: { revalidate: 60, tags: ['products'] },
