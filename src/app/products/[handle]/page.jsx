@@ -11,6 +11,7 @@ import ProductDescription from '@/components/product/ProductDescription';
 import ProductPurchaseClient from '@/components/product/ProductPurchaseClient';
 import ProductSocialProof from '@/components/product/ProductSocialProof';
 import ProductTrustBadges from '@/components/product/ProductTrustBadges';
+import ProductTrustTicker from '@/components/product/ProductTrustTicker';
 import ProductReviews from '@/components/product/ProductReviews';
 import ProductCrossSell from '@/components/product/ProductCrossSell';
 import CustomerSalesBadge from '@/components/product/CustomerSalesBadge';
@@ -127,6 +128,9 @@ export default async function ProductPage({ params }) {
 
             {/* 4. Horizontal Güvən Nişanları (Təmiz SSR Server Component) */}
             <ProductTrustBadges />
+
+            {/* 5. Horizontal Ticker - Sayt Haqqında 5 Qısa Məlumat (Arxa fonu qara, yazılar ağ) */}
+            <ProductTrustTicker />
           </div>
         </div>
 

@@ -49,3 +49,25 @@ body {
 ::-webkit-scrollbar-thumb:hover {
   background: #ff5b00;
 }
+
+/* Horizontal Ticker / Marquee Animation */
+@keyframes ticker-slide {
+  0% {
+    transform: translate3d(0, 0, 0);
+  }
+  100% {
+    transform: translate3d(-50%, 0, 0);
+  }
+}
+
+.animate-ticker {
+  display: flex;
+  width: max-content;
+  animation: ticker-slide 25s linear infinite;
+  will-change: transform;
+}
+
+.animate-ticker:hover {
+  animation-play-state: paused;
+}
+
