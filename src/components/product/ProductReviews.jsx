@@ -5,6 +5,55 @@ import { Star, CheckCircle, ThumbsUp, ShieldCheck, MessageSquare, ChevronDown, C
 import { getProductReviews } from '@/data/productReviews';
 import CustomerSalesBadge from './CustomerSalesBadge';
 
+const COLOR_MAP = {
+  'bg-emerald-500': '#10B981',
+  'bg-[#FF5B00]': '#FF5B00',
+  'bg-blue-500': '#3B82F6',
+  'bg-purple-500': '#A855F7',
+  'bg-pink-500': '#EC4899',
+  'bg-indigo-500': '#6366F1',
+  'bg-teal-500': '#14B8A6',
+  'bg-rose-500': '#F43F5E',
+  'bg-amber-500': '#F59E0B',
+  'bg-emerald-600': '#059669',
+  'bg-cyan-600': '#0891B2',
+  'bg-violet-500': '#8B5CF6',
+  'bg-blue-600': '#2563EB',
+  'bg-fuchsia-500': '#D946EF',
+  'bg-stone-600': '#57534E',
+  'bg-teal-600': '#0D9488',
+  'bg-orange-500': '#F97316',
+  'bg-red-500': '#EF4444',
+  'bg-sky-600': '#0284C7',
+  'bg-pink-600': '#DB2777',
+  'bg-indigo-600': '#4F46E5',
+  'bg-purple-600': '#9333EA',
+  'bg-emerald-700': '#047857',
+  'bg-rose-600': '#E11D48',
+  'bg-amber-600': '#D97706',
+  'bg-stone-700': '#44403C',
+  'bg-orange-600': '#EA580C',
+  'bg-violet-600': '#7C3AED',
+  'bg-red-600': '#DC2626',
+  'bg-rose-700': '#BE123C',
+  'bg-blue-700': '#1D4ED8',
+  'bg-fuchsia-600': '#C026D3',
+};
+
+const PALETTE = ['#FF5B00', '#10B981', '#3B82F6', '#8B5CF6', '#EC4899', '#F59E0B', '#14B8A6', '#6366F1', '#06B6D4', '#F43F5E'];
+
+function getAvatarBg(rev) {
+  if (rev?.avatarColor && COLOR_MAP[rev.avatarColor]) {
+    return COLOR_MAP[rev.avatarColor];
+  }
+  const name = rev?.name || 'User';
+  let hash = 0;
+  for (let i = 0; i < name.length; i++) {
+    hash = name.charCodeAt(i) + ((hash << 5) - hash);
+  }
+  return PALETTE[Math.abs(hash) % PALETTE.length];
+}
+
 export default function ProductReviews({ product }) {
   const reviews = getProductReviews(product);
   const [showAll, setShowAll] = useState(false);
@@ -75,6 +124,8 @@ export default function ProductReviews({ product }) {
         {displayedReviews.map((rev) => {
           const currentHelpful = helpfulCounts[rev.id] !== undefined ? helpfulCounts[rev.id] : rev.helpful;
           const isClicked = helpfulCounts[`${rev.id}_clicked`];
+          const avatarBg = getAvatarBg(rev);
+          const initialLetter = rev.name ? rev.name.trim().charAt(0).toUpperCase() : 'A';
 
           return (
             <div
@@ -86,16 +137,17 @@ export default function ProductReviews({ product }) {
                 <div className="flex items-start justify-between gap-2 mb-3">
                   <div className="flex items-center gap-3">
                     <div
-                      className={`w-9 h-9 rounded-full ${rev.avatarColor} text-white font-black text-xs flex items-center justify-center shrink-0 shadow-sm`}
+                      className="w-9 h-9 rounded-full text-white font-black text-xs flex items-center justify-center shrink-0 shadow-sm ring-2 ring-white"
+                      style={{ backgroundColor: avatarBg }}
                     >
-                      {rev.name.charAt(0)}
+                      {initialLetter}
                     </div>
                     <div>
-                      <h4 className="text-xs font-bold text-neutral-900 flex items-center gap-1.5">
-                        {rev.name}
+                      <h4 className="text-xs font-bold text-neutral-900 flex items-center gap-1.5 flex-wrap">
+                        <span>{rev.name}</span>
                         {rev.verified && (
-                          <span className="inline-flex items-center gap-0.5 text-[10px] font-semibold text-[#10B981] bg-[#10B981]/10 px-2 py-0.5 rounded-full">
-                            <CheckCircle className="w-2.5 h-2.5" /> Təsdiqlənmiş Alıcı
+                          <span className="inline-flex items-center gap-1 text-[10px] font-semibold text-[#10B981] bg-emerald-50 border border-emerald-100 px-2 py-0.5 rounded-full">
+                            <CheckCircle className="w-2.5 h-2.5 text-[#10B981]" /> Təsdiqlənmiş Alıcı
                           </span>
                         )}
                       </h4>
