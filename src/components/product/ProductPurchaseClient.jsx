@@ -58,13 +58,7 @@ export default function ProductPurchaseClient({ product }) {
       {/* Dinamik Qiymət Bloku */}
       <div className="p-3.5 sm:p-4 rounded-2xl bg-white border border-neutral-200 shadow-sm flex items-center justify-between gap-3">
         <div className="flex items-baseline gap-2.5 flex-wrap">
-          <span
-            className="text-3xl sm:text-4xl font-black text-[#FF5B00] tracking-tight"
-            style={{
-              WebkitTextStroke: '0.8px #000000',
-              paintOrder: 'stroke fill',
-            }}
-          >
+          <span className="text-3xl sm:text-4xl font-black text-[#FF5B00] tracking-tight">
             {(Number(currentPrice) * quantity).toFixed(2)} AZN
           </span>
           {comparePrice && (
@@ -206,13 +200,7 @@ export default function ProductPurchaseClient({ product }) {
               </div>
             </div>
             <span className="text-[11px] text-emerald-700 font-bold mt-0.5">Çatdırılma Pulsuz</span>
-            <span
-              className="text-xs sm:text-sm font-black text-[#FF5B00] mt-2"
-              style={{
-                WebkitTextStroke: '0.4px #000000',
-                paintOrder: 'stroke fill',
-              }}
-            >
+            <span className="text-xs sm:text-sm font-black text-[#FF5B00] mt-2">
               {(Number(currentPrice) * 2).toFixed(2)} AZN
             </span>
           </button>

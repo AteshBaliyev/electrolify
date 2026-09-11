@@ -274,13 +274,7 @@ export default function CartDrawer() {
 
                               {/* Qiymət */}
                               <div className="text-right">
-                                <span
-                                  className="text-xs font-black text-[#FF5B00] block"
-                                  style={{
-                                    WebkitTextStroke: '0.4px #000000',
-                                    paintOrder: 'stroke fill',
-                                  }}
-                                >
+                                <span className="text-xs font-black text-[#FF5B00] block">
                                   {(item.price * item.quantity).toFixed(2)} AZN
                                 </span>
                                 {item.compareAtPrice > item.price && (
@@ -445,13 +439,7 @@ export default function CartDrawer() {
                   </div>
                   <div className="flex justify-between items-baseline pt-2 border-t border-neutral-200">
                     <span className="font-bold text-neutral-900 text-sm">Yekun Məbləğ:</span>
-                    <span
-                      className="font-black text-[#FF5B00] text-xl"
-                      style={{
-                        WebkitTextStroke: '0.6px #000000',
-                        paintOrder: 'stroke fill',
-                      }}
-                    >
+                    <span className="font-black text-[#FF5B00] text-xl">
                       {finalTotal} AZN
                     </span>
                   </div>

@@ -38,13 +38,7 @@ export default function StickyAddToCart({ product, selectedVariant, onOrderClick
                     {selectedVariant.title}
                   </span>
                 )}
-              <span
-                className="text-xs sm:text-sm font-black text-[#FF5B00]"
-                style={{
-                  WebkitTextStroke: '0.4px #000000',
-                  paintOrder: 'stroke fill',
-                }}
-              >
+              <span className="text-xs sm:text-sm font-black text-[#FF5B00]">
                 {currentPrice} AZN
               </span>
               {comparePrice && (
