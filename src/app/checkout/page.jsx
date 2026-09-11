@@ -75,8 +75,8 @@ export default function CheckoutPage() {
       shippingMethodLabel = 'Poçtla Çatdırılma (4 AZN)';
     }
   } else {
-    baseShippingFee = 0;
-    shippingMethodLabel = 'Şəhər qeyd edilməyib';
+    baseShippingFee = 5.0;
+    shippingMethodLabel = 'Qapıya Çatdırılma (5 AZN)';
   }
 
   // Kritik Şərt: Əgər səbət cəmi 50 AZN-i keçibsə, çatdırılma TAM PULSUZDUR (0 AZN)!

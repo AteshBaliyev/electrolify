@@ -76,10 +76,10 @@ export default function CartDrawer() {
     }
   };
 
+  const shippingFee = isFreeShipping ? 0 : 5.0;
   const discountAmount = promoApplied ? (subtotalNumber * 0.1).toFixed(2) : 0;
-  const finalTotal = promoApplied
-    ? (subtotalNumber * 0.9).toFixed(2)
-    : subtotal;
+  const discountedSubtotal = promoApplied ? subtotalNumber * 0.9 : subtotalNumber;
+  const finalTotal = (discountedSubtotal + shippingFee).toFixed(2);
 
   const handleCheckout = () => {
     closeCart();
