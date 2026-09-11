@@ -24,7 +24,7 @@ import {
 import { useCart } from '@/context/CartContext';
 
 export default function CheckoutPage() {
-  const { items, subtotal, subtotalNumber, isFreeShipping, clearCart } = useCart();
+  const { items, subtotal, subtotalNumber, isFreeShipping, hasTwoOrMoreItems, clearCart } = useCart();
 
   // Yalnız tələb olunan 6 xana: Ad, Soyad, Şəhər, Telefon, Poçt İndeksi, E-poçt (opsional)
   const [firstName, setFirstName] = useState('');
@@ -457,7 +457,7 @@ export default function CheckoutPage() {
                   {isFreeShipping && (
                     <span className="text-[10px] font-bold text-[#10B981] bg-[#10B981]/15 px-2 py-0.5 rounded-full flex items-center gap-1">
                       <Sparkles className="w-3 h-3" />
-                      50 AZN üzəri: PULSUZ
+                      {hasTwoOrMoreItems ? '2 Məhsul Aksiyası: PULSUZ' : '50 AZN üzəri: PULSUZ'}
                     </span>
                   )}
                 </div>
@@ -688,12 +688,17 @@ export default function CheckoutPage() {
                 <span className="text-neutral-900 font-mono font-bold">{subtotal} AZN</span>
               </div>
               <div className="flex justify-between items-center">
-                <span className="text-neutral-500">Çatdırılma:</span>
+                <span className="text-neutral-500">Çatdırılma (Karqo):</span>
                 <div>
                   {isFreeShipping ? (
-                    <span className="text-[#10B981] font-bold font-mono">
-                      0 AZN (Pulsuz)
-                    </span>
+                    <div className="flex items-center gap-2">
+                      <span className="text-neutral-400 line-through font-mono text-xs">
+                        {(baseShippingFee > 0 ? baseShippingFee : 5.0).toFixed(2)} AZN
+                      </span>
+                      <span className="text-[#10B981] font-black text-xs uppercase bg-[#10B981]/10 px-2 py-0.5 rounded-md">
+                        Pulsuz
+                      </span>
+                    </div>
                   ) : effectiveShippingFee > 0 ? (
                     <span className="text-neutral-900 font-mono font-bold">
                       {effectiveShippingFee.toFixed(2)} AZN
@@ -707,9 +712,13 @@ export default function CheckoutPage() {
               </div>
 
               {isFreeShipping && (
-                <div className="p-2 rounded-xl bg-emerald-50 border border-emerald-200 text-emerald-700 text-[11px] font-semibold flex items-center gap-1.5">
-                  <Sparkles className="w-3.5 h-3.5 shrink-0" />
-                  <span>50 AZN hədəfi keçildiyi üçün çatdırılma 0 AZN!</span>
+                <div className="p-2.5 rounded-xl bg-emerald-50 border border-emerald-200 text-emerald-700 text-[11px] font-semibold flex items-center gap-2">
+                  <Sparkles className="w-4 h-4 shrink-0 text-[#10B981]" />
+                  <span>
+                    {hasTwoOrMoreItems
+                      ? '🎉 2 ədəd məhsul aksiyası: Karqo tamamilə PULSUZDUR!'
+                      : '🎉 50 AZN aksiyası: Karqo tamamilə PULSUZDUR!'}
+                  </span>
                 </div>
               )}
 

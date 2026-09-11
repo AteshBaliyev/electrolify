@@ -431,11 +431,20 @@ export default function CartDrawer() {
                     <span>Məhsulların cəmi:</span>
                     <span className="text-neutral-900 font-bold">{subtotal} AZN</span>
                   </div>
-                  <div className="flex justify-between">
+                  <div className="flex justify-between items-center">
                     <span>Çatdırılma:</span>
-                    <span className={isFreeShipping ? 'text-[#10B981] font-bold' : 'text-neutral-700'}>
-                      {isFreeShipping ? 'PULSUZ (0 AZN)' : '5.00 AZN'}
-                    </span>
+                    {isFreeShipping ? (
+                      <div className="flex items-center gap-1.5">
+                        <span className="text-neutral-400 line-through font-mono text-[11px]">
+                          5.00 AZN
+                        </span>
+                        <span className="text-[#10B981] font-bold text-xs bg-[#10B981]/10 px-1.5 py-0.5 rounded">
+                          Pulsuz
+                        </span>
+                      </div>
+                    ) : (
+                      <span className="text-neutral-700 font-bold">5.00 AZN</span>
+                    )}
                   </div>
                   <div className="flex justify-between items-baseline pt-2 border-t border-neutral-200">
                     <span className="font-bold text-neutral-900 text-sm">Yekun Məbləğ:</span>

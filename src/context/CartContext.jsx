@@ -148,12 +148,13 @@ export function CartProvider({ children }) {
   // Hesablamalar
   const subtotal = items.reduce((acc, item) => acc + item.price * item.quantity, 0);
   const totalCount = items.reduce((acc, item) => acc + item.quantity, 0);
-  const isFreeShipping = subtotal >= FREE_SHIPPING_THRESHOLD;
-  const remainingForFreeShipping = Math.max(0, FREE_SHIPPING_THRESHOLD - subtotal);
-  const freeShippingPercentage = Math.min(
-    100,
-    Math.round((subtotal / FREE_SHIPPING_THRESHOLD) * 100)
-  );
+  // 50 AZN və yuxarı VƏ YA bir məhsuldan 2 ədəd (və ya cəmi 2+ məhsul) sifariş edildikdə Karqo TAM PULSUZDUR!
+  const hasTwoOrMoreItems = totalCount >= 2 || items.some((item) => item.quantity >= 2);
+  const isFreeShipping = subtotal >= FREE_SHIPPING_THRESHOLD || hasTwoOrMoreItems;
+  const remainingForFreeShipping = isFreeShipping ? 0 : Math.max(0, FREE_SHIPPING_THRESHOLD - subtotal);
+  const freeShippingPercentage = isFreeShipping
+    ? 100
+    : Math.min(100, Math.round((subtotal / FREE_SHIPPING_THRESHOLD) * 100));
 
   return (
     <CartContext.Provider
@@ -170,9 +171,10 @@ export function CartProvider({ children }) {
         subtotal: subtotal.toFixed(2),
         subtotalNumber: subtotal,
         totalCount,
+        hasTwoOrMoreItems,
         freeShippingThreshold: FREE_SHIPPING_THRESHOLD,
         isFreeShipping,
-        remainingForFreeShipping: Math.max(0, FREE_SHIPPING_THRESHOLD - subtotal),
+        remainingForFreeShipping,
         remainingForFreeShippingText: remainingForFreeShipping.toFixed(2),
         freeShippingPercentage,
       }}
