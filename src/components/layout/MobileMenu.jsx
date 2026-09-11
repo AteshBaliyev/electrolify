@@ -17,6 +17,7 @@ import {
   Sparkles,
 } from 'lucide-react';
 import Link from 'next/link';
+import Image from 'next/image';
 
 export default function MobileMenu({ isOpen, onClose, searchQuery, setSearchQuery, handleSearch }) {
   const categories = [
@@ -72,8 +73,14 @@ export default function MobileMenu({ isOpen, onClose, searchQuery, setSearchQuer
             {/* Menyu Başlığı (Min 48px toxunma sahəsi) */}
             <div className="p-4 sm:p-5 border-b border-neutral-200 flex items-center justify-between bg-white shrink-0">
               <div className="flex items-center gap-2.5">
-                <div className="w-10 h-10 rounded-xl bg-gradient-to-tr from-[#FF5B00] via-[#FF6E1A] to-yellow-500 flex items-center justify-center text-white font-black shadow-md">
-                  <Zap className="w-6 h-6 fill-white text-white" />
+                <div className="relative w-10 h-10 rounded-xl bg-neutral-950 border border-orange-500/30 overflow-hidden shadow-md flex items-center justify-center shrink-0">
+                  <Image
+                    src="/logo-icon.png"
+                    alt="Electrolify Logo"
+                    width={40}
+                    height={40}
+                    className="w-full h-full object-cover"
+                  />
                 </div>
                 <div className="flex flex-col">
                   <span className="font-black text-xl tracking-tight text-neutral-900">

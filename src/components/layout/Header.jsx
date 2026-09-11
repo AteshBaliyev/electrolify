@@ -2,6 +2,7 @@
 
 import React, { useState } from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 import {
   Zap,
   Search,
@@ -35,10 +36,17 @@ export default function Header() {
     <>
       <header className="sticky top-0 z-40 bg-white/95 backdrop-blur-md border-b border-neutral-200 shadow-sm transition-all">
         <div className="max-w-7xl mx-auto px-4 h-16 md:h-18 flex items-center justify-between gap-3 md:gap-8">
-          {/* 1. Sol: Minimalist Loqo (Electrolify) */}
-          <Link href="/" className="flex items-center gap-2.5 shrink-0 group">
-            <div className="w-9 h-9 md:w-10 md:h-10 rounded-xl bg-gradient-to-tr from-[#FF5B00] via-[#FF6E1A] to-yellow-500 flex items-center justify-center shadow-md group-hover:scale-105 transition-transform">
-              <Zap className="w-5 h-5 md:w-6 md:h-6 text-white fill-white" />
+          {/* 1. Sol: Loqo (Electrolify) */}
+          <Link href="/" className="flex items-center gap-2.5 sm:gap-3 shrink-0 group">
+            <div className="relative w-10 h-10 md:w-11 md:h-11 rounded-xl bg-neutral-950 border border-orange-500/30 overflow-hidden shadow-md group-hover:scale-105 group-hover:border-[#FF5B00] transition-all flex items-center justify-center shrink-0">
+              <Image
+                src="/logo-icon.png"
+                alt="Electrolify Logo"
+                width={44}
+                height={44}
+                className="w-full h-full object-cover"
+                priority
+              />
             </div>
             <div className="flex flex-col">
               <span className="text-lg md:text-2xl font-black tracking-tight text-neutral-900 flex items-center">

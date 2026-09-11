@@ -1,5 +1,6 @@
 import React from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 import {
   Zap,
   ShieldCheck,
@@ -79,9 +80,15 @@ export default function Footer() {
       <div className="max-w-7xl mx-auto px-4 py-12 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-8">
         {/* Şirkət Haqqında */}
         <div className="lg:col-span-2 flex flex-col gap-4">
-          <div className="flex items-center gap-2">
-            <div className="w-8 h-8 rounded-lg bg-[#FF5B00] flex items-center justify-center text-white font-black">
-              <Zap className="w-5 h-5 fill-white text-white" />
+          <div className="flex items-center gap-2.5">
+            <div className="relative w-9 h-9 rounded-xl bg-neutral-950 border border-orange-500/30 overflow-hidden shadow-sm flex items-center justify-center shrink-0">
+              <Image
+                src="/logo-icon.png"
+                alt="Electrolify Logo"
+                width={36}
+                height={36}
+                className="w-full h-full object-cover"
+              />
             </div>
             <span className="font-black text-xl text-neutral-900 tracking-tight">
               ELECTROLIFY<span className="text-[#FF5B00]">.AZ</span>
