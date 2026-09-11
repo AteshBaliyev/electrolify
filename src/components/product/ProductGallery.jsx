@@ -2,7 +2,7 @@
 
 import React, { useState } from 'react';
 import Image from 'next/image';
-import { ChevronLeft, ChevronRight, Clock, Flame } from 'lucide-react';
+import { ChevronLeft, ChevronRight } from 'lucide-react';
 
 export default function ProductGallery({ images = [], title = '' }) {
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -59,16 +59,6 @@ export default function ProductGallery({ images = [], title = '' }) {
         onTouchEnd={onTouchEnd}
         className="relative aspect-square w-full rounded-3xl bg-white border border-neutral-200 overflow-hidden group select-none shadow-sm touch-pan-y"
       >
-        {/* Yüksək Konversiya Təcili Endirim Nişanı */}
-        <div className="absolute top-3.5 left-3.5 z-20 flex flex-col gap-1.5 pointer-events-none">
-          <span className="bg-[#FF5B00] text-white text-[11px] md:text-xs font-black px-3 py-1 rounded-full uppercase tracking-wider shadow-md flex items-center gap-1">
-            <Flame className="w-3.5 h-3.5 fill-white text-white" /> -44% ENDİRİM
-          </span>
-          <span className="bg-white/90 backdrop-blur-md border border-red-200 text-red-600 text-[11px] font-bold px-2.5 py-1 rounded-full flex items-center gap-1.5 shadow-sm">
-            <Clock className="w-3.5 h-3.5 text-red-500 animate-pulse" />
-            <span>Bitməsinə: 02:47:18</span>
-          </span>
-        </div>
 
         {/* Şəkil Sayğacı */}
         <div className="absolute top-3.5 right-3.5 z-20 bg-neutral-900/70 backdrop-blur-md px-3 py-1 rounded-full text-[11px] text-white font-mono">

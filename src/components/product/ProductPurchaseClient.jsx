@@ -34,6 +34,10 @@ export default function ProductPurchaseClient({ product }) {
   const comparePrice =
     selectedVariant?.compareAtPrice?.amount ||
     product.compareAtPriceRange?.minVariantPrice?.amount;
+  const discountPercent =
+    comparePrice && Number(comparePrice) > Number(currentPrice)
+      ? Math.round(((Number(comparePrice) - Number(currentPrice)) / Number(comparePrice)) * 100)
+      : null;
 
   const handleOrderNow = (e) => {
     e?.preventDefault?.();
@@ -74,9 +78,9 @@ export default function ProductPurchaseClient({ product }) {
             </span>
           )}
         </div>
-        {comparePrice && (
-          <span className="text-xs font-black text-white bg-[#10B981] px-2.5 py-1 rounded-lg uppercase tracking-wider shrink-0">
-            QƏNAƏT: {Math.max(0, parseInt(comparePrice) - parseInt(currentPrice)) * quantity} AZN
+        {discountPercent && discountPercent > 0 && (
+          <span className="text-xs font-black text-white bg-[#10B981] px-2.5 py-1 rounded-lg uppercase tracking-wider shrink-0 shadow-xs">
+            -{discountPercent}% ENDİRİM
           </span>
         )}
       </div>
