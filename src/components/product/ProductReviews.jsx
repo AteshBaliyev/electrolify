@@ -3,13 +3,14 @@
 import React from 'react';
 import { Star, CheckCircle, ThumbsUp, ShieldCheck, MessageSquare } from 'lucide-react';
 import { getProductReviews } from '@/data/productReviews';
+import CustomerSalesBadge from './CustomerSalesBadge';
 
 export default function ProductReviews({ product }) {
   const reviews = getProductReviews(product);
 
   return (
     <section className="w-full mt-16 pt-10 border-t border-neutral-200">
-      <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-6 pb-8 border-b border-neutral-200">
+      <div className="flex flex-col lg:flex-row items-start lg:items-center justify-between gap-6 pb-8 border-b border-neutral-200">
         <div>
           <div className="flex items-center gap-2 mb-1">
             <MessageSquare className="w-5 h-5 text-[#FF5B00]" />
@@ -22,28 +23,32 @@ export default function ProductReviews({ product }) {
           </p>
         </div>
 
-        {/* Ümumi Reytinq Kartı */}
-        <div className="flex items-center gap-4 p-4 rounded-2xl bg-white border border-neutral-200 shadow-sm shrink-0">
-          <div className="text-center">
-            <span className="text-3xl font-black text-neutral-900 block">4.9</span>
-            <div className="flex text-yellow-400 gap-0.5 justify-center mt-1">
-              {[...Array(5)].map((_, i) => (
-                <Star key={i} className="w-3.5 h-3.5 fill-yellow-400" />
-              ))}
+        {/* Ümumi Reytinq və Real Alış Statistikası Kartı */}
+        <div className="flex flex-col sm:flex-row items-start sm:items-center gap-3 shrink-0">
+          <div className="flex items-center gap-4 p-4 rounded-2xl bg-white border border-neutral-200 shadow-sm shrink-0">
+            <div className="text-center">
+              <span className="text-3xl font-black text-neutral-900 block">4.9</span>
+              <div className="flex text-yellow-400 gap-0.5 justify-center mt-1">
+                {[...Array(5)].map((_, i) => (
+                  <Star key={i} className="w-3.5 h-3.5 fill-yellow-400" />
+                ))}
+              </div>
+              <span className="text-[10px] text-neutral-500 mt-0.5 block">184 Rəy əsasında</span>
             </div>
-            <span className="text-[10px] text-neutral-500 mt-0.5 block">184 Rəy əsasında</span>
+
+            <div className="h-10 w-[1px] bg-neutral-200" />
+
+            <div className="flex flex-col gap-1 text-[11px] text-neutral-600">
+              <div className="flex items-center gap-1.5 font-bold text-[#10B981]">
+                <CheckCircle className="w-3.5 h-3.5" /> 99.4% Müsbət Rəy
+              </div>
+              <div className="flex items-center gap-1.5 text-neutral-500">
+                <ShieldCheck className="w-3.5 h-3.5 text-blue-600" /> 100% Təsdiqlənmiş Alıcı
+              </div>
+            </div>
           </div>
 
-          <div className="h-10 w-[1px] bg-neutral-200" />
-
-          <div className="flex flex-col gap-1 text-[11px] text-neutral-600">
-            <div className="flex items-center gap-1.5 font-bold text-[#10B981]">
-              <CheckCircle className="w-3.5 h-3.5" /> 99.4% Müsbət Rəy
-            </div>
-            <div className="flex items-center gap-1.5 text-neutral-500">
-              <ShieldCheck className="w-3.5 h-3.5 text-blue-600" /> 100% Təsdiqlənmiş Alıcı
-            </div>
-          </div>
+          <CustomerSalesBadge product={product} />
         </div>
       </div>
 

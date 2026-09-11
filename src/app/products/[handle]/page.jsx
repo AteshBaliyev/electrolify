@@ -13,6 +13,7 @@ import ProductSocialProof from '@/components/product/ProductSocialProof';
 import ProductTrustBadges from '@/components/product/ProductTrustBadges';
 import ProductReviews from '@/components/product/ProductReviews';
 import ProductCrossSell from '@/components/product/ProductCrossSell';
+import CustomerSalesBadge from '@/components/product/CustomerSalesBadge';
 
 export async function generateMetadata({ params }) {
   const handle = params?.handle || 'electrolify-pro-watch-series-9';
@@ -111,6 +112,9 @@ export default async function ProductPage({ params }) {
                 {product.title}
               </h1>
 
+              {/* Rəyin / Başlığın Altında Real Müştəri Statistikası Nişanı */}
+              <CustomerSalesBadge product={product} className="my-1" />
+
               {/* 'Read More' Açıqlama Sistemi */}
               <ProductDescription description={product.description} />
             </div>
@@ -119,7 +123,7 @@ export default async function ProductPage({ params }) {
             <ProductPurchaseClient product={product} />
 
             {/* 3. Kompakt Statistika (Live Social Proof) */}
-            <ProductSocialProof productId={product.id} />
+            <ProductSocialProof product={product} productId={product.id} />
 
             {/* 4. Horizontal Güvən Nişanları (Təmiz SSR Server Component) */}
             <ProductTrustBadges />
