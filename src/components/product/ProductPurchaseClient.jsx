@@ -20,6 +20,11 @@ export default function ProductPurchaseClient({ product }) {
   const { addToCart } = useCart();
 
   const variants = product.variants?.edges?.map((e) => e.node) || [];
+  const hasMultipleRealVariants =
+    variants.length > 1 &&
+    !variants.every((v) =>
+      ['default title', 'standart', 'standard'].includes((v.title || '').trim().toLowerCase())
+    );
   const [selectedVariant, setSelectedVariant] = useState(variants[0] || null);
   const [quantity, setQuantity] = useState(1);
   const [isSuccessModalOpen, setIsSuccessModalOpen] = useState(false);
@@ -49,7 +54,13 @@ export default function ProductPurchaseClient({ product }) {
       {/* Dinamik Qiymət Bloku */}
       <div className="p-3.5 sm:p-4 rounded-2xl bg-white border border-neutral-200 shadow-sm flex items-center justify-between gap-3">
         <div className="flex items-baseline gap-2.5 flex-wrap">
-          <span className="text-3xl sm:text-4xl font-black text-[#FF5B00] tracking-tight">
+          <span
+            className="text-3xl sm:text-4xl font-black text-[#FF5B00] tracking-tight"
+            style={{
+              WebkitTextStroke: '0.8px #000000',
+              paintOrder: 'stroke fill',
+            }}
+          >
             {(Number(currentPrice) * quantity).toFixed(2)} AZN
           </span>
           {comparePrice && (
@@ -70,8 +81,8 @@ export default function ProductPurchaseClient({ product }) {
         )}
       </div>
 
-      {/* Yığcam Variant Seçimi (Pill Design - Yan-yana kompakt düymələr) */}
-      {variants.length > 0 && (
+      {/* Yığcam Variant Seçimi (Yalnız fərqli real variantlar olduqda göstərilir) */}
+      {hasMultipleRealVariants && (
         <div className="flex flex-col gap-2 p-3 rounded-2xl bg-white border border-neutral-200 shadow-sm">
           <div className="flex items-center justify-between text-xs">
             <span className="font-bold text-neutral-700">
@@ -155,7 +166,7 @@ export default function ProductPurchaseClient({ product }) {
                 {quantity === 1 && <div className="w-1.5 h-1.5 rounded-full bg-white" />}
               </div>
             </div>
-            <span className="text-[11px] text-neutral-500 mt-0.5">Standart Sifariş</span>
+            <span className="text-[11px] text-neutral-500 mt-0.5">Tək Sifariş</span>
             <span className="text-xs sm:text-sm font-black text-neutral-900 mt-2">
               {Number(currentPrice).toFixed(2)} AZN
             </span>
@@ -191,7 +202,13 @@ export default function ProductPurchaseClient({ product }) {
               </div>
             </div>
             <span className="text-[11px] text-emerald-700 font-bold mt-0.5">Çatdırılma Pulsuz</span>
-            <span className="text-xs sm:text-sm font-black text-[#FF5B00] mt-2">
+            <span
+              className="text-xs sm:text-sm font-black text-[#FF5B00] mt-2"
+              style={{
+                WebkitTextStroke: '0.4px #000000',
+                paintOrder: 'stroke fill',
+              }}
+            >
               {(Number(currentPrice) * 2).toFixed(2)} AZN
             </span>
           </button>

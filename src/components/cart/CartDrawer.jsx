@@ -239,9 +239,12 @@ export default function CartDrawer() {
                               </h4>
                             </Link>
 
-                            <span className="text-[10px] text-neutral-500 block truncate mt-0.5">
-                              {item.variantTitle}
-                            </span>
+                            {item.variantTitle &&
+                              !['standart', 'default title'].includes(item.variantTitle.toLowerCase()) && (
+                                <span className="text-[10px] text-neutral-500 block truncate mt-0.5">
+                                  {item.variantTitle}
+                                </span>
+                              )}
 
                             <div className="flex items-center justify-between mt-2.5">
                               {/* Say Dəyişdirici */}
@@ -271,7 +274,13 @@ export default function CartDrawer() {
 
                               {/* Qiymət */}
                               <div className="text-right">
-                                <span className="text-xs font-black text-[#FF5B00] block">
+                                <span
+                                  className="text-xs font-black text-[#FF5B00] block"
+                                  style={{
+                                    WebkitTextStroke: '0.4px #000000',
+                                    paintOrder: 'stroke fill',
+                                  }}
+                                >
                                   {(item.price * item.quantity).toFixed(2)} AZN
                                 </span>
                                 {item.compareAtPrice > item.price && (
@@ -436,7 +445,13 @@ export default function CartDrawer() {
                   </div>
                   <div className="flex justify-between items-baseline pt-2 border-t border-neutral-200">
                     <span className="font-bold text-neutral-900 text-sm">Yekun Məbləğ:</span>
-                    <span className="font-black text-[#FF5B00] text-xl">
+                    <span
+                      className="font-black text-[#FF5B00] text-xl"
+                      style={{
+                        WebkitTextStroke: '0.6px #000000',
+                        paintOrder: 'stroke fill',
+                      }}
+                    >
                       {finalTotal} AZN
                     </span>
                   </div>

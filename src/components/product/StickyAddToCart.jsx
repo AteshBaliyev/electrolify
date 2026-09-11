@@ -32,10 +32,19 @@ export default function StickyAddToCart({ product, selectedVariant, onOrderClick
               {product.title}
             </h4>
             <div className="flex items-center gap-2 mt-0.5">
-              <span className="text-[11px] sm:text-xs text-neutral-500 font-medium truncate max-w-[85px] sm:max-w-[120px]">
-                {selectedVariant.title}
-              </span>
-              <span className="text-xs sm:text-sm font-black text-[#FF5B00]">
+              {selectedVariant.title &&
+                !['standart', 'default title'].includes(selectedVariant.title.toLowerCase()) && (
+                  <span className="text-[11px] sm:text-xs text-neutral-500 font-medium truncate max-w-[85px] sm:max-w-[120px]">
+                    {selectedVariant.title}
+                  </span>
+                )}
+              <span
+                className="text-xs sm:text-sm font-black text-[#FF5B00]"
+                style={{
+                  WebkitTextStroke: '0.4px #000000',
+                  paintOrder: 'stroke fill',
+                }}
+              >
                 {currentPrice} AZN
               </span>
               {comparePrice && (
