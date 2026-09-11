@@ -52,17 +52,17 @@ export default function Header() {
 
           {/* 2. Masaüstü Üfüqi Naviqasiya Menyu (Desktop Horizontal Navigation) */}
           <nav className="hidden lg:flex items-center gap-5 xl:gap-7 text-xs font-bold text-neutral-700">
-            <Link href="/category/smart-saatlar" className="hover:text-[#FF5B00] transition-colors whitespace-nowrap">
-              Smart Saatlar
+            <Link href="/#bestsellers" className="hover:text-[#FF5B00] transition-colors whitespace-nowrap">
+              Bütün Məhsullar
             </Link>
-            <Link href="/category/qulaqliqlar" className="hover:text-[#FF5B00] transition-colors whitespace-nowrap">
-              Simsiz Qulaqlıqlar
+            <Link href="/category/deri-qullugu" className="hover:text-[#FF5B00] transition-colors whitespace-nowrap">
+              Dəri Qulluğu & Vakum
             </Link>
-            <Link href="/category/sarj-cihazlari" className="hover:text-[#FF5B00] transition-colors whitespace-nowrap">
-              MagSafe & Şarj
+            <Link href="/category/masaj" className="hover:text-[#FF5B00] transition-colors whitespace-nowrap">
+              Masaj & Sağlamlıq
             </Link>
-            <Link href="/endirimlər" className="text-[#FF5B00] hover:text-[#e04e00] transition-colors whitespace-nowrap flex items-center gap-1 font-extrabold">
-              <Sparkles className="w-3.5 h-3.5" /> Kampaniyalar
+            <Link href="/#flashsales" className="text-[#FF5B00] hover:text-[#e04e00] transition-colors whitespace-nowrap flex items-center gap-1 font-extrabold">
+              <Sparkles className="w-3.5 h-3.5" /> Günün Fürsətləri
             </Link>
             <Link href="/support" className="hover:text-neutral-900 transition-colors whitespace-nowrap">
               FAQ & Dəstək

@@ -10,18 +10,33 @@ export default function BestsellersGrid({ products = MOCK_PRODUCTS }) {
 
   const tabs = [
     { id: 'all', label: 'Bütün Məhsullar' },
-    { id: 'watches', label: 'Smart Saatlar' },
-    { id: 'audio', label: 'Qulaqlıqlar' },
-    { id: 'chargers', label: 'Şarj & MagSafe' },
+    { id: 'deri', label: 'Dəri Qulluğu & Vakum' },
+    { id: 'masaj', label: 'Masaj & Sağlamlıq' },
   ];
 
   const sourceProducts = products && products.length > 0 ? products : MOCK_PRODUCTS;
 
   const filteredProducts = sourceProducts.filter((prod) => {
     if (activeTab === 'all') return true;
-    if (activeTab === 'watches') return prod.handle?.includes('watch');
-    if (activeTab === 'audio') return prod.handle?.includes('aurapod') || prod.handle?.includes('audio');
-    if (activeTab === 'chargers') return prod.handle?.includes('voltpulse') || prod.handle?.includes('charge');
+    const title = (prod.title || '').toLowerCase();
+    const handle = (prod.handle || '').toLowerCase();
+    if (activeTab === 'deri') {
+      return (
+        handle.includes('clarify') ||
+        handle.includes('vakum') ||
+        title.includes('vakum') ||
+        title.includes('qara')
+      );
+    }
+    if (activeTab === 'masaj') {
+      return (
+        handle.includes('istiəl') ||
+        handle.includes('istiel') ||
+        handle.includes('masaj') ||
+        title.includes('masaj') ||
+        title.includes('isti')
+      );
+    }
     return true;
   });
 

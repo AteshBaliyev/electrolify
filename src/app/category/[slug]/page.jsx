@@ -5,12 +5,14 @@ import { getProductsByCategory } from '@/lib/shopify';
 import ProductCard from '@/components/home/ProductCard';
 
 const CATEGORY_NAMES = {
-  'smart-saatlar': 'Smart Saatlar',
-  'qulaqliqlar': 'Simsiz Qulaqlıqlar',
-  'sarj-cihazlari': 'MagSafe & Şarj Cihazları',
-  'powerbank': 'Powerbank & Batareyalar',
-  'aksesuarlar': 'Mobil Aksesuarlar',
-  'smart-home': 'Smart Home Cihazları',
+  'deri-qullugu': 'Dəri Qulluğu & Vakum Cihazları',
+  'masaj': 'Masaj & Sağlamlıq Cihazları',
+  'vakum': 'Qara Nöqtə Vakum Cihazları',
+  'saglamliq': 'Masaj & Sağlamlıq',
+  'smart-saatlar': 'Bütün Məhsullar',
+  'qulaqliqlar': 'Bütün Məhsullar',
+  'sarj-cihazlari': 'Bütün Məhsullar',
+  'powerbank': 'Bütün Məhsullar',
 };
 
 export async function generateMetadata({ params }) {

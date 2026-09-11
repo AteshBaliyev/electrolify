@@ -111,28 +111,23 @@ export default function Footer() {
           <h4 className="text-neutral-900 font-bold text-sm mb-4">Populyar Bölmələr</h4>
           <ul className="flex flex-col gap-2.5 text-neutral-600">
             <li>
-              <Link href="/category/smart-saatlar" className="hover:text-[#FF5B00] transition-colors">
-                Smart Saatlar
+              <Link href="/category/deri-qullugu" className="hover:text-[#FF5B00] transition-colors">
+                Dəri Qulluğu & Vakum
               </Link>
             </li>
             <li>
-              <Link href="/category/qulaqliqlar" className="hover:text-[#FF5B00] transition-colors">
-                Simsiz Qulaqlıqlar
+              <Link href="/category/masaj" className="hover:text-[#FF5B00] transition-colors">
+                Masaj & Sağlamlıq
               </Link>
             </li>
             <li>
-              <Link href="/category/sarj-cihazlari" className="hover:text-[#FF5B00] transition-colors">
-                MagSafe və Simsiz Şarj
+              <Link href="/#bestsellers" className="hover:text-[#FF5B00] transition-colors">
+                Bütün Məhsullar
               </Link>
             </li>
             <li>
-              <Link href="/category/powerbank" className="hover:text-[#FF5B00] transition-colors">
-                Sürətli Powerbanklar
-              </Link>
-            </li>
-            <li>
-              <Link href="/endirimlər" className="text-[#FF5B00] font-semibold hover:underline">
-                🔥 Xüsusi Kampaniyalar
+              <Link href="/#flashsales" className="text-[#FF5B00] font-semibold hover:underline">
+                🔥 Günün Fürsətləri
               </Link>
             </li>
           </ul>

@@ -268,12 +268,9 @@ export function transformShopifyJsonProduct(p) {
  */
 export async function fetchLiveShopifyProducts() {
   try {
-    const rawStoreDomain = process.env.SHOPIFY_STORE_DOMAIN;
-    const storeDomain =
-      !rawStoreDomain || rawStoreDomain.includes('your-store-name')
-        ? 'electrolify.com'
-        : rawStoreDomain;
-    const cleanDomain = storeDomain.replace(/^https?:\/\//, '').replace(/\/$/, '');
+    const rawStoreDomain =
+      process.env.SHOPIFY_STORE_DOMAIN || 'zi73g2-zx.myshopify.com';
+    const cleanDomain = rawStoreDomain.replace(/^https?:\/\//, '').replace(/\/$/, '');
     const res = await fetch(`https://${cleanDomain}/products.json?limit=250`, {
       next: { revalidate: 60, tags: ['products'] },
       headers: { 'User-Agent': 'Electrolify-NextJS/1.0' },
@@ -291,7 +288,7 @@ export async function fetchLiveShopifyProducts() {
 }
 
 /**
- * Mağazadakı məhsulları əldə edir (Real Shopify mağazası ilə inteqrasiya olunmuş)
+ * Mağazadakı məhsulları əldə edir (YALNIZ Shopify Admin Panelində olan real məhsullar)
  */
 export async function getProducts(first = 20) {
   if (isShopifyConfigured()) {
@@ -299,21 +296,18 @@ export async function getProducts(first = 20) {
       query: PRODUCTS_QUERY,
       variables: { first },
     });
-    if (!error && data?.products?.edges) {
+    if (!error && data?.products?.edges && data.products.edges.length > 0) {
       return data.products.edges.map((edge) => edge.node);
     }
   }
 
-  // Shopify mağazasından real məhsulları çək
+  // Shopify mağazasından yalnız real məhsulları çək
   const live = await fetchLiveShopifyProducts();
   if (live && live.length > 0) {
-    const liveHandles = new Set(live.map((p) => (p.handle || '').toLowerCase()));
-    const additional = MOCK_PRODUCTS.filter(
-      (p) => !liveHandles.has((p.handle || '').toLowerCase())
-    );
-    return [...live, ...additional].slice(0, first);
+    return live.slice(0, first);
   }
 
+  // Fallback olaraq yalnız real mağaza məhsulları
   return MOCK_PRODUCTS.slice(0, first);
 }
 
@@ -334,18 +328,21 @@ export async function getProductByHandle(handle) {
   }
 
   const live = await fetchLiveShopifyProducts();
-  if (live && live.length > 0) {
-    const match = live.find((p) => {
-      const pHandle = decodeURIComponent(p.handle || '').toLowerCase();
-      return pHandle === decodedHandle;
-    });
-    if (match) return match;
-  }
+  const productList = live && live.length > 0 ? live : MOCK_PRODUCTS;
 
-  return MOCK_PRODUCTS.find((p) => {
+  const match = productList.find((p) => {
     const pHandle = decodeURIComponent(p.handle || '').toLowerCase();
-    return pHandle === decodedHandle;
-  }) || null;
+    const pTitle = (p.title || '').toLowerCase();
+    return (
+      pHandle === decodedHandle ||
+      String(p.id) === String(handle) ||
+      (decodedHandle.includes('clarify') && (pHandle.includes('clarify') || pTitle.includes('clarify'))) ||
+      ((decodedHandle.includes('isti') || decodedHandle.includes('masaj')) &&
+        (pHandle.includes('isti') || pHandle.includes('masaj') || pTitle.includes('masaj')))
+    );
+  });
+
+  return match || productList[0];
 }
 
 /**
@@ -356,20 +353,19 @@ export async function getProductsByCategory(categorySlug, first = 20) {
   if (!categorySlug) return allProducts;
 
   const slug = categorySlug.toLowerCase();
-  return allProducts.filter((p) => {
+  const filtered = allProducts.filter((p) => {
     const handle = (p.handle || '').toLowerCase();
     const title = (p.title || '').toLowerCase();
-    if (slug.includes('saat') || slug.includes('watch')) {
-      return handle.includes('watch') || title.includes('watch') || title.includes('saat');
+    if (slug.includes('masaj') || slug.includes('saglamliq')) {
+      return handle.includes('masaj') || handle.includes('isti') || title.includes('masaj');
     }
-    if (slug.includes('qulaq') || slug.includes('audio') || slug.includes('aurapod')) {
-      return handle.includes('aurapod') || handle.includes('audio') || title.includes('qulaqlıq');
-    }
-    if (slug.includes('sarj') || slug.includes('magsafe') || slug.includes('charge')) {
-      return handle.includes('magsafe') || handle.includes('voltpulse') || title.includes('şarj');
+    if (slug.includes('deri') || slug.includes('vakum') || slug.includes('qulluq')) {
+      return handle.includes('clarify') || handle.includes('vakum') || title.includes('vakum') || title.includes('qara');
     }
     return true;
   });
+
+  return filtered.length > 0 ? filtered : allProducts;
 }
 
 /**
@@ -387,46 +383,29 @@ export async function createCart(lines = []) {
 }
 
 // -------------------------------------------------------------
-// Fallback / Mock Məlumatlar (Shopify açarları daxil edilənə qədər)
+// Real Shopify Mağazası Məlumatları (Yalnız Admin Paneldə olan məhsullar)
 // -------------------------------------------------------------
 export const MOCK_PRODUCTS = [
   {
-    id: 'mock-1',
-    title: 'Electrolify Pro Watch Series 9 (Ultra Edition)',
-    handle: 'electrolify-pro-watch-series-9',
-    description: 'Titanium korpus, AMOLED super-ekran, ürək döyüntüsü və qan təzyiqi sensorları. IP68 suya davamlı premium smart saat. 7 gün batareya ömrü və zənglərə cavab vermə funksiyası.',
+    id: '9625190498560',
+    title: 'ClarifyPro - Qara Nöktə Təmizləyici Vakum Cihazı',
+    handle: 'clarifypro-qara-noktə-təmizləyici-vakum-cihazi',
+    description:
+      'Dəridəki qara nöqtələri, məsamələri və artıq yağı dərini zədələmədən dərindən təmizləyən 3 rejimli güclü vakum cihazı. Dəyişdirilə bilən xüsusi başlıqlar və uzunömürlü akkumulyator ilə ev şəraitində peşəkar dəri qulluğu.',
     availableForSale: true,
     priceRange: {
-      minVariantPrice: { amount: '129.00', currencyCode: 'AZN' },
-      maxVariantPrice: { amount: '159.00', currencyCode: 'AZN' },
+      minVariantPrice: { amount: '24.99', currencyCode: 'AZN' },
+      maxVariantPrice: { amount: '24.99', currencyCode: 'AZN' },
     },
     compareAtPriceRange: {
-      minVariantPrice: { amount: '229.00', currencyCode: 'AZN' },
+      minVariantPrice: { amount: '49.00', currencyCode: 'AZN' },
     },
     images: {
       edges: [
         {
           node: {
-            url: 'https://images.unsplash.com/photo-1579586337278-3befd40fd17a?w=800&q=80',
-            altText: 'Electrolify Pro Watch - Space Black Ön Görünüş',
-          },
-        },
-        {
-          node: {
-            url: 'https://images.unsplash.com/photo-1508685096489-7aacd43bd3b1?w=800&q=80',
-            altText: 'Electrolify Pro Watch - Qolda Görünüş',
-          },
-        },
-        {
-          node: {
-            url: 'https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=800&q=80',
-            altText: 'Electrolify Pro Watch - Detal və Kəmər',
-          },
-        },
-        {
-          node: {
-            url: 'https://images.unsplash.com/photo-1434493789847-2f02dc6ca35d?w=800&q=80',
-            altText: 'Electrolify Pro Watch - Ekran interfeysi',
+            url: 'https://cdn.shopify.com/s/files/1/0852/9418/6752/files/ChatGPTImage26Agu202603_24_34.png?v=1787700289',
+            altText: 'ClarifyPro - Qara Nöktə Təmizləyici Vakum Cihazı',
           },
         },
       ],
@@ -435,76 +414,37 @@ export const MOCK_PRODUCTS = [
       edges: [
         {
           node: {
-            id: 'variant-1-1',
-            title: 'Qara (Space Black) / 45mm',
-            color: 'Qara',
-            size: '45mm',
+            id: '49547097932032',
+            title: 'Standart',
             availableForSale: true,
-            price: { amount: '129.00', currencyCode: 'AZN' },
-            compareAtPrice: { amount: '229.00', currencyCode: 'AZN' },
-          },
-        },
-        {
-          node: {
-            id: 'variant-1-2',
-            title: 'Qara (Space Black) / 49mm Ultra',
-            color: 'Qara',
-            size: '49mm Ultra',
-            availableForSale: true,
-            price: { amount: '149.00', currencyCode: 'AZN' },
-            compareAtPrice: { amount: '249.00', currencyCode: 'AZN' },
-          },
-        },
-        {
-          node: {
-            id: 'variant-1-3',
-            title: 'Gümüşü (Titanium Silver) / 45mm',
-            color: 'Gümüşü',
-            size: '45mm',
-            availableForSale: true,
-            price: { amount: '139.00', currencyCode: 'AZN' },
-            compareAtPrice: { amount: '239.00', currencyCode: 'AZN' },
-          },
-        },
-        {
-          node: {
-            id: 'variant-1-4',
-            title: 'Narıncı İdman (Alpine Orange) / 49mm Ultra',
-            color: 'Narıncı',
-            size: '49mm Ultra',
-            availableForSale: true,
-            price: { amount: '159.00', currencyCode: 'AZN' },
-            compareAtPrice: { amount: '269.00', currencyCode: 'AZN' },
+            price: { amount: '24.99', currencyCode: 'AZN' },
+            compareAtPrice: { amount: '49.00', currencyCode: 'AZN' },
           },
         },
       ],
     },
   },
   {
-    id: 'mock-2',
-    title: 'AuraPod ANC Pro Simsiz Qulaqlıq (Spatial Audio)',
-    handle: 'aurapod-anc-pro',
-    description: 'Aktiv küy boğma (ANC), 48 saatlıq batareya ömrü, dərin bas və kristal təmiz səs keyfiyyəti. Şəffaf rejim və toxunma idarəetməsi.',
+    id: '9612405702912',
+    title: 'İstiƏl — İstilikli Boyun, Bel və Çiyin Masajı',
+    handle:
+      'i̇stiəl-masaj-aparati-i̇stilikli-verən-və-avtomatik-sixaraq-masaj-edən-boyun-bel-və-ciyin-masaj-cihazi',
+    description:
+      'İstilik verən və avtomatik sıxaraq dərindən masaj edən boyun, bel və çiyin masaj cihazı. Gərgin əzələləri rahatladır, qan dövranını yaxşılaşdırır və günün yorğunluğunu dərhal aradan qaldırır.',
     availableForSale: true,
     priceRange: {
-      minVariantPrice: { amount: '79.00', currencyCode: 'AZN' },
-      maxVariantPrice: { amount: '89.00', currencyCode: 'AZN' },
+      minVariantPrice: { amount: '45.00', currencyCode: 'AZN' },
+      maxVariantPrice: { amount: '45.00', currencyCode: 'AZN' },
     },
     compareAtPriceRange: {
-      minVariantPrice: { amount: '149.00', currencyCode: 'AZN' },
+      minVariantPrice: { amount: '85.00', currencyCode: 'AZN' },
     },
     images: {
       edges: [
         {
           node: {
-            url: 'https://images.unsplash.com/photo-1590658268037-6bf12165a8df?w=800&q=80',
-            altText: 'AuraPod ANC Pro Qara',
-          },
-        },
-        {
-          node: {
-            url: 'https://images.unsplash.com/photo-1572536147248-ac59a8abfa4b?w=800&q=80',
-            altText: 'AuraPod ANC Pro Keys',
+            url: 'https://cdn.shopify.com/s/files/1/0852/9418/6752/files/ChatGPT_Image_16_Agu_2026_00_10_34.png?v=1786880634',
+            altText: 'İstiƏl — İstilikli Boyun, Bel və Çiyin Masajı',
           },
         },
       ],
@@ -513,63 +453,11 @@ export const MOCK_PRODUCTS = [
       edges: [
         {
           node: {
-            id: 'variant-2-1',
-            title: 'Mat Qara',
-            color: 'Mat Qara',
-            size: 'Standart',
+            id: '49192144306432',
+            title: 'Standart',
             availableForSale: true,
-            price: { amount: '79.00', currencyCode: 'AZN' },
-            compareAtPrice: { amount: '149.00', currencyCode: 'AZN' },
-          },
-        },
-        {
-          node: {
-            id: 'variant-2-2',
-            title: 'Kvars Ağ',
-            color: 'Ağ',
-            size: 'Standart',
-            availableForSale: true,
-            price: { amount: '89.00', currencyCode: 'AZN' },
-            compareAtPrice: { amount: '159.00', currencyCode: 'AZN' },
-          },
-        },
-      ],
-    },
-  },
-  {
-    id: 'mock-3',
-    title: 'VoltPulse 3-ü 1-də MagSafe Sürətli Şarj Stansiyası (15W)',
-    handle: 'voltpulse-3in1-magsafe',
-    description: 'iPhone, Apple Watch və AirPods-u eyni vaxtda simsiz və sürətli şarj edin. Qatlanan alüminium dizayn, həddindən artıq qızmaya qarşı ağıllı çip.',
-    availableForSale: true,
-    priceRange: {
-      minVariantPrice: { amount: '59.00', currencyCode: 'AZN' },
-      maxVariantPrice: { amount: '69.00', currencyCode: 'AZN' },
-    },
-    compareAtPriceRange: {
-      minVariantPrice: { amount: '99.00', currencyCode: 'AZN' },
-    },
-    images: {
-      edges: [
-        {
-          node: {
-            url: 'https://images.unsplash.com/photo-1622445262464-84b1456045b6?w=800&q=80',
-            altText: 'VoltPulse 3-in-1 Wireless Charger',
-          },
-        },
-      ],
-    },
-    variants: {
-      edges: [
-        {
-          node: {
-            id: 'variant-3-1',
-            title: 'Titanium Grey',
-            color: 'Boz',
-            size: '15W',
-            availableForSale: true,
-            price: { amount: '59.00', currencyCode: 'AZN' },
-            compareAtPrice: { amount: '99.00', currencyCode: 'AZN' },
+            price: { amount: '45.00', currencyCode: 'AZN' },
+            compareAtPrice: { amount: '85.00', currencyCode: 'AZN' },
           },
         },
       ],

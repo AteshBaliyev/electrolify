@@ -29,40 +29,4 @@ export const CROSS_SELL_PRODUCTS = [
     description: 'Məsamələri dərindən təmizləyən və dərini hamarlaşdıran vakum cihazı.',
     handle: 'clarifypro-qara-noktə-təmizləyici-vakum-cihazi',
   },
-  {
-    id: 'store-watch',
-    title: 'Electrolify Pro Watch Series 9 (Ultra Edition)',
-    category: 'Smart Saat',
-    price: 129.0,
-    compareAtPrice: 229.0,
-    discount: '-44%',
-    image:
-      'https://images.unsplash.com/photo-1579586337278-3befd40fd17a?w=800&q=80',
-    description: 'Titanium korpus, AMOLED super-ekran, zənglərə cavab və sağlamlıq sensorları.',
-    handle: 'electrolify-pro-watch-series-9',
-  },
-  {
-    id: 'store-aurapod',
-    title: 'AuraPod ANC Pro Simsiz Qulaqlıq',
-    category: 'Audio & Qulaqlıq',
-    price: 39.0,
-    compareAtPrice: 69.0,
-    discount: '-43%',
-    image:
-      'https://images.unsplash.com/photo-1590658268037-6bf12165a8df?w=800&q=80',
-    description: 'Aktiv küyboğma (ANC), şəffaflıq rejimi və kristal təmiz səs keyfiyyəti.',
-    handle: 'aurapod-anc-pro',
-  },
-  {
-    id: 'store-voltpulse',
-    title: 'VoltPulse 3-in-1 MagSafe Şarj Stansiyası',
-    category: 'Şarj və Aksesuar',
-    price: 35.0,
-    compareAtPrice: 59.0,
-    discount: '-41%',
-    image:
-      'https://images.unsplash.com/photo-1586953208448-b95a79798f07?w=800&q=80',
-    description: 'Telefon, saat və qulaqlıq üçün 15W sürətli simsiz enerji stansiyası.',
-    handle: 'voltpulse-3-in-1',
-  },
 ];
