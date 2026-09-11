@@ -42,6 +42,19 @@ export default function CartDrawer() {
   const [promoApplied, setPromoApplied] = useState(false);
   const [showPromoInput, setShowPromoInput] = useState(false);
 
+  // Səbətdə olmayan tövsiyə edilən məhsulları filtrlə
+  const unaddedRecommendations = CROSS_SELL_PRODUCTS.filter(
+    (cross) =>
+      !items.some(
+        (item) =>
+          (item.handle && cross.handle && item.handle === cross.handle) ||
+          (item.title &&
+            cross.title &&
+            item.title.toLowerCase().includes(cross.title.toLowerCase().slice(0, 7))) ||
+          (item.id && cross.id && String(item.id) === String(cross.id))
+      )
+  );
+
   // Mobil cihazlarda səbət açılanda arxa səhifənin sürüşməsini (scroll lock) əngəllə
   React.useEffect(() => {
     if (isCartOpen) {
@@ -167,10 +180,14 @@ export default function CartDrawer() {
                     </p>
                   </div>
                   <button
-                    onClick={closeCart}
-                    className="py-2.5 px-6 rounded-xl bg-[#FF5B00] text-white font-black text-xs uppercase tracking-wider hover:bg-[#E64D00] transition-colors cursor-pointer"
+                    onClick={() => {
+                      closeCart();
+                      router.push('/#bestsellers');
+                    }}
+                    className="py-3 px-6 rounded-xl bg-[#FF5B00] text-white font-black text-xs uppercase tracking-wider hover:bg-[#E64D00] transition-colors cursor-pointer flex items-center gap-2 shadow-md shadow-[#FF5B00]/20 active:scale-95"
                   >
-                    Məhsullara Bax
+                    <ShoppingBag className="w-4 h-4" />
+                    <span>Digər Məhsullara Bax</span>
                   </button>
                 </div>
               ) : (
@@ -279,77 +296,80 @@ export default function CartDrawer() {
                     })}
                   </div>
 
-                  {/* 4. Səbət Daxili Cross-sell (Bununla Birlikdə Tövsiyə Olunur - Vizual Olarag Kəskin Ayrılmış) */}
-                  <div className="mt-6 p-3.5 rounded-2xl bg-orange-50/40 border border-dashed border-orange-200 shadow-sm">
-                    <div className="flex items-center justify-between mb-3">
-                      <span className="text-xs font-bold text-neutral-900 flex items-center gap-1.5">
-                        <Zap className="w-3.5 h-3.5 text-[#FF5B00] fill-[#FF5B00]" />
-                        Bununla Birlikdə Tövsiyə Olunur
-                      </span>
-                      <span className="text-[10px] text-[#FF5B00] font-semibold bg-[#FF5B00]/10 px-2 py-0.5 rounded-full">
-                        Tövsiyə
-                      </span>
-                    </div>
+                  {/* 4. Səbət Daxili Tövsiyə Edilən Məhsullar (Balaca formada və kliklənən) */}
+                  {unaddedRecommendations.length > 0 && (
+                    <div className="mt-5 p-3 rounded-2xl bg-orange-50/50 border border-dashed border-orange-200 shadow-xs">
+                      <div className="flex items-center justify-between mb-2 px-0.5">
+                        <span className="text-[11px] font-bold text-neutral-900 flex items-center gap-1.5">
+                          <Zap className="w-3.5 h-3.5 text-[#FF5B00] fill-[#FF5B00]" />
+                          Önərilən Məhsullar
+                        </span>
+                        <span className="text-[9px] text-[#FF5B00] font-bold bg-[#FF5B00]/10 px-2 py-0.5 rounded-full">
+                          Xüsusi Təklif
+                        </span>
+                      </div>
 
-                    <div className="space-y-2">
-                      {CROSS_SELL_PRODUCTS.map((cross) => {
-                        const crossHref = `/products/${cross.handle || 'electrolify-pro-watch-series-9'}`;
-                        return (
-                          <div
-                            key={cross.id}
-                            className="p-2 rounded-xl bg-white border border-neutral-200 hover:border-neutral-300 flex items-center justify-between gap-2.5 transition-colors shadow-sm"
-                          >
-                            {/* Şəkil (Kliklənən Link) */}
-                            <Link
-                              href={crossHref}
-                              onClick={closeCart}
-                              className="relative w-10 h-10 rounded-lg bg-neutral-100 overflow-hidden shrink-0 border border-neutral-200 block hover:opacity-85 transition-opacity"
+                      <div className="space-y-2">
+                        {unaddedRecommendations.map((cross) => {
+                          const crossHref = `/products/${cross.handle || 'clarifypro-qara-noktə-təmizləyici-vakum-cihazi'}`;
+                          return (
+                            <div
+                              key={cross.id}
+                              className="p-2 rounded-xl bg-white border border-neutral-200 hover:border-orange-300 flex items-center justify-between gap-2.5 transition-all shadow-xs"
                             >
-                              <Image
-                                src={cross.image}
-                                alt={cross.title}
-                                fill
-                                sizes="40px"
-                                className="object-cover"
-                              />
-                            </Link>
-
-                            <div className="flex-1 min-w-0">
-                              {/* Başlıq (Kliklənən Link) */}
+                              {/* Şəkil və Başlıq (Kliklənən Link - birbaşa məhsul səhifəsinə aparır) */}
                               <Link
                                 href={crossHref}
                                 onClick={closeCart}
-                                className="block group"
+                                className="flex items-center gap-2.5 min-w-0 flex-1 group"
                               >
-                                <h5 className="text-[11px] font-bold text-neutral-800 truncate group-hover:text-[#FF5B00] transition-colors">
-                                  {cross.title}
-                                </h5>
+                                <div className="relative w-10 h-10 rounded-lg bg-neutral-100 overflow-hidden shrink-0 border border-neutral-200 group-hover:opacity-85 transition-opacity">
+                                  <Image
+                                    src={cross.image}
+                                    alt={cross.title}
+                                    fill
+                                    sizes="40px"
+                                    className="object-cover"
+                                  />
+                                </div>
+                                <div className="min-w-0 flex-1">
+                                  <h5 className="text-[11px] font-bold text-neutral-800 truncate group-hover:text-[#FF5B00] transition-colors">
+                                    {cross.title}
+                                  </h5>
+                                  <div className="flex items-center gap-1.5 mt-0.5">
+                                    <span className="text-xs font-black text-[#FF5B00]">
+                                      {cross.price.toFixed(2)} AZN
+                                    </span>
+                                    {cross.compareAtPrice > cross.price && (
+                                      <span className="text-[10px] text-neutral-400 line-through">
+                                        {cross.compareAtPrice.toFixed(2)} AZN
+                                      </span>
+                                    )}
+                                    {cross.discount && (
+                                      <span className="text-[9px] font-black text-white bg-[#10B981] px-1 rounded">
+                                        {cross.discount}
+                                      </span>
+                                    )}
+                                  </div>
+                                </div>
                               </Link>
-                              <div className="flex items-center gap-2 mt-0.5">
-                                <span className="text-xs font-black text-[#FF5B00]">
-                                  {cross.price.toFixed(2)} AZN
-                                </span>
-                                <span className="text-[10px] text-neutral-400 line-through">
-                                  {cross.compareAtPrice.toFixed(2)} AZN
-                                </span>
-                                <span className="text-[9px] font-black text-white bg-[#10B981] px-1 rounded">
-                                  {cross.discount}
-                                </span>
-                              </div>
-                            </div>
 
-                            <button
-                              onClick={() => addCrossSellItem(cross)}
-                              className="shrink-0 py-1.5 px-2.5 rounded-lg bg-orange-50 hover:bg-[#FF5B00] hover:text-white text-[#FF5B00] font-bold text-[11px] flex items-center gap-1 border border-orange-200 transition-all active:scale-95 cursor-pointer"
-                            >
-                              <Plus className="w-3.5 h-3.5" />
-                              <span>Əlavə et</span>
-                            </button>
-                          </div>
-                        );
-                      })}
+                              {/* Səbətə sürətli əlavə et düyməsi */}
+                              <button
+                                type="button"
+                                onClick={() => addCrossSellItem(cross)}
+                                className="shrink-0 py-1.5 px-2.5 rounded-lg bg-orange-50 hover:bg-[#FF5B00] hover:text-white text-[#FF5B00] font-bold text-[11px] flex items-center gap-1 border border-orange-200 transition-all active:scale-95 cursor-pointer"
+                                title="Səbətə əlavə et"
+                              >
+                                <Plus className="w-3.5 h-3.5" />
+                                <span>Əlavə et</span>
+                              </button>
+                            </div>
+                          );
+                        })}
+                      </div>
                     </div>
-                  </div>
+                  )}
                 </>
               )}
             </div>
@@ -430,6 +450,19 @@ export default function CartDrawer() {
                   <Zap className="w-4 h-4 fill-white text-white" />
                   <span>SİFARİŞİ TAMAMLA (Qapıda Ödəniş)</span>
                   <ArrowRight className="w-4 h-4 text-white" />
+                </button>
+
+                {/* Digər Məhsullara Bax Düyməsi */}
+                <button
+                  type="button"
+                  onClick={() => {
+                    closeCart();
+                    router.push('/#bestsellers');
+                  }}
+                  className="w-full min-h-[46px] py-2.5 px-4 rounded-2xl border border-neutral-300 hover:border-neutral-400 bg-white hover:bg-neutral-100 text-neutral-800 font-bold text-xs sm:text-sm flex items-center justify-center gap-2 transition-all active:scale-[0.98] cursor-pointer shadow-xs"
+                >
+                  <ShoppingBag className="w-4 h-4 text-[#FF5B00]" />
+                  <span>Digər Məhsullara Bax</span>
                 </button>
 
                 <div className="flex items-center justify-center gap-3 text-[10px] text-neutral-500 text-center">

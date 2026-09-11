@@ -43,7 +43,7 @@ export default function BestsellersGrid({ products = MOCK_PRODUCTS }) {
   const displayProducts = filteredProducts.length > 0 ? filteredProducts : sourceProducts;
 
   return (
-    <section className="w-full my-8 sm:my-12">
+    <section id="bestsellers" className="w-full my-8 sm:my-12">
       {/* Bölmə Başlığı */}
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-3 sm:gap-4 mb-6 sm:mb-8 pb-3 sm:pb-4 border-b border-neutral-200">
         <div>
