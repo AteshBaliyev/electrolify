@@ -8,8 +8,8 @@ import GlobalWhatsAppButton from '@/components/common/GlobalWhatsAppButton';
 
 export const metadata = {
   metadataBase: new URL('https://electrolify.com'),
-  title: 'Electrolify.com | Premium Elektronika və Ağıllı Qadcetlər',
-  description: 'Azərbaycanın ən etibarlı e-ticarət platforması. Orijinal məhsullar, 24 saatda sürətli çatdırılma və 100% zəmanət.',
+  title: 'Electrolify | Premium Elektronika və Ağıllı Qadcetlər',
+  description: 'Azərbaycanın ən etibarlı e-ticarət platforması. Orijinal məhsullar, 50 AZN-dən yuxarı pulsuz çatdırılma və 100% zəmanət.',
   keywords: 'elektronika, smart saat, simsiz qulaqlıq, magsafe, baku, azərbaycan, online alisveris',
   icons: {
     icon: '/icon.png',
@@ -17,10 +17,10 @@ export const metadata = {
     apple: '/icon.png',
   },
   openGraph: {
-    title: 'Electrolify.com | Premium Elektronika',
+    title: 'Electrolify | Premium Elektronika',
     description: 'Xüsusi endirimlər və sürətli çatdırılma ilə sifariş verin.',
     url: 'https://electrolify.com',
-    siteName: 'Electrolify.com',
+    siteName: 'Electrolify',
     images: [
       {
         url: '/logo.png',

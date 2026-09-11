@@ -84,7 +84,7 @@ export default function MobileMenu({ isOpen, onClose, searchQuery, setSearchQuer
                 </div>
                 <div className="flex flex-col">
                   <span className="font-black text-xl tracking-tight text-neutral-900">
-                    ELECTROLIFY<span className="text-[#FF5B00]">.AZ</span>
+                    ELECTROLIFY
                   </span>
                   <span className="text-[10px] text-neutral-500 font-semibold tracking-wider uppercase">
                     Ağıllı Elektronika
@@ -191,7 +191,7 @@ export default function MobileMenu({ isOpen, onClose, searchQuery, setSearchQuer
             {/* WhatsApp ilə Birbaşa Sürətli Sifariş */}
             <div className="p-4 sm:p-5 border-t border-neutral-200 bg-neutral-50 flex flex-col gap-3 shrink-0 pb-[calc(1rem+env(safe-area-inset-bottom,0px))]">
               <a
-                href="https://wa.me/994556422545?text=Salam,%20Electrolify.az-dan%20sifari%C5%9F%20verm%C9%99k%20ist%C9%99yir%C9%99m"
+                href="https://wa.me/994556422545?text=Salam,%20Electrolify-dan%20sifari%C5%9F%20verm%C9%99k%20ist%C9%99yir%C9%99m"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="w-full min-h-[52px] py-3.5 px-4 rounded-2xl bg-[#25D366] hover:bg-[#20bd5a] text-white font-black text-sm uppercase tracking-wide flex items-center justify-center gap-2.5 shadow-md transition-transform active:scale-95"

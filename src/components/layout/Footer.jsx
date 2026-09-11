@@ -91,12 +91,12 @@ export default function Footer() {
               />
             </div>
             <span className="font-black text-xl text-neutral-900 tracking-tight">
-              ELECTROLIFY<span className="text-[#FF5B00]">.AZ</span>
+              ELECTROLIFY
             </span>
           </div>
 
           <p className="text-neutral-600 text-xs leading-relaxed max-w-sm">
-            Electrolify.az — Azərbaycanın ən sürətli və güvənli elektronika mağazasıdır. Biz yalnız sınaqdan keçmiş, yüksək keyfiyyətli qadcetləri birbaşa qapınıza çatdırırıq.
+            Electrolify — Azərbaycanın ən sürətli və güvənli elektronika mağazasıdır. Biz yalnız sınaqdan keçmiş, yüksək keyfiyyətli qadcetləri birbaşa qapınıza çatdırırıq.
           </p>
 
           {/* WhatsApp ilə Birbaşa Sifariş Düyməsi */}
@@ -184,8 +184,8 @@ export default function Footer() {
             </li>
             <li className="flex items-center gap-2">
               <Mail className="w-4 h-4 text-[#FF5B00] shrink-0" />
-              <a href="mailto:destek@electrolify.az" className="hover:text-neutral-900 transition-colors">
-                destek@electrolify.az
+              <a href="mailto:destek@electrolify.com" className="hover:text-neutral-900 transition-colors">
+                destek@electrolify.com
               </a>
             </li>
             <li className="flex items-start gap-2">
@@ -204,7 +204,7 @@ export default function Footer() {
       <div className="border-t border-neutral-200 bg-neutral-200/60">
         <div className="max-w-7xl mx-auto px-4 py-6 flex flex-col sm:flex-row items-center justify-between gap-4">
           <p className="text-[11px] text-neutral-500 text-center sm:text-left">
-            © 2026 <strong className="text-neutral-800">Electrolify.az</strong> — Bütün hüquqlar qorunur. Azərbaycan bazarı üçün xüsusi olaraq optimallaşdırılmışdır.
+            © 2026 <strong className="text-neutral-800">Electrolify</strong> — Bütün hüquqlar qorunur. Azərbaycan bazarı üçün xüsusi olaraq optimallaşdırılmışdır.
           </p>
 
           {/* Qəbul Olunan Ödənişlər */}

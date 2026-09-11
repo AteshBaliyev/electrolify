@@ -217,7 +217,7 @@ export default function CheckoutPage() {
 
           <div className="flex flex-col gap-2.5">
             <a
-              href={`https://wa.me/994556422545?text=Salam,%20Electrolify.az-dan%20${orderResult.orderNumber}%20sayl%C4%B1%20sifari%C5%9F%20verdim.`}
+              href={`https://wa.me/994556422545?text=Salam,%20Electrolify-dan%20${orderResult.orderNumber}%20sayl%C4%B1%20sifari%C5%9F%20verdim.`}
               target="_blank"
               rel="noopener noreferrer"
               className="w-full py-3.5 px-4 rounded-xl bg-[#25D366] hover:bg-[#20bd5a] text-white font-black text-xs uppercase tracking-wide flex items-center justify-center gap-2 transition-transform active:scale-95 shadow-md"

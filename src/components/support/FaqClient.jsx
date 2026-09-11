@@ -20,12 +20,12 @@ const FAQ_ITEMS = [
     icon: Truck,
     iconColor: 'text-[#FF5B00]',
     answer: `
-      Electrolify.az olaraq bütün Azərbaycan ərazisinə operativ və güvənli çatdırılma təşkil edirik:
+      Electrolify olaraq bütün Azərbaycan ərazisinə operativ və güvənli çatdırılma təşkil edirik:
 
       • Bakı şəhəri: Sifarişiniz təsdiqləndikdən sonra 24 saat ərzində birbaşa qapınıza çatdırılır. Əksər hallarda günorta saat 15:00-dək verilən sifarişlər elə həmin gün təhvil verilir.
       • Sumqayıt və Abşeron: Eyni gün və ya ən geci növbəti gün çatdırılır.
       • Bütün Azərbaycan Rayonları: Azərpoçt və ya təcili rayon kuryer marşrutları vasitəsilə 2-3 iş günü ərzində qoruyucu xüsusi bağlamada zədəsiz çatdırılır.
-      • Pulsuz Çatdırılma: 100 AZN və daha yuxarı bütün sifarişlər üçün çatdırılma TAM PULSUZDUR! 100 AZN-dən aşağı sifarişlər üçün standart şəhərdaxili kuryer haqqı cəmi 5 AZN təşkil edir.
+      • Pulsuz Çatdırılma: 50 AZN və daha yuxarı bütün sifarişlər üçün çatdırılma TAM PULSUZDUR! 50 AZN-dən aşağı sifarişlər üçün standart şəhərdaxili kuryer haqqı cəmi 5 AZN təşkil edir.
     `,
   },
   {
@@ -51,7 +51,7 @@ const FAQ_ITEMS = [
     icon: ShieldCheck,
     iconColor: 'text-blue-600',
     answer: `
-      Electrolify.az-dan aldığınız hər bir məhsul rəsmi qanunvericilik və daxili keyfiyyət standartlarımızla qorunur:
+      Electrolify-dan aldığınız hər bir məhsul rəsmi qanunvericilik və daxili keyfiyyət standartlarımızla qorunur:
 
       • 14 Gün Şərtsiz İadə / Dəyişmə: Məhsulu təhvil aldığınız tarixdən etibarən 14 gün ərzində bəyənmədiyiniz halda dərhal başqa modellə dəyişdirə və ya 100% pulunuzu geri ala bilərsiniz.
       • Qaytarma Qaydası: Məhsulun əmtəə görünüşü, zavod qutusu və aksesuarları zədələnməmiş vəziyyətdə olmalıdır.
@@ -79,7 +79,7 @@ const FAQ_ITEMS = [
     icon: CheckCircle2,
     iconColor: 'text-amber-600',
     answer: `
-      Electrolify.az yalnız yoxlanılmış və beynəlxalq sertifikatlara (CE, RoHS, FCC) malik orijinal qadcetlərin satışını həyata keçirir:
+      Electrolify yalnız yoxlanılmış və beynəlxalq sertifikatlara (CE, RoHS, FCC) malik orijinal qadcetlərin satışını həyata keçirir:
 
       • Hər bir məhsul zavod qablaşdırmasında, toxunulmaz qoruyucu lentlərlə təqdim edilir.
       • Smart saatlar və qulaqlıqlar rəsmi tətbiqlər (məs. Wearfit Pro, FitCloudPro və s.) vasitəsilə smartfona problemsiz qoşulur və proqram təminatı yenilənmələrini dəstəkləyir.
