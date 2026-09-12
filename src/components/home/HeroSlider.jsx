@@ -126,11 +126,12 @@ export default function HeroSlider({ products = [] }) {
     >
       <div
         key={slide.id}
-        className={`relative min-h-[380px] sm:min-h-[420px] md:min-h-[460px] p-5 sm:p-10 md:p-14 flex flex-col justify-center bg-gradient-to-r ${slide.bgGradient} animate-in fade-in duration-300`}
+        className={`relative min-h-[420px] sm:min-h-[420px] md:min-h-[460px] p-4 sm:p-10 md:p-14 flex flex-col justify-center bg-gradient-to-r ${slide.bgGradient} animate-in fade-in duration-300`}
       >
-        <div className="grid grid-cols-1 md:grid-cols-12 gap-6 items-center z-10">
+        <div className="grid grid-cols-1 md:grid-cols-12 gap-4 md:gap-6 items-center z-10">
           {/* Mətn və Təklif */}
-          <div className="md:col-span-7 flex flex-col gap-3 sm:gap-4 max-w-xl">
+          <div className="md:col-span-7 flex flex-col gap-2.5 sm:gap-4 max-w-xl">
+            {/* 1. Badges */}
             <div className="flex items-center gap-2 flex-wrap">
               <span className="text-[11px] font-black bg-[#FF5B00] text-white px-3 py-1 rounded-full uppercase tracking-wider shadow-md">
                 {slide.badge}
@@ -140,15 +141,47 @@ export default function HeroSlider({ products = [] }) {
               </span>
             </div>
 
-            <h1 className="text-2xl sm:text-4xl md:text-5xl font-black text-neutral-900 tracking-tight leading-tight">
-              {slide.title}
-            </h1>
+            {/* 2. Məhsulun Adı (Tıklandıqda məhsul səhifəsinə keçid) */}
+            <Link
+              href={slide.link}
+              className="group/title block cursor-pointer"
+            >
+              <h1 className="text-xl sm:text-4xl md:text-5xl font-black text-neutral-900 group-hover/title:text-[#FF5B00] tracking-tight leading-tight transition-colors">
+                {slide.title}
+              </h1>
+            </Link>
 
-            <p className="text-xs sm:text-sm text-neutral-600 leading-relaxed max-w-lg">
-              {slide.subtitle}
-            </p>
+            {/* 3. Mobildə: Məhsulun Şəkli (Məhsulun adından aşağıda, açıqlamasından yuxarıda) */}
+            <div className="flex md:hidden items-center justify-center my-1">
+              <Link
+                href={slide.link}
+                aria-label={slide.title}
+                className="relative w-44 h-44 sm:w-56 sm:h-56 rounded-2xl overflow-hidden bg-white/95 border border-neutral-200 shadow-md p-1.5 flex items-center justify-center group cursor-pointer block"
+              >
+                <div className="relative w-full h-full rounded-xl overflow-hidden">
+                  <Image
+                    src={slide.image}
+                    alt={slide.title}
+                    fill
+                    sizes="220px"
+                    priority={currentSlide === 0}
+                    className="object-cover rounded-xl group-hover:scale-105 transition-transform duration-500"
+                  />
+                </div>
+              </Link>
+            </div>
 
-            {/* Qiymət və Qənaət */}
+            {/* 4. Məhsulun Açıqlaması (Tıklandıqda məhsul səhifəsinə keçid) */}
+            <Link
+              href={slide.link}
+              className="group/desc block cursor-pointer"
+            >
+              <p className="text-xs sm:text-sm text-neutral-600 group-hover/desc:text-neutral-900 leading-relaxed max-w-lg transition-colors">
+                {slide.subtitle}
+              </p>
+            </Link>
+
+            {/* 5. Qiymət və Qənaət */}
             <div className="flex items-baseline gap-3 pt-1">
               <span className="text-2xl sm:text-4xl font-black text-[#FF5B00]">
                 {slide.price}
@@ -163,11 +196,11 @@ export default function HeroSlider({ products = [] }) {
               </span>
             </div>
 
-            {/* CTA Düyməsi */}
+            {/* 6. CTA Düyməsi */}
             <div className="pt-2">
               <Link
                 href={slide.link}
-                className="w-full sm:w-auto inline-flex items-center justify-center gap-3 min-h-[50px] py-3.5 px-8 rounded-2xl bg-[#FF5B00] hover:bg-[#E64D00] text-white font-black text-xs sm:text-sm uppercase tracking-wide shadow-xl shadow-[#FF5B00]/25 transition-all transform active:scale-95 glow-orange"
+                className="w-full sm:w-auto inline-flex items-center justify-center gap-3 min-h-[48px] sm:min-h-[50px] py-3.5 px-8 rounded-2xl bg-[#FF5B00] hover:bg-[#E64D00] text-white font-black text-xs sm:text-sm uppercase tracking-wide shadow-xl shadow-[#FF5B00]/25 transition-all transform active:scale-95 glow-orange"
               >
                 <Zap className="w-4 h-4 fill-white text-white" />
                 <span>{slide.ctaText}</span>
@@ -176,8 +209,8 @@ export default function HeroSlider({ products = [] }) {
             </div>
           </div>
 
-          {/* Şəkil Qutusu */}
-          <div className="md:col-span-5 flex items-center justify-center relative">
+          {/* Desktop / Planşet Şəkil Qutusu (Yalnız md və yuxarı ekranlarda sağ sütunda) */}
+          <div className="hidden md:flex md:col-span-5 items-center justify-center relative">
             <Link
               href={slide.link}
               aria-label={slide.title}
@@ -202,16 +235,16 @@ export default function HeroSlider({ products = [] }) {
       <button
         onClick={handlePrev}
         aria-label="Əvvəlki slayd"
-        className="absolute left-3 top-1/2 -translate-y-1/2 z-20 min-w-[48px] min-h-[48px] rounded-full bg-white/90 hover:bg-[#FF5B00] text-neutral-800 hover:text-white border border-neutral-200 flex items-center justify-center shadow-md transition-all active:scale-90"
+        className="absolute left-2 sm:left-3 top-1/2 -translate-y-1/2 z-20 min-w-[38px] min-h-[38px] sm:min-w-[48px] sm:min-h-[48px] rounded-full bg-white/90 hover:bg-[#FF5B00] text-neutral-800 hover:text-white border border-neutral-200 flex items-center justify-center shadow-md transition-all active:scale-90"
       >
-        <ChevronLeft className="w-6 h-6" />
+        <ChevronLeft className="w-5 h-5 sm:w-6 sm:h-6" />
       </button>
       <button
         onClick={handleNext}
         aria-label="Növbəti slayd"
-        className="absolute right-3 top-1/2 -translate-y-1/2 z-20 min-w-[48px] min-h-[48px] rounded-full bg-white/90 hover:bg-[#FF5B00] text-neutral-800 hover:text-white border border-neutral-200 flex items-center justify-center shadow-md transition-all active:scale-90"
+        className="absolute right-2 sm:right-3 top-1/2 -translate-y-1/2 z-20 min-w-[38px] min-h-[38px] sm:min-w-[48px] sm:min-h-[48px] rounded-full bg-white/90 hover:bg-[#FF5B00] text-neutral-800 hover:text-white border border-neutral-200 flex items-center justify-center shadow-md transition-all active:scale-90"
       >
-        <ChevronRight className="w-6 h-6" />
+        <ChevronRight className="w-5 h-5 sm:w-6 sm:h-6" />
       </button>
 
       {/* Slayd Nöqtələri (Pagination) */}
