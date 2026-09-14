@@ -13,10 +13,6 @@ const DEFAULT_CLIENT_SECRET = Buffer.from(
   'c2hwc3NfZmIwNTNlYzMyZjExYWUwYTA3NjEzYTNlYTg0NWVjZmU=',
   'base64'
 ).toString('utf8');
-const DEFAULT_ACCESS_TOKEN = Buffer.from(
-  'c2hwYXRfNjdlYTRhODU4NjRmNDUwOTFjNjM2MjI3OGQzMGM3YzE=',
-  'base64'
-).toString('utf8');
 
 const CLIENT_ID = process.env.SHOPIFY_CLIENT_ID || DEFAULT_CLIENT_ID;
 const CLIENT_SECRET = process.env.SHOPIFY_CLIENT_SECRET || DEFAULT_CLIENT_SECRET;
@@ -29,59 +25,58 @@ const KNOWN_SHOPIFY_VARIANTS = {
 };
 
 // Yaddaşda saxlanılan token və etibarlılıq vaxtı
-let memoryToken = process.env.SHOPIFY_ADMIN_ACCESS_TOKEN || DEFAULT_ACCESS_TOKEN;
-let tokenExpiresAt = Date.now() + 20 * 3600 * 1000; // 20 saat etibarlı
+let cachedToken = null;
+let tokenExpiresAt = 0;
 
 /**
  * Shopify Admin Access Token əldə edir.
- * Token bitdikdə avtomatik olaraq Client Credentials (ID + Secret) vasitəsilə yeniləyir.
+ * Hər zaman etibarlı OAuth Client Credentials (ID + Secret) vasitəsilə generasiya edir.
  */
-export async function getShopifyAdminAccessToken() {
-  // Əgər mövcud token hələ də etibarlıdırsa, dərhal qaytar
-  if (memoryToken && Date.now() < tokenExpiresAt - 300000) {
-    return memoryToken;
+export async function getShopifyAdminAccessToken(forceRefresh = false) {
+  // Əgər mövcud token hələ də etibarlıdırsa və məcburi yeniləmə istənməyibsə, dərhal qaytar
+  if (!forceRefresh && cachedToken && Date.now() < tokenExpiresAt - 60000) {
+    return cachedToken;
   }
 
   const clientId = process.env.SHOPIFY_CLIENT_ID || CLIENT_ID;
   const clientSecret = process.env.SHOPIFY_CLIENT_SECRET || CLIENT_SECRET;
 
-  if (!clientId || !clientSecret) {
-    return memoryToken || process.env.SHOPIFY_ADMIN_ACCESS_TOKEN || DEFAULT_ACCESS_TOKEN;
-  }
+  if (clientId && clientSecret) {
+    try {
+      const tokenUrl = `https://${STORE_DOMAIN}/admin/oauth/access_token`;
+      const res = await fetch(tokenUrl, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          client_id: clientId,
+          client_secret: clientSecret,
+          grant_type: 'client_credentials',
+        }),
+      });
 
-  try {
-    const tokenUrl = `https://${STORE_DOMAIN}/admin/oauth/access_token`;
-    const res = await fetch(tokenUrl, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        client_id: clientId,
-        client_secret: clientSecret,
-        grant_type: 'client_credentials',
-      }),
-    });
-
-    if (res.ok) {
-      const data = await res.json();
-      if (data.access_token) {
-        memoryToken = data.access_token;
-        const expiresInSec = data.expires_in || 86400;
-        tokenExpiresAt = Date.now() + expiresInSec * 1000;
-        console.log('[Shopify Admin Auth]: Yeni Access Token uğurla generasiya olundu.');
-        return memoryToken;
+      if (res.ok) {
+        const data = await res.json();
+        if (data.access_token) {
+          cachedToken = data.access_token;
+          const expiresInSec = data.expires_in || 86400;
+          tokenExpiresAt = Date.now() + expiresInSec * 1000;
+          console.log('[Shopify Admin Auth]: Yeni Access Token uğurla generasiya olundu.');
+          return cachedToken;
+        }
+      } else {
+        const errText = await res.text();
+        console.warn('[Shopify Admin Auth Xəbərdarlıq]:', res.status, errText);
       }
-    } else {
-      const errText = await res.text();
-      console.warn('[Shopify Admin Auth Xəbərdarlıq]:', res.status, errText);
+    } catch (err) {
+      console.error('[Shopify Admin Auth Xətası]:', err.message);
     }
-  } catch (err) {
-    console.error('[Shopify Admin Auth Xətası]:', err.message);
   }
 
-  // Fallback olaraq ilkin tokeni qaytar
-  return memoryToken || DEFAULT_ACCESS_TOKEN;
+  // Fallback olaraq env tokeni qaytar
+  cachedToken = process.env.SHOPIFY_ADMIN_ACCESS_TOKEN || null;
+  return cachedToken;
 }
 
 /**
@@ -128,7 +123,7 @@ export async function createShopifyAdminOrder({
   paymentType = 'Qapıda Nağd Ödəniş (COD)',
   orderNumber = '',
 }) {
-  const token = await getShopifyAdminAccessToken();
+  let token = await getShopifyAdminAccessToken();
   if (!token) {
     return {
       success: false,
@@ -152,7 +147,7 @@ export async function createShopifyAdminOrder({
     const line = {
       title: item.title,
       quantity: Number(item.quantity) || 1,
-      price: String(item.price),
+      price: String(item.price || 0),
       name: `${item.title} - ${item.variantTitle || 'Standart'}`,
     };
 
@@ -163,35 +158,14 @@ export async function createShopifyAdminOrder({
     return line;
   });
 
-  // 1. Nömrə üzrə mövcud müştərini axtar (Təkrarlanan nömrə xətasının qarşısını almaq üçün)
-  let customerData = {
-    first_name: firstName,
-    last_name: lastName,
-    email: email,
-  };
-
-  try {
-    const searchUrl = `https://${STORE_DOMAIN}/admin/api/${API_VERSION}/customers/search.json?query=${encodeURIComponent(phone)}`;
-    const searchRes = await fetch(searchUrl, {
-      headers: {
-        'Content-Type': 'application/json',
-        'X-Shopify-Access-Token': token,
-      },
-    });
-    if (searchRes.ok) {
-      const searchJson = await searchRes.json();
-      if (searchJson.customers && searchJson.customers.length > 0) {
-        customerData = { id: searchJson.customers[0].id };
-      }
-    }
-  } catch (searchErr) {
-    console.warn('[Shopify Customer Search Warning]:', searchErr.message);
-  }
-
   const payload = {
     order: {
       line_items: lineItems,
-      customer: customerData,
+      customer: {
+        first_name: firstName,
+        last_name: lastName,
+        email: email,
+      },
       shipping_address: {
         first_name: firstName,
         last_name: lastName,
@@ -219,41 +193,63 @@ export async function createShopifyAdminOrder({
           code: 'COD_SHIPPING',
         },
       ],
-      financial_status: 'pending', // Qapıda ödəniş olduğu üçün gözləmədə
+      financial_status: 'pending',
       gateway: 'Cash on Delivery (Qapıda Nağd Ödəniş)',
       note: `Electrolify Saytından Yeni Sifariş:\nSifariş Kodu: ${orderNumber}\nMüştəri: ${customerFullName}\nTelefon: ${phone}\nŞəhər: ${city}\nPoçt: ${postalCode}\nÇatdırılma: ${shippingMethod} (${shippingFee} AZN)\nÖdəniş növü: ${paymentType}\nÜmumi Məbləğ: ${total} AZN`,
       tags: 'Electrolify, Web Sifarişi, Qapıda Ödəniş, COD',
-      send_receipt: true, // Müştəriyə və mağaza sahibinə rəsmi bildiriş
+      send_receipt: true,
       send_fulfillment_receipt: true,
     },
   };
 
-  try {
-    const endpoint = `https://${STORE_DOMAIN}/admin/api/${API_VERSION}/orders.json`;
-    let res = await fetch(endpoint, {
+  const endpoint = `https://${STORE_DOMAIN}/admin/api/${API_VERSION}/orders.json`;
+
+  const sendOrder = async (authToken, orderPayload) => {
+    const res = await fetch(endpoint, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        'X-Shopify-Access-Token': token,
+        'X-Shopify-Access-Token': authToken,
       },
-      body: JSON.stringify(payload),
+      body: JSON.stringify(orderPayload),
     });
+    let data;
+    try {
+      data = await res.json();
+    } catch {
+      data = { errors: await res.text() };
+    }
+    return { res, data };
+  };
 
-    let data = await res.json();
+  try {
+    let { res, data } = await sendOrder(token, payload);
 
-    // Əgər customer səbəbli hər hansı xəta çıxarsa (məsələn nömrə artıq mövcuddur), customer-i çıxararaq dərhal təkrarla
-    if (!res.ok && data.errors && (data.errors['customer.phone_number'] || data.errors.customer || data.errors.phone)) {
+    // 1. Əgər 401 Unauthorized xətası alsaq, dərhal OAuth ilə yeni token alıb təkrarla
+    if (res.status === 401 || (data.errors && typeof data.errors === 'string' && data.errors.includes('Invalid API key'))) {
+      console.warn('[Shopify Admin API]: 401 Xətası, token dərhal yenilənir və təkrar göndərilir...');
+      token = await getShopifyAdminAccessToken(true);
+      const retryAuth = await sendOrder(token, payload);
+      res = retryAuth.res;
+      data = retryAuth.data;
+    }
+
+    // 2. Əgər customer səbəbli hər hansı xəta çıxarsa (məsələn nömrə artıq mövcuddur), customer-i çıxararaq dərhal təkrarla
+    if (!res.ok && data.errors && (data.errors['customer.phone_number'] || data.errors.customer || data.errors.phone || data.errors.email)) {
       console.log('[Shopify Admin API]: Müştəri sahəsi xətası, customer çıxarılaraq təkrar göndərilir...');
       delete payload.order.customer;
-      res = await fetch(endpoint, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'X-Shopify-Access-Token': token,
-        },
-        body: JSON.stringify(payload),
-      });
-      data = await res.json();
+      const retryCust = await sendOrder(token, payload);
+      res = retryCust.res;
+      data = retryCust.data;
+    }
+
+    // 3. Əgər variant_id xətası çıxarsa, variant_id-ləri çıxarıb yalnız ad/qiymət ilə təkrarla
+    if (!res.ok && data.errors && (data.errors.line_items || JSON.stringify(data.errors).includes('variant'))) {
+      console.log('[Shopify Admin API]: Variant xətası, variant_id çıxarılaraq təkrar göndərilir...');
+      payload.order.line_items = payload.order.line_items.map(({ variant_id, ...rest }) => rest);
+      const retryVar = await sendOrder(token, payload);
+      res = retryVar.res;
+      data = retryVar.data;
     }
 
     if (res.ok && data.order?.id) {
@@ -267,7 +263,7 @@ export async function createShopifyAdminOrder({
         shopifyOrderName: data.order.name,
       };
     } else {
-      console.warn('[Shopify Admin API Cavabı]:', JSON.stringify(data));
+      console.error('[Shopify Admin API XƏTASI]:', JSON.stringify(data));
       return {
         success: false,
         error: data.errors || 'Shopify sifarişi qəbul etmədi.',

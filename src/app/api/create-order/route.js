@@ -131,6 +131,7 @@ export async function POST(request) {
       success: true,
       orderNumber,
       shopifyOrderId,
+      shopifyOrderName,
       customer: {
         name: customerFullName,
         phone,
