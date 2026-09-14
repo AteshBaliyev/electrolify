@@ -172,7 +172,7 @@ export default function Header() {
 
           {/* Aşağı Sətir: Tam Ortada Naviqasiya Menyu */}
           <nav className="flex items-center justify-center gap-6 lg:gap-8 py-2.5 text-xs font-bold text-neutral-700">
-            <Link href="/#bestsellers" className="hover:text-[#FF5B00] transition-colors whitespace-nowrap">
+            <Link href="/products" className="hover:text-[#FF5B00] transition-colors whitespace-nowrap">
               Bütün Məhsullar
             </Link>
             <Link href="/category/deri-qullugu" className="hover:text-[#FF5B00] transition-colors whitespace-nowrap">

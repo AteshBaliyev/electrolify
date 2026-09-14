@@ -128,7 +128,7 @@ export default function Footer() {
               </Link>
             </li>
             <li>
-              <Link href="/#bestsellers" className="hover:text-[#FF5B00] transition-colors">
+              <Link href="/products" className="hover:text-[#FF5B00] transition-colors">
                 Bütün Məhsullar
               </Link>
             </li>

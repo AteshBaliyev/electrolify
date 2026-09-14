@@ -386,7 +386,18 @@ Zəhmət olmasa sifarişimi qəbul edin və çatdırılmanı başladın.`;
               <ArrowLeft className="w-4 h-4" />
               <span>Geri</span>
             </Link>
-            <span className="font-black text-sm tracking-wider text-neutral-900">ELECTROLIFY</span>
+            <Link href="/" className="flex items-center gap-2">
+              <div className="relative w-7 h-7 rounded-lg bg-neutral-950 border border-orange-500/30 overflow-hidden shadow-xs flex items-center justify-center shrink-0">
+                <Image
+                  src="/logo-icon.png"
+                  alt="Electrolify Logo"
+                  width={28}
+                  height={28}
+                  className="w-full h-full object-cover"
+                />
+              </div>
+              <span className="font-black text-sm tracking-wider text-neutral-900">ELECTROLIFY</span>
+            </Link>
             <div className="w-10" />
           </div>
         </div>
@@ -428,9 +439,15 @@ Zəhmət olmasa sifarişimi qəbul edin və çatdırılmanı başladın.`;
             <span className="hidden xs:inline">Alış-verişə qayıt</span>
           </Link>
 
-          <Link href="/" className="flex items-center gap-1.5">
-            <div className="w-7 h-7 rounded-lg bg-neutral-950 flex items-center justify-center shadow-xs">
-              <Zap className="w-4 h-4 fill-[#FF5B00] text-[#FF5B00]" />
+          <Link href="/" className="flex items-center gap-2 group">
+            <div className="relative w-8 h-8 rounded-xl bg-neutral-950 border border-orange-500/30 overflow-hidden shadow-xs flex items-center justify-center shrink-0">
+              <Image
+                src="/logo-icon.png"
+                alt="Electrolify Logo"
+                width={32}
+                height={32}
+                className="w-full h-full object-cover"
+              />
             </div>
             <span className="font-black text-sm tracking-wider text-neutral-900">ELECTROLIFY</span>
           </Link>

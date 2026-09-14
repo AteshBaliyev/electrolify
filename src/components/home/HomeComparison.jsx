@@ -2,6 +2,7 @@
 
 import React from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 import { Check, X, ArrowRight, ShieldCheck } from 'lucide-react';
 
 export default function HomeComparison() {
@@ -79,9 +80,20 @@ export default function HomeComparison() {
 
         {/* Sağ Tərəf: Elektrolify Mətni və Düyməsi */}
         <div className="lg:col-span-5 flex flex-col items-center lg:items-start text-center lg:text-left space-y-4">
-          <h2 className="text-3xl sm:text-4xl font-black text-neutral-900 tracking-tight">
-            Elektrolify®
-          </h2>
+          <div className="flex items-center gap-3">
+            <div className="relative w-11 h-11 rounded-2xl bg-neutral-950 border border-orange-500/30 overflow-hidden shadow-lg shadow-orange-500/10 shrink-0">
+              <Image
+                src="/logo-icon.png"
+                alt="Electrolify Logo"
+                fill
+                sizes="44px"
+                className="object-cover"
+              />
+            </div>
+            <h2 className="text-3xl sm:text-4xl font-black text-neutral-900 tracking-tight">
+              Elektrolify®
+            </h2>
+          </div>
 
           <p className="text-sm sm:text-base text-neutral-600 leading-relaxed max-w-md">
             İlin Ən Böyük Endirimi Başladı! İndi sifariş edin, 50% qənaət edin və pulsuz sürətli çatdırılma əldə edin.
@@ -89,7 +101,7 @@ export default function HomeComparison() {
 
           <div className="pt-2 w-full sm:w-auto">
             <Link
-              href="/products/clarifypro-qara-noktə-təmizləyici-vakum-cihazi"
+              href="/products"
               className="w-full sm:w-auto min-h-[50px] px-8 py-3.5 rounded-2xl bg-black hover:bg-neutral-800 text-white font-black text-sm uppercase tracking-wider shadow-xl transition-all transform active:scale-95 flex items-center justify-center gap-2"
             >
               <span>Bütün Məhsullara Bax</span>

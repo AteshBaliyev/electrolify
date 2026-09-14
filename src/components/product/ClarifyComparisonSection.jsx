@@ -1,6 +1,7 @@
 'use client';
 
 import React from 'react';
+import Link from 'next/link';
 import Image from 'next/image';
 import {
   Check,
@@ -236,23 +237,42 @@ export default function ClarifyComparisonSection({ product }) {
 
           {/* Sağ Tərəf: İstifadəçinin Şəklindəki Elektrolify Mətni və Düyməsi */}
           <div className="lg:col-span-5 flex flex-col items-center lg:items-start text-center lg:text-left space-y-4">
-            <h2 className="text-3xl sm:text-4xl font-black text-neutral-900 tracking-tight">
-              Elektrolify®
-            </h2>
+            <div className="flex items-center gap-3">
+              <div className="relative w-11 h-11 rounded-2xl bg-neutral-950 border border-orange-500/30 overflow-hidden shadow-lg shadow-orange-500/10 shrink-0">
+                <Image
+                  src="/logo-icon.png"
+                  alt="Electrolify Logo"
+                  fill
+                  sizes="44px"
+                  className="object-cover"
+                />
+              </div>
+              <h2 className="text-3xl sm:text-4xl font-black text-neutral-900 tracking-tight">
+                Elektrolify®
+              </h2>
+            </div>
 
             <p className="text-sm sm:text-base text-neutral-600 leading-relaxed max-w-md">
               İlin Ən Böyük Endirimi Başladı! İndi sifariş edin, 50% qənaət edin və pulsuz sürətli çatdırılma əldə edin.
             </p>
 
-            <div className="pt-2 w-full sm:w-auto">
+            <div className="pt-2 w-full flex flex-col sm:flex-row items-center gap-2.5">
               <button
                 type="button"
                 onClick={scrollToOrder}
-                className="w-full sm:w-auto min-h-[52px] px-8 py-3.5 rounded-2xl bg-black hover:bg-neutral-800 text-white font-black text-sm uppercase tracking-wider shadow-xl transition-all transform active:scale-95 flex items-center justify-center gap-2 cursor-pointer"
+                className="w-full sm:w-auto min-h-[50px] px-6 py-3.5 rounded-2xl bg-[#FF5B00] hover:bg-[#E64D00] text-white font-black text-xs sm:text-sm uppercase tracking-wider shadow-lg shadow-[#FF5B00]/30 transition-all transform active:scale-95 flex items-center justify-center gap-2 cursor-pointer"
               >
-                <span>Bütün Məhsullara Bax / Sifariş Et</span>
-                <ArrowRight className="w-4 h-4" />
+                <Zap className="w-4 h-4 fill-white text-white" />
+                <span>Qapıda Sifariş Ver</span>
               </button>
+
+              <Link
+                href="/products"
+                className="w-full sm:w-auto min-h-[50px] px-6 py-3.5 rounded-2xl bg-black hover:bg-neutral-800 text-white font-black text-xs sm:text-sm uppercase tracking-wider shadow-xl transition-all transform active:scale-95 flex items-center justify-center gap-2 text-center"
+              >
+                <span>Bütün Məhsullara Bax</span>
+                <ArrowRight className="w-4 h-4" />
+              </Link>
             </div>
 
             <div className="flex items-center gap-2 text-[11px] text-neutral-500 pt-1">

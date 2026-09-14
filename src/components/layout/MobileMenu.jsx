@@ -40,7 +40,7 @@ export default function MobileMenu({ isOpen, onClose, searchQuery, setSearchQuer
     {
       title: 'Bütün Məhsullar',
       desc: 'Rəsmi zəmanətli mağaza seçimləri',
-      href: '/#bestsellers',
+      href: '/products',
       icon: Zap,
       badge: 'Kataloq',
       color: 'text-amber-500',
