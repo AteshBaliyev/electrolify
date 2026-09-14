@@ -191,7 +191,7 @@ export default function MobileMenu({ isOpen, onClose, searchQuery, setSearchQuer
             {/* WhatsApp ilə Birbaşa Sürətli Sifariş */}
             <div className="p-4 sm:p-5 border-t border-neutral-200 bg-neutral-50 flex flex-col gap-3 shrink-0 pb-[calc(1rem+env(safe-area-inset-bottom,0px))]">
               <a
-                href="https://wa.me/994556422545?text=Salam,%20Electrolify-dan%20sifari%C5%9F%20verm%C9%99k%20ist%C9%99yir%C9%99m"
+                href="https://wa.me/994559031176?text=Salam,%20Electrolify-dan%20sifari%C5%9F%20verm%C9%99k%20ist%C9%99yir%C9%99m"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="w-full min-h-[52px] py-3.5 px-4 rounded-2xl bg-[#25D366] hover:bg-[#20bd5a] text-white font-black text-sm uppercase tracking-wide flex items-center justify-center gap-2.5 shadow-md transition-transform active:scale-95"
@@ -201,11 +201,11 @@ export default function MobileMenu({ isOpen, onClose, searchQuery, setSearchQuer
               </a>
 
               <a
-                href="tel:+994556422545"
+                href="tel:+994559031176"
                 className="min-h-[48px] flex items-center justify-between text-xs text-neutral-700 bg-white border border-neutral-200 px-4 py-2.5 rounded-xl shadow-sm"
               >
                 <span className="flex items-center gap-2 font-bold text-neutral-900">
-                  <PhoneCall className="w-4 h-4 text-[#FF5B00]" /> 055 642 25 45
+                  <PhoneCall className="w-4 h-4 text-[#FF5B00]" /> 055 903 11 76
                 </span>
                 <span className="text-[11px] text-emerald-600 font-semibold">Hər gün: 09:00 - 22:00</span>
               </a>

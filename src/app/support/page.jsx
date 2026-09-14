@@ -43,15 +43,15 @@ export default function SupportPage() {
 
           <div className="flex items-center gap-2.5 w-full sm:w-auto">
             <a
-              href="tel:+994556422545"
+              href="tel:+994559031176"
               className="flex-1 sm:flex-initial py-2.5 px-4 rounded-xl bg-neutral-100 hover:bg-neutral-200 border border-neutral-200 text-xs font-bold text-neutral-900 flex items-center justify-center gap-2 transition-colors shadow-sm"
             >
               <PhoneCall className="w-3.5 h-3.5 text-[#FF5B00]" />
-              <span>055 642 25 45</span>
+              <span>055 903 11 76</span>
             </a>
 
             <a
-              href="https://wa.me/994556422545"
+              href="https://wa.me/994559031176"
               target="_blank"
               rel="noopener noreferrer"
               className="flex-1 sm:flex-initial py-2.5 px-4 rounded-xl bg-[#25D366] hover:bg-[#20bd5a] text-white font-black text-xs uppercase tracking-wide flex items-center justify-center gap-2 shadow-md transition-transform active:scale-95"

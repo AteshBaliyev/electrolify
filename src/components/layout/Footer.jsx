@@ -102,7 +102,7 @@ export default function Footer() {
           {/* WhatsApp ilə Birbaşa Sifariş Düyməsi */}
           <div>
             <a
-              href="https://wa.me/994556422545"
+              href="https://wa.me/994559031176"
               target="_blank"
               rel="noopener noreferrer"
               className="inline-flex items-center justify-center gap-2.5 min-h-[48px] bg-[#25D366] hover:bg-[#20bd5a] text-white font-extrabold text-xs sm:text-sm py-3 px-5 rounded-2xl shadow-md transition-all active:scale-95"
@@ -178,8 +178,8 @@ export default function Footer() {
           <ul className="flex flex-col gap-3 text-neutral-600">
             <li className="flex items-center gap-2">
               <PhoneCall className="w-4 h-4 text-[#FF5B00] shrink-0" />
-              <a href="tel:+994556422545" className="hover:text-neutral-900 transition-colors font-medium">
-                055 642 25 45
+              <a href="tel:+994559031176" className="hover:text-neutral-900 transition-colors font-medium">
+                055 903 11 76
               </a>
             </li>
             <li className="flex items-center gap-2">

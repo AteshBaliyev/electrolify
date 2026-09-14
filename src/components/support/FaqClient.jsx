@@ -69,7 +69,7 @@ const FAQ_ITEMS = [
 
       • WhatsApp Bildirişi: Sifarişinizi tamamlayan kimi sistemimiz qeyd etdiyiniz nömrəyə təsdiq mesajı və unikal sifariş kodunu göndərir.
       • Canlı Operator Zəngi: 5-10 dəqiqə ərzində satış menecerimiz sizinlə əlaqə saxlayıb çatdırılma vaxtını dəqiqləşdirir.
-      • WhatsApp Dəstək Xətti: İstənilən vaxt birbaşa 055 642 25 45 nömrəsinə yazaraq kuryerin harada olduğunu və dəqiq gəliş saatını canlı öyrənə bilərsiniz.
+      • WhatsApp Dəstək Xətti: İstənilən vaxt birbaşa 055 903 11 76 nömrəsinə yazaraq kuryerin harada olduğunu və dəqiq gəliş saatını canlı öyrənə bilərsiniz.
     `,
   },
   {
@@ -185,7 +185,7 @@ export default function FaqClient() {
                   <div className="mt-4 pt-3 border-t border-neutral-200 flex items-center justify-between text-[11px] text-neutral-500">
                     <span>Bu məlumat sizin üçün faydalı oldu?</span>
                     <a
-                      href={`https://wa.me/994556422545?text=Salam,%20"${encodeURIComponent(
+                      href={`https://wa.me/994559031176?text=Salam,%20"${encodeURIComponent(
                         item.question
                       )}"%20haqq%C4%B1nda%20əlavə%20sualım%20var.`}
                       target="_blank"

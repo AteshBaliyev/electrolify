@@ -220,7 +220,7 @@ ${itemsListText}
 
 Zəhmət olmasa sifarişimi qəbul edin və çatdırılmanı başladın.`;
 
-    const whatsappLink = `https://wa.me/994556422545?text=${encodeURIComponent(
+    const whatsappLink = `https://wa.me/994559031176?text=${encodeURIComponent(
       whatsappMessage
     )}`;
 

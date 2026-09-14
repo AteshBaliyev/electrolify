@@ -146,11 +146,11 @@ export default function Header() {
             {/* Sağ: Əlaqə və Səbət */}
             <div className="flex items-center justify-end gap-3">
               <a
-                href="tel:+994556422545"
+                href="tel:+994559031176"
                 className="hidden lg:flex items-center gap-1.5 px-3 py-2 rounded-full bg-neutral-100 hover:bg-neutral-200 border border-neutral-200 text-xs text-neutral-700 transition-colors"
               >
                 <PhoneCall className="w-3.5 h-3.5 text-[#FF5B00]" />
-                <span className="font-semibold">055 642 25 45</span>
+                <span className="font-semibold">055 903 11 76</span>
               </a>
 
               <button

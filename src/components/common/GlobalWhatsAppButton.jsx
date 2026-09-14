@@ -21,10 +21,10 @@ export default function GlobalWhatsAppButton() {
 
       {/* Əsas Floating Düymə */}
       <a
-        href="https://wa.me/994556422545"
+        href="https://wa.me/994559031176"
         target="_blank"
         rel="noopener noreferrer"
-        aria-label="WhatsApp Dəstək Xətti (055 642 25 45)"
+        aria-label="WhatsApp Dəstək Xətti (055 903 11 76)"
         className="relative w-12 h-12 sm:w-14 sm:h-14 rounded-full bg-[#25D366] hover:bg-[#20bd5a] text-white flex items-center justify-center shadow-[0_4px_24px_rgba(37,211,102,0.5)] transition-all duration-300 transform group-hover:scale-110 active:scale-95"
       >
         {/* Pulsasiya edən kənar halqa */}
