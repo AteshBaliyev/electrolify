@@ -20,6 +20,7 @@ import {
   Printer,
 } from 'lucide-react';
 import { useCart } from '@/context/CartContext';
+import { trackPurchase } from '@/lib/metaPixel';
 
 export default function CheckoutPage() {
   const { items, subtotal, subtotalNumber, isFreeShipping, hasTwoOrMoreItems, clearCart } = useCart();
@@ -181,6 +182,14 @@ export default function CheckoutPage() {
         setSubmittedDetails(orderSnapshot);
         setOrderResult(data);
         clearCart();
+
+        // Meta Pixel Purchase Hadisəsi: Sifariş uğurla tamamlandıqda (yekun məbləğ və AZN valyutası ilə)
+        trackPurchase({
+          orderId: data.shopifyOrderName || data.orderNumber || `ORD-${Date.now()}`,
+          value: totalAmount,
+          currency: 'AZN',
+          items: orderSnapshot.items,
+        });
       } else {
         setErrorMsg(data.error || 'Sifariş göndərilərkən xəta baş verdi.');
       }

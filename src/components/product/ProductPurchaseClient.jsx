@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import {
   Zap,
@@ -14,10 +14,18 @@ import {
 } from 'lucide-react';
 import { useCart } from '@/context/CartContext';
 import StickyAddToCart from '@/components/product/StickyAddToCart';
+import { trackViewContent } from '@/lib/metaPixel';
 
 export default function ProductPurchaseClient({ product }) {
   const router = useRouter();
   const { addToCart } = useCart();
+
+  // Meta Pixel ViewContent Hadisəsi: İstifadəçi məhsul səhifəsinə daxil olduqda işə düşür
+  useEffect(() => {
+    if (product) {
+      trackViewContent(product);
+    }
+  }, [product?.id, product?.handle]);
 
   const variants = product.variants?.edges?.map((e) => e.node) || [];
   const hasMultipleRealVariants =
