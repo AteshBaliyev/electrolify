@@ -15,6 +15,7 @@ import ProductTrustTicker from '@/components/product/ProductTrustTicker';
 import ProductReviews from '@/components/product/ProductReviews';
 import ProductCrossSell from '@/components/product/ProductCrossSell';
 import CustomerSalesBadge from '@/components/product/CustomerSalesBadge';
+import ClarifyComparisonSection from '@/components/product/ClarifyComparisonSection';
 
 export async function generateMetadata({ params }) {
   const handle = params?.handle || 'electrolify-pro-watch-series-9';
@@ -61,6 +62,15 @@ export default async function ProductPage({ params }) {
   const recommendedStoreProducts = (allProducts || []).filter(
     (p) => String(p.id) !== String(product.id) && p.handle !== product.handle
   );
+
+  // Clarify Pro vakum cihazı üçün xüsusi Qarşılaşdırma və Əvvəl / Sonra bölməsi
+  const isClarifyPro =
+    String(handle).toLowerCase().includes('clarify') ||
+    String(handle).toLowerCase().includes('vakum') ||
+    String(product.handle || '').toLowerCase().includes('clarify') ||
+    String(product.title || '').toLowerCase().includes('clarify') ||
+    String(product.title || '').toLowerCase().includes('vakum') ||
+    String(product.title || '').toLowerCase().includes('qara');
 
   return (
     <div className="bg-[#F8F9FA] text-neutral-900 min-h-screen pb-24 sm:pb-20">
@@ -133,6 +143,11 @@ export default async function ProductPage({ params }) {
             <ProductTrustTicker />
           </div>
         </div>
+
+        {/* Clarify Pro üçün Əvvəl / Sonra Şəkilləri və Dəqiq Qarşılaşdırma Bölməsi */}
+        {isClarifyPro && (
+          <ClarifyComparisonSection product={product} />
+        )}
 
         {/* Bununla Birlikdə Tez-tez Alınırlar (Mağazanın digər real məhsullarından ibarət dəst) */}
         <ProductCrossSell

@@ -3,6 +3,7 @@ import HeroSlider from '@/components/home/HeroSlider';
 import CategoryCircles from '@/components/home/CategoryCircles';
 import FlashSales from '@/components/home/FlashSales';
 import BestsellersGrid from '@/components/home/BestsellersGrid';
+import HomeComparison from '@/components/home/HomeComparison';
 import { getProducts, MOCK_PRODUCTS } from '@/lib/shopify';
 
 export const metadata = {
@@ -36,6 +37,9 @@ export default async function HomePage() {
 
         {/* 4. 'Çox Satanlar' Grid-i - Mobildə 2-li Grid */}
         <BestsellersGrid products={products} />
+
+        {/* 5. Sayt Üzrə Qarşılaşdırma Cədvəli və Elektrolify Xüsusi Endirim Bloku */}
+        <HomeComparison />
       </div>
     </div>
   );
