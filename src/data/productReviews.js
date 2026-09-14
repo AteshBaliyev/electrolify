@@ -145,7 +145,7 @@ export const REVIEWS_BY_PRODUCT = {
       date: '11 gün əvvəl',
       rating: 5,
       title: 'Şəkiyə sürətli çatdırılma oldu, məhsul orijinaldır',
-      comment: 'Qutunun üstündə hologram zəmanət nişanı var idi. Dərhal yoxladım, 5 fərqli ucluq var, hərəsi bir nahiyə üçündür.',
+      comment: 'Qutunun üstündə hologram zəmanət nişanı var idi. Dərhal yoxladım, 3 fərqli ucluq var, hərəsi bir nahiyə üçündür.',
       verified: true,
       helpful: 13,
       avatarColor: 'bg-violet-500',

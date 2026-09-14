@@ -33,7 +33,7 @@ export default function ClarifyComparisonSection({ product }) {
       others: false,
     },
     {
-      feature: 'Fərqli Bölgələri Üçün 6 Ucluq',
+      feature: 'Fərqli Bölgələr Üçün 3 Ucluq',
       clarify: true,
       others: false,
     },
@@ -136,7 +136,7 @@ export default function ClarifyComparisonSection({ product }) {
                   Kök Salmış Qara Nöqtələrin və Yağın Çıxarılması
                 </h3>
                 <p className="text-xs text-neutral-500 mt-1.5 leading-relaxed">
-                  Əllə sıxmağa və qızartılara son qoyun! 6 fərqli ucluq sayəsində dərinin ən dar nöqtələrində belə zərərsiz nəticə.
+                  Əllə sıxmağa və qızartılara son qoyun! 3 fərqli ucluq sayəsində dərinin ən dar nöqtələrində belə zərərsiz nəticə.
                 </p>
               </div>
 
@@ -163,15 +163,15 @@ export default function ClarifyComparisonSection({ product }) {
             </span>
           </div>
           <div className="p-3 rounded-xl bg-neutral-50 border border-neutral-200/80">
-            <span className="block text-2xl font-black text-emerald-600 font-mono">6 Ucluq</span>
+            <span className="block text-2xl font-black text-emerald-600 font-mono">3 Ucluq</span>
             <span className="text-xs text-neutral-600 font-medium mt-0.5 block">
-              Hər üz zonası üçün xüsusi başlıq
+              Hər üz nahiyəsi üçün 3 xüsusi başlıq
             </span>
           </div>
           <div className="p-3 rounded-xl bg-neutral-50 border border-neutral-200/80">
-            <span className="block text-2xl font-black text-blue-600 font-mono">10 000+</span>
+            <span className="block text-2xl font-black text-blue-600 font-mono">1200+</span>
             <span className="text-xs text-neutral-600 font-medium mt-0.5 block">
-              Məmnun alıcı Azərbaycanda
+              Məmnun Müştəri Azərbaycanda
             </span>
           </div>
         </div>

@@ -80,7 +80,7 @@ export default function ProductCard({ product, badge = null, discount = null }) 
               ))}
             </div>
             <span className="text-[10px] sm:text-[11px] font-bold text-neutral-900">4.9</span>
-            <span className="text-[9px] sm:text-[10px] text-neutral-500">(184)</span>
+            <span className="text-[9px] sm:text-[10px] text-neutral-500">(240)</span>
           </div>
 
           {/* Başlıq */}

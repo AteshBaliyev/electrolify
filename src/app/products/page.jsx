@@ -3,10 +3,6 @@ import Link from 'next/link';
 import {
   ChevronRight,
   Sparkles,
-  Truck,
-  ShieldCheck,
-  ShoppingBag,
-  SlidersHorizontal,
 } from 'lucide-react';
 import { getProducts, MOCK_PRODUCTS } from '@/lib/shopify';
 import ProductCard from '@/components/home/ProductCard';
@@ -126,39 +122,6 @@ export default async function AllProductsPage() {
             </Link>
           </div>
         )}
-
-        {/* 4. Alt Zəmanət Zolağı */}
-        <div className="mt-10 p-5 rounded-3xl bg-white border border-neutral-200 grid grid-cols-1 sm:grid-cols-3 gap-4 text-xs text-neutral-600">
-          <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-xl bg-orange-50 text-[#FF5B00] flex items-center justify-center shrink-0">
-              <Truck className="w-5 h-5" />
-            </div>
-            <div>
-              <strong className="block text-neutral-900 font-bold">24 Saatda Çatdırılma</strong>
-              <span className="text-[11px] text-neutral-500">Bakı və rayonlara sürətli çatdırılma</span>
-            </div>
-          </div>
-
-          <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-xl bg-emerald-50 text-[#10B981] flex items-center justify-center shrink-0">
-              <ShieldCheck className="w-5 h-5" />
-            </div>
-            <div>
-              <strong className="block text-neutral-900 font-bold">100% Orijinal Məhsul</strong>
-              <span className="text-[11px] text-neutral-500">Rəsmi fabrik zəmanəti</span>
-            </div>
-          </div>
-
-          <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-xl bg-blue-50 text-blue-600 flex items-center justify-center shrink-0">
-              <Sparkles className="w-5 h-5" />
-            </div>
-            <div>
-              <strong className="block text-neutral-900 font-bold">Qapıda Ödəniş</strong>
-              <span className="text-[11px] text-neutral-500">Məhsulu yoxlayıb yerində ödəyin</span>
-            </div>
-          </div>
-        </div>
       </div>
     </div>
   );

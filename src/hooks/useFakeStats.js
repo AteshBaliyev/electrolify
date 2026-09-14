@@ -25,7 +25,7 @@ export function useFakeStats({ productId = '', liveViewers = true } = {}) {
     soldLast24Hours: 37,
     stockLeft: 4,
     rating: 4.9,
-    reviewsCount: 184,
+    reviewsCount: 240,
   });
 
   // Təsadüfi aralıq köməkçisi

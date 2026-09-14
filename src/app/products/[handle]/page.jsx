@@ -115,7 +115,7 @@ export default async function ProductPage({ params }) {
                     ))}
                   </div>
                   <span className="font-black text-neutral-900">4.9</span>
-                  <span className="text-neutral-500 text-[11px]">(184 təsdiqlənmiş rəy)</span>
+                  <span className="text-neutral-500 text-[11px]">(240 təsdiqlənmiş rəy)</span>
                 </div>
               </div>
 

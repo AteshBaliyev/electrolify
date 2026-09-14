@@ -391,7 +391,7 @@ export const MOCK_PRODUCTS = [
     title: 'ClarifyPro - Qara Nöktə Təmizləyici Vakum Cihazı',
     handle: 'clarifypro-qara-noktə-təmizləyici-vakum-cihazi',
     description:
-      'Dəridəki qara nöqtələri, məsamələri və artıq yağı dərini zədələmədən dərindən təmizləyən 3 rejimli güclü vakum cihazı. Dəyişdirilə bilən xüsusi başlıqlar və uzunömürlü akkumulyator ilə ev şəraitində peşəkar dəri qulluğu.',
+      'Dəridəki qara nöqtələri, məsamələri və artıq yağı dərini zədələmədən dərindən təmizləyən 3 rejimli güclü vakum cihazı. Dəyişdirilə bilən 3 xüsusi ucluq və uzunömürlü akkumulyator ilə ev şəraitində peşəkar dəri qulluğu.',
     availableForSale: true,
     priceRange: {
       minVariantPrice: { amount: '24.99', currencyCode: 'AZN' },

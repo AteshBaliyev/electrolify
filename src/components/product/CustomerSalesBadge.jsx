@@ -12,19 +12,19 @@ export default function CustomerSalesBadge({ product, className = '' }) {
   const title = (product?.title || '').toLowerCase();
 
   // Məhsula uyğun real və sabit statistika
-  let satisfiedCount = 764;
+  let satisfiedCount = '1200+';
   let ordersLast24h = 19;
 
   if (handle.includes('clarify') || title.includes('vakum') || title.includes('clarify')) {
-    satisfiedCount = 764;
+    satisfiedCount = '1200+';
     ordersLast24h = 19;
   } else if (handle.includes('isti') || title.includes('masaj') || handle.includes('masaj')) {
-    satisfiedCount = 892;
+    satisfiedCount = '890+';
     ordersLast24h = 24;
   } else {
     // Gələcəkdə əlavə edilən digər Shopify məhsulları üçün deterministik real rəqəmlər
     const seed = (handle || title || 'product').split('').reduce((acc, c) => acc + c.charCodeAt(0), 0);
-    satisfiedCount = 650 + (seed % 280);
+    satisfiedCount = `${650 + (seed % 280)}+`;
     ordersLast24h = 15 + (seed % 16);
   }
 

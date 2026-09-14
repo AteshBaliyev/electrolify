@@ -13,7 +13,7 @@ export default function HomeComparison() {
       others: false,
     },
     {
-      feature: 'Fərqli Bölgələri Üçün 6 Ucluq',
+      feature: 'Fərqli Bölgələr Üçün 3 Ucluq',
       clarify: true,
       others: false,
     },
