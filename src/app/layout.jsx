@@ -1,10 +1,6 @@
 import './globals.css';
 import { CartProvider } from '@/context/CartContext';
-import AnnouncementBar from '@/components/layout/AnnouncementBar';
-import Header from '@/components/layout/Header';
-import Footer from '@/components/layout/Footer';
-import CartDrawer from '@/components/cart/CartDrawer';
-import GlobalWhatsAppButton from '@/components/common/GlobalWhatsAppButton';
+import AppLayout from '@/components/layout/AppLayout';
 
 export const metadata = {
   metadataBase: new URL('https://electrolify.com'),
@@ -39,12 +35,7 @@ export default function RootLayout({ children }) {
     <html lang="az">
       <body className="min-h-screen bg-[#F8F9FA] text-neutral-900 selection:bg-[#FF5B00] selection:text-white flex flex-col">
         <CartProvider>
-          <AnnouncementBar />
-          <Header />
-          <main className="flex-1">{children}</main>
-          <Footer />
-          <CartDrawer />
-          <GlobalWhatsAppButton />
+          <AppLayout>{children}</AppLayout>
         </CartProvider>
       </body>
     </html>
