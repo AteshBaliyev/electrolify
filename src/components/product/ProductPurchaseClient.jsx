@@ -14,6 +14,7 @@ import {
 } from 'lucide-react';
 import { useCart } from '@/context/CartContext';
 import StickyAddToCart from '@/components/product/StickyAddToCart';
+import CustomerSalesBadge from '@/components/product/CustomerSalesBadge';
 import { trackViewContent } from '@/lib/metaPixel';
 
 export default function ProductPurchaseClient({ product }) {
@@ -47,7 +48,15 @@ export default function ProductPurchaseClient({ product }) {
       ? Math.round(((Number(comparePrice) - Number(currentPrice)) / Number(comparePrice)) * 100)
       : null;
 
-  const handleOrderNow = (e) => {
+  // 1. "İndi Al, Qapıda Ödə": Birbaşa Checkout Form Səhifəsinə aparır
+  const handleBuyNow = (e) => {
+    e?.preventDefault?.();
+    addToCart(product, selectedVariant, quantity, false);
+    router.push('/checkout');
+  };
+
+  // 2. "Səbətə Əlavə Et": Səbətə atır və Səbət Paneli (Drawer) açılır
+  const handleAddToCart = (e) => {
     e?.preventDefault?.();
     addToCart(product, selectedVariant, quantity, true);
   };
@@ -58,9 +67,8 @@ export default function ProductPurchaseClient({ product }) {
       <StickyAddToCart
         product={product}
         selectedVariant={selectedVariant}
-        onOrderClick={() => {
-          addToCart(product, selectedVariant, quantity, true);
-        }}
+        onOrderClick={handleBuyNow}
+        onAddToCartClick={handleAddToCart}
       />
 
       {/* Dinamik Qiymət Bloku */}
@@ -215,38 +223,56 @@ export default function ProductPurchaseClient({ product }) {
         </div>
       </div>
 
-      {/* SİFARİŞ DÜYMƏSİ (Say seçici və Böyük Əsas Düymə) */}
-      <div className="flex items-center gap-2">
-        <div className="flex items-center bg-white border border-neutral-200 shadow-sm rounded-2xl p-1 shrink-0 h-[52px]">
+      {/* SİFARİŞ DÜYMƏLƏRİ VƏ MƏMNUN MÜŞTƏRİ BLOKU */}
+      <div className="flex flex-col gap-2.5">
+        {/* Say seçici və Əsas "İNDİ AL, QAPIDA ÖDƏ" Düyməsi */}
+        <div className="flex items-center gap-2">
+          <div className="flex items-center bg-white border border-neutral-200 shadow-sm rounded-2xl p-1 shrink-0 h-[52px]">
+            <button
+              type="button"
+              onClick={() => setQuantity((q) => Math.max(1, q - 1))}
+              className="w-10 h-10 rounded-xl bg-neutral-100 hover:bg-neutral-200 text-neutral-800 flex items-center justify-center transition-colors active:scale-95 cursor-pointer"
+              aria-label="Sayı azalt"
+            >
+              <Minus className="w-4 h-4" />
+            </button>
+            <span className="w-10 text-center text-sm font-black text-neutral-900">
+              {quantity}
+            </span>
+            <button
+              type="button"
+              onClick={() => setQuantity((q) => q + 1)}
+              className="w-10 h-10 rounded-xl bg-neutral-100 hover:bg-neutral-200 text-neutral-800 flex items-center justify-center transition-colors active:scale-95 cursor-pointer"
+              aria-label="Sayı artır"
+            >
+              <Plus className="w-4 h-4" />
+            </button>
+          </div>
+
           <button
+            id="main-order-button"
             type="button"
-            onClick={() => setQuantity((q) => Math.max(1, q - 1))}
-            className="w-10 h-10 rounded-xl bg-neutral-100 hover:bg-neutral-200 text-neutral-800 flex items-center justify-center transition-colors active:scale-95 cursor-pointer"
-            aria-label="Sayı azalt"
+            onClick={handleBuyNow}
+            className="flex-1 min-h-[52px] py-3.5 px-4 rounded-2xl bg-[#FF5B00] hover:bg-[#E64D00] text-white font-black text-sm sm:text-base tracking-wide uppercase flex items-center justify-center gap-2 shadow-xl shadow-[#FF5B00]/30 transition-all active:scale-[0.98] glow-orange cursor-pointer"
           >
-            <Minus className="w-4 h-4" />
-          </button>
-          <span className="w-10 text-center text-sm font-black text-neutral-900">
-            {quantity}
-          </span>
-          <button
-            type="button"
-            onClick={() => setQuantity((q) => q + 1)}
-            className="w-10 h-10 rounded-xl bg-neutral-100 hover:bg-neutral-200 text-neutral-800 flex items-center justify-center transition-colors active:scale-95 cursor-pointer"
-            aria-label="Sayı artır"
-          >
-            <Plus className="w-4 h-4" />
+            <Zap className="w-5 h-5 fill-white text-white shrink-0" />
+            <span>İNDİ AL, QAPIDA ÖDƏ</span>
+            <ArrowRight className="w-4 h-4 shrink-0 text-white" />
           </button>
         </div>
 
+        {/* Məmnun Müştəri Sayı Nişanı */}
+        <CustomerSalesBadge product={product} className="w-full justify-start sm:justify-start" />
+
+        {/* Səbətə Əlavə Et Düyməsi (Sifariş Butonu ilə Məmnun Müştəri Sayının Altında) */}
         <button
-          id="main-order-button"
-          onClick={handleOrderNow}
-          className="flex-1 min-h-[52px] py-3.5 px-4 rounded-2xl bg-[#FF5B00] hover:bg-[#E64D00] text-white font-black text-sm sm:text-base tracking-wide uppercase flex items-center justify-center gap-2 shadow-xl shadow-[#FF5B00]/30 transition-all active:scale-[0.98] glow-orange cursor-pointer"
+          id="add-to-cart-button"
+          type="button"
+          onClick={handleAddToCart}
+          className="w-full min-h-[50px] py-3 px-4 rounded-2xl bg-white hover:bg-neutral-900 text-neutral-900 hover:text-white border-2 border-neutral-900 font-black text-sm sm:text-base tracking-wide uppercase flex items-center justify-center gap-2.5 shadow-sm transition-all active:scale-[0.98] cursor-pointer group"
         >
-          <Zap className="w-5 h-5 fill-white text-white shrink-0" />
-          <span>İNDİ SİFARİŞ VER</span>
-          <ArrowRight className="w-4 h-4 shrink-0 text-white" />
+          <ShoppingBag className="w-5 h-5 text-neutral-900 group-hover:text-white transition-colors shrink-0" />
+          <span>SƏBƏTƏ ƏLAVƏ ET</span>
         </button>
       </div>
 

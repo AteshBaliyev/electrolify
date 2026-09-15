@@ -16,7 +16,7 @@ const SLIDES = [
     comparePrice: '49.00 AZN',
     link: '/products/clarifypro-qara-noktə-təmizləyici-vakum-cihazi',
     image: 'https://cdn.shopify.com/s/files/1/0852/9418/6752/files/ChatGPTImage26Agu202603_24_34.png?v=1787700289',
-    ctaText: 'İndi Sifariş Et',
+    ctaText: 'İndi Al, Qapıda Ödə',
     bgGradient: 'from-orange-50 via-white to-amber-50/50',
   },
   {
@@ -63,7 +63,7 @@ export default function HeroSlider({ products = [] }) {
           comparePrice: comparePrice ? `${comparePrice} AZN` : null,
           link: `/products/${encodeURIComponent(prod.handle)}`,
           image: imgUrl,
-          ctaText: 'İndi Sifariş Et',
+          ctaText: 'İndi Al, Qapıda Ödə',
           bgGradient: gradients[index % gradients.length],
         };
       });

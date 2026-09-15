@@ -3,7 +3,7 @@
 import React, { useMemo } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
-import { Zap, Eye } from 'lucide-react';
+import { Zap, Eye, ShoppingBag } from 'lucide-react';
 import { useCart } from '@/context/CartContext';
 import { CROSS_SELL_PRODUCTS } from '@/data/crossSellProducts';
 
@@ -181,8 +181,8 @@ export default function ProductCrossSell({
                     onClick={() => handleOrderProduct(cross)}
                     className="min-h-[42px] px-3 py-2 rounded-xl bg-[#FF5B00] hover:bg-[#E64D00] text-white text-xs font-black uppercase tracking-wider flex items-center justify-center gap-1.5 shadow-md shadow-[#FF5B00]/25 transition-all active:scale-95 cursor-pointer text-center"
                   >
-                    <Zap className="w-3.5 h-3.5 fill-white text-white" />
-                    <span>Sifariş Ver</span>
+                    <ShoppingBag className="w-3.5 h-3.5" />
+                    <span>Səbətə At</span>
                   </button>
                 </div>
               </div>

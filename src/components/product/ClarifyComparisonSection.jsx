@@ -263,7 +263,7 @@ export default function ClarifyComparisonSection({ product }) {
                 className="w-full sm:w-auto min-h-[50px] px-6 py-3.5 rounded-2xl bg-[#FF5B00] hover:bg-[#E64D00] text-white font-black text-xs sm:text-sm uppercase tracking-wider shadow-lg shadow-[#FF5B00]/30 transition-all transform active:scale-95 flex items-center justify-center gap-2 cursor-pointer"
               >
                 <Zap className="w-4 h-4 fill-white text-white" />
-                <span>Qapıda Sifariş Ver</span>
+                <span>İndi Al, Qapıda Ödə</span>
               </button>
 
               <Link
