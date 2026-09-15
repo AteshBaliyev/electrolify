@@ -261,10 +261,7 @@ export default function ProductPurchaseClient({ product }) {
           </button>
         </div>
 
-        {/* Məmnun Müştəri Sayı Nişanı */}
-        <CustomerSalesBadge product={product} className="w-full justify-start sm:justify-start" />
-
-        {/* Səbətə Əlavə Et Düyməsi (Sifariş Butonu ilə Məmnun Müştəri Sayının Altında) */}
+        {/* Səbətə Əlavə Et Düyməsi (İndi Al Qapıda Ödə-nin Tam Altında) */}
         <button
           id="add-to-cart-button"
           type="button"
@@ -274,6 +271,9 @@ export default function ProductPurchaseClient({ product }) {
           <ShoppingBag className="w-5 h-5 text-neutral-900 group-hover:text-white transition-colors shrink-0" />
           <span>SƏBƏTƏ ƏLAVƏ ET</span>
         </button>
+
+        {/* Məmnun Müştəri Sayı Nişanı */}
+        <CustomerSalesBadge product={product} className="w-full justify-start sm:justify-start" />
       </div>
 
       {/* Sürətli Qapıda Sifariş Təsdiq Modalı (Saf CSS ilə) */}
