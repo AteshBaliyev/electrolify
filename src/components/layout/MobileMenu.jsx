@@ -12,6 +12,7 @@ import {
 } from 'lucide-react';
 import Link from 'next/link';
 import Image from 'next/image';
+import SearchDropdown from './SearchDropdown';
 
 export default function MobileMenu({ isOpen, onClose, searchQuery, setSearchQuery, handleSearch }) {
   const categories = [
@@ -108,10 +109,31 @@ export default function MobileMenu({ isOpen, onClose, searchQuery, setSearchQuer
                   placeholder="Məhsul və ya model axtar..."
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
-                  className="w-full bg-neutral-100 border border-neutral-200 focus:border-[#FF5B00] focus:bg-white rounded-xl min-h-[48px] py-3 pl-11 pr-4 text-base text-neutral-900 placeholder-neutral-500 focus:outline-none transition-colors"
+                  className="w-full bg-neutral-100 border border-neutral-200 focus:border-[#FF5B00] focus:bg-white rounded-xl min-h-[48px] py-3 pl-11 pr-10 text-base text-neutral-900 placeholder-neutral-500 focus:outline-none transition-colors"
                 />
                 <Search className="w-5 h-5 text-neutral-400 absolute left-3.5 top-1/2 -translate-y-1/2" />
+                {searchQuery && (
+                  <button
+                    type="button"
+                    onClick={() => setSearchQuery('')}
+                    className="absolute right-3.5 top-1/2 -translate-y-1/2 min-w-[36px] min-h-[36px] flex items-center justify-center text-neutral-400 p-1"
+                  >
+                    <X className="w-4 h-4" />
+                  </button>
+                )}
               </form>
+
+              {/* Axtarış Nəticələri */}
+              {searchQuery && searchQuery.trim().length > 0 && (
+                <div className="mt-3">
+                  <SearchDropdown
+                    query={searchQuery}
+                    isOpen={true}
+                    onClose={onClose}
+                    className="static w-full shadow-sm border border-neutral-200"
+                  />
+                </div>
+              )}
             </div>
 
             {/* Kateqoriyalar Siyahısı */}

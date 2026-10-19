@@ -5,6 +5,7 @@ import {
   ShoppingBag,
 } from 'lucide-react';
 import { getProducts, MOCK_PRODUCTS } from '@/lib/shopify';
+import { searchStoreProducts } from '@/lib/searchHelper';
 import ProductCard from '@/components/home/ProductCard';
 
 export const metadata = {
@@ -13,7 +14,8 @@ export const metadata = {
     'Electrolify mağazasının bütün məhsul kataloqu. Dəri qulluğu vakum cihazları, masaj alətləri və ağıllı qadcetlər. 24 saatda sürətli çatdırılma və qapıda ödəniş.',
 };
 
-export default async function AllProductsPage() {
+export default async function AllProductsPage({ searchParams }) {
+  const query = (searchParams?.q || searchParams?.search || '').trim();
   let products = MOCK_PRODUCTS;
 
   try {
@@ -24,6 +26,8 @@ export default async function AllProductsPage() {
   } catch (err) {
     console.warn('[AllProductsPage]: Fallback məhsulları istifadə edildi', err);
   }
+
+  const displayProducts = query ? searchStoreProducts(query, products) : products;
 
   return (
     <div className="bg-[#F8F9FA] text-neutral-900 min-h-screen py-6 sm:py-10">
@@ -81,12 +85,32 @@ export default async function AllProductsPage() {
               🔥 Günün Fürsətləri
             </Link>
           </div>
+
+          {/* Əgər Axtarış Edilibsə: Axtarış Bildirişi */}
+          {query && (
+            <div className="mt-4 p-3 rounded-2xl bg-orange-50 border border-orange-200 flex flex-col sm:flex-row sm:items-center justify-between gap-2.5 text-xs">
+              <div className="flex items-center gap-2">
+                <span className="font-bold text-neutral-900">
+                  Axtarış sorğusu: <span className="text-[#FF5B00]">"{query}"</span>
+                </span>
+                <span className="text-neutral-500">
+                  ({displayProducts.length} məhsul tapıldı)
+                </span>
+              </div>
+              <Link
+                href="/products"
+                className="px-3 py-1.5 rounded-xl bg-white border border-neutral-200 text-neutral-800 font-bold hover:bg-neutral-50 transition-colors self-start sm:self-auto text-center"
+              >
+                Filtri Təmizlə ✕
+              </Link>
+            </div>
+          )}
         </div>
 
         {/* 3. Məhsul Şəbəkəsi (Mobildə 2-li Grid, Desktopda 4-lü Grid) */}
-        {products && products.length > 0 ? (
+        {displayProducts && displayProducts.length > 0 ? (
           <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2.5 sm:gap-4 md:gap-5">
-            {products.map((prod, idx) => (
+            {displayProducts.map((prod, idx) => (
               <ProductCard
                 key={prod.id}
                 product={prod}
@@ -100,13 +124,19 @@ export default async function AllProductsPage() {
             <div className="w-14 h-14 rounded-2xl bg-orange-50 text-[#FF5B00] flex items-center justify-center mx-auto mb-3">
               <ShoppingBag className="w-7 h-7" />
             </div>
-            <h3 className="text-lg font-bold text-neutral-900">Hazırda məhsul tapılmadı</h3>
-            <p className="text-xs text-neutral-500 mt-1">Zəhmət olmasa bir az sonra yenidən yoxlayın.</p>
+            <h3 className="text-lg font-bold text-neutral-900">
+              {query ? `"${query}" üzrə heç bir məhsul tapılmadı` : 'Hazırda məhsul tapılmadı'}
+            </h3>
+            <p className="text-xs text-neutral-500 mt-1">
+              {query
+                ? 'Fərqli sözlərlə (məsələn: Clarify, İstiƏl, Lumify) axtarmağı yoxlayın.'
+                : 'Zəhmət olmasa bir az sonra yenidən yoxlayın.'}
+            </p>
             <Link
-              href="/"
+              href="/products"
               className="mt-4 inline-flex items-center justify-center py-2.5 px-6 rounded-xl bg-[#FF5B00] hover:bg-[#E64D00] text-white font-black text-xs uppercase tracking-wider transition-colors"
             >
-              Ana Səhifəyə Qayıt
+              Bütün Məhsulları Göstər
             </Link>
           </div>
         )}

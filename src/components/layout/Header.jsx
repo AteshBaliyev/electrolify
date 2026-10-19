@@ -1,8 +1,9 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
+import { useRouter } from 'next/navigation';
 import {
   Zap,
   Search,
@@ -13,23 +14,61 @@ import {
   Sparkles,
 } from 'lucide-react';
 import MobileMenu from './MobileMenu';
+import SearchDropdown from './SearchDropdown';
+import { findBestMatchProduct } from '@/lib/searchHelper';
 import { useCart } from '@/context/CartContext';
 
 export default function Header() {
+  const router = useRouter();
   const { totalCount, openCart } = useCart();
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isMobileSearchOpen, setIsMobileSearchOpen] = useState(false);
+  const [isDesktopSearchOpen, setIsDesktopSearchOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
 
+  const desktopSearchRef = useRef(null);
+
+  // Kənara kliklədikdə axtarış pəncərəsini bağla
+  useEffect(() => {
+    function handleClickOutside(event) {
+      if (
+        desktopSearchRef.current &&
+        !desktopSearchRef.current.contains(event.target)
+      ) {
+        setIsDesktopSearchOpen(false);
+      }
+    }
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, []);
+
   const handleSearch = (e) => {
-    e.preventDefault();
-    if (!searchQuery.trim()) return;
-    // Gələcək mərhələdə axtarış səhifəsinə yönləndirmə
-    console.log('Axtarış sorğusu:', searchQuery);
+    if (e && e.preventDefault) e.preventDefault();
+    const query = searchQuery.trim();
+
+    setIsDesktopSearchOpen(false);
+    setIsMobileSearchOpen(false);
+    setIsMobileMenuOpen(false);
+
+    if (!query) {
+      router.push('/products');
+      return;
+    }
+
+    // Ən uyğun məhsulu tapıb birbaşa həmin məhsul səhifəsinə yönləndir
+    const bestMatch = findBestMatchProduct(query);
+    if (bestMatch?.handle) {
+      router.push(`/products/${bestMatch.handle}`);
+    } else {
+      router.push(`/products?q=${encodeURIComponent(query)}`);
+    }
   };
 
   const clearSearch = () => {
     setSearchQuery('');
+    setIsDesktopSearchOpen(false);
   };
 
   return (
@@ -97,13 +136,17 @@ export default function Header() {
           {/* Yuxarı Sətir: Axtarış | TAM ORTADA LOQO VƏ AD | Əlaqə & Səbət */}
           <div className="grid grid-cols-3 items-center py-3 border-b border-neutral-100">
             {/* Sol: Axtarış Çubuğu */}
-            <div className="flex items-center justify-start max-w-xs">
+            <div ref={desktopSearchRef} className="flex items-center justify-start max-w-xs relative">
               <form onSubmit={handleSearch} className="relative w-full">
                 <input
                   type="text"
                   placeholder="Məhsul axtarışı..."
                   value={searchQuery}
-                  onChange={(e) => setSearchQuery(e.target.value)}
+                  onFocus={() => setIsDesktopSearchOpen(true)}
+                  onChange={(e) => {
+                    setSearchQuery(e.target.value);
+                    if (!isDesktopSearchOpen) setIsDesktopSearchOpen(true);
+                  }}
                   className="w-full bg-neutral-100 border border-neutral-200 hover:border-neutral-300 focus:border-[#FF5B00] focus:bg-white rounded-full py-2 pl-9 pr-8 text-xs text-neutral-900 placeholder-neutral-500 focus:outline-none focus:ring-1 focus:ring-[#FF5B00]/30 transition-all"
                 />
                 <Search className="w-3.5 h-3.5 text-neutral-400 absolute left-3 top-1/2 -translate-y-1/2 pointer-events-none" />
@@ -117,6 +160,14 @@ export default function Header() {
                   </button>
                 )}
               </form>
+
+              {/* Masaüstü Canlı Axtarış Nəticələri */}
+              <SearchDropdown
+                query={searchQuery}
+                isOpen={isDesktopSearchOpen}
+                onClose={() => setIsDesktopSearchOpen(false)}
+                className="top-full left-0 mt-2 w-[340px] sm:w-[380px]"
+              />
             </div>
 
             {/* Tam Ortada: Loqo və Ad (ELECTROLIFY) */}
@@ -192,11 +243,12 @@ export default function Header() {
 
         {/* Mobil Ekranlar Üçün Açılan Axtarış Paneli */}
         {isMobileSearchOpen && (
-          <div className="md:hidden px-4 py-3 bg-white border-t border-neutral-200 animate-fadeIn">
+          <div className="md:hidden px-4 py-3 bg-white border-t border-neutral-200 animate-fadeIn relative">
             <form onSubmit={handleSearch} className="relative">
               <input
                 type="text"
-                placeholder="Məhsul və ya brend axtarın..."
+                autoFocus
+                placeholder="Məhsul və ya model axtarın..."
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
                 className="w-full bg-neutral-100 border border-neutral-200 focus:border-[#FF5B00] focus:bg-white rounded-xl py-3 pl-10 pr-9 text-xs text-neutral-900 placeholder-neutral-500 focus:outline-none"
@@ -212,6 +264,14 @@ export default function Header() {
                 </button>
               )}
             </form>
+
+            {/* Mobil Açılan Axtarış Nəticələri */}
+            <SearchDropdown
+              query={searchQuery}
+              isOpen={true}
+              onClose={() => setIsMobileSearchOpen(false)}
+              className="top-full left-4 right-4 mt-2"
+            />
           </div>
         )}
       </header>
