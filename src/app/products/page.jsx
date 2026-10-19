@@ -2,7 +2,7 @@ import React from 'react';
 import Link from 'next/link';
 import {
   ChevronRight,
-  Sparkles,
+  ShoppingBag,
 } from 'lucide-react';
 import { getProducts, MOCK_PRODUCTS } from '@/lib/shopify';
 import ProductCard from '@/components/home/ProductCard';
@@ -39,31 +39,13 @@ export default async function AllProductsPage() {
 
         {/* 2. Kataloq Başlığı və Təsvir */}
         <div className="bg-white border border-neutral-200 rounded-3xl p-6 sm:p-8 mb-6 sm:mb-8 shadow-xs">
-          <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
-            <div>
-              <span className="text-[11px] font-mono uppercase tracking-widest text-[#FF5B00] font-bold bg-orange-50 px-3 py-1 rounded-full border border-orange-200 inline-flex items-center gap-1.5 mb-2">
-                <Sparkles className="w-3.5 h-3.5 text-[#FF5B00]" />
-                Rəsmi Mağaza Kataloqu
-              </span>
-              <h1 className="text-2xl sm:text-4xl font-black text-neutral-900 tracking-tight">
-                Bütün Məhsullar
-              </h1>
-              <p className="text-xs sm:text-sm text-neutral-600 mt-1.5 max-w-2xl leading-relaxed">
-                Ən çox tələbat görən dəri qulluğu, vakum cihazları və ağıllı qadcetlərin tam siyahısı. Bütün sifarişlərdə qapıda ödəniş və 24 saat ərzində çatdırılma imkanı.
-              </p>
-            </div>
-
-            {/* Sayğac və Qısa Zəmanət */}
-            <div className="flex items-center gap-3 self-start md:self-center shrink-0">
-              <div className="px-4 py-2.5 rounded-2xl bg-neutral-50 border border-neutral-200 text-center">
-                <span className="block text-xl font-black text-neutral-900 font-mono">
-                  {products.length}
-                </span>
-                <span className="text-[10px] text-neutral-500 font-bold uppercase">
-                  Məhsul Mövcuddur
-                </span>
-              </div>
-            </div>
+          <div>
+            <h1 className="text-2xl sm:text-4xl font-black text-neutral-900 tracking-tight">
+              Bütün Məhsullar
+            </h1>
+            <p className="text-xs sm:text-sm text-neutral-600 mt-1.5 max-w-2xl leading-relaxed">
+              Ən çox tələbat görən dəri qulluğu, vakum cihazları və ağıllı qadcetlərin tam siyahısı. Bütün sifarişlərdə qapıda ödəniş və 24 saat ərzində çatdırılma imkanı.
+            </p>
           </div>
 
           {/* Sürətli Filter Pill-ləri */}

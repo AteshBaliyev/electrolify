@@ -4,17 +4,11 @@ import React from 'react';
 import {
   X,
   Search,
-  Watch,
-  Headphones,
-  Zap,
-  BatteryCharging,
-  Flame,
   PhoneCall,
   MessageCircle,
   Truck,
   ShieldCheck,
   ChevronRight,
-  Sparkles,
 } from 'lucide-react';
 import Link from 'next/link';
 import Image from 'next/image';
@@ -25,33 +19,25 @@ export default function MobileMenu({ isOpen, onClose, searchQuery, setSearchQuer
       title: 'Dəri Qulluğu & Vakum',
       desc: 'ClarifyPro - Qara Nöqtə Təmizləyici',
       href: '/category/deri-qullugu',
-      icon: Sparkles,
       badge: 'Hit',
-      color: 'text-[#FF5B00]',
     },
     {
       title: 'Masaj & Sağlamlıq',
       desc: 'İstiƏl - İstilikli Boyun və Çiyin Masajı',
       href: '/category/masaj',
-      icon: Flame,
       badge: 'Trend',
-      color: 'text-emerald-500',
     },
     {
       title: 'Bütün Məhsullar',
       desc: 'Rəsmi zəmanətli mağaza seçimləri',
       href: '/products',
-      icon: Zap,
       badge: 'Kataloq',
-      color: 'text-amber-500',
     },
     {
       title: 'Günün Xüsusi Fürsətləri',
       desc: 'Qapıda ödəniş və sürətli çatdırılma',
       href: '/#flashsales',
-      icon: Flame,
       badge: '🔥 Tələs',
-      color: 'text-red-500',
       highlight: true,
     },
   ];
@@ -128,62 +114,49 @@ export default function MobileMenu({ isOpen, onClose, searchQuery, setSearchQuer
                 Bütün Bölmələr
               </span>
               <div className="flex flex-col gap-2.5">
-                {categories.map((cat, idx) => {
-                  const Icon = cat.icon;
-                  return (
-                    <Link
-                      key={idx}
-                      href={cat.href}
-                      onClick={onClose}
-                      className={`min-h-[54px] flex items-center justify-between p-3.5 rounded-2xl border transition-all active:scale-[0.99] ${
-                        cat.highlight
-                          ? 'bg-red-50 border-red-200 text-red-900 shadow-sm'
-                          : 'bg-neutral-50 hover:bg-neutral-100 border-neutral-200 text-neutral-800'
-                      }`}
-                    >
-                      <div className="flex items-center gap-3.5">
-                        <div className={`p-2.5 rounded-xl bg-white shadow-sm border border-neutral-200 ${cat.color} shrink-0`}>
-                          <Icon className="w-5 h-5" />
-                        </div>
-                        <div>
-                          <div className="flex items-center gap-2">
-                            <span className="text-sm font-bold text-neutral-900">{cat.title}</span>
-                            {cat.badge && (
-                              <span
-                                className={`text-[10px] font-black px-2 py-0.5 rounded-md ${
-                                  cat.highlight
-                                    ? 'bg-red-500 text-white animate-pulse'
-                                    : 'bg-[#FF5B00]/10 text-[#FF5B00]'
-                                }`}
-                              >
-                                {cat.badge}
-                              </span>
-                            )}
-                          </div>
-                          <span className="text-xs text-neutral-500 block mt-0.5">{cat.desc}</span>
-                        </div>
+                {categories.map((cat, idx) => (
+                  <Link
+                    key={idx}
+                    href={cat.href}
+                    onClick={onClose}
+                    className={`min-h-[52px] flex items-center justify-between p-3.5 rounded-2xl border transition-all active:scale-[0.99] ${
+                      cat.highlight
+                        ? 'bg-red-50 border-red-200 text-red-900 shadow-sm'
+                        : 'bg-neutral-50 hover:bg-neutral-100 border-neutral-200 text-neutral-800'
+                    }`}
+                  >
+                    <div>
+                      <div className="flex items-center gap-2">
+                        <span className="text-sm font-bold text-neutral-900">{cat.title}</span>
+                        {cat.badge && (
+                          <span
+                            className={`text-[10px] font-black px-2 py-0.5 rounded-md ${
+                              cat.highlight
+                                ? 'bg-red-500 text-white animate-pulse'
+                                : 'bg-[#FF5B00]/10 text-[#FF5B00]'
+                            }`}
+                          >
+                            {cat.badge}
+                          </span>
+                        )}
                       </div>
-                      <ChevronRight className="w-5 h-5 text-neutral-400 shrink-0" />
-                    </Link>
-                  );
-                })}
+                      <span className="text-xs text-neutral-500 block mt-0.5">{cat.desc}</span>
+                    </div>
+                    <ChevronRight className="w-5 h-5 text-neutral-400 shrink-0 ml-3" />
+                  </Link>
+                ))}
 
                 {/* Əlavə Sürətli Keçid: FAQ və Dəstək */}
                 <Link
                   href="/support"
                   onClick={onClose}
-                  className="min-h-[54px] flex items-center justify-between p-3.5 rounded-2xl border bg-neutral-50 hover:bg-neutral-100 border-neutral-200 text-neutral-800 transition-all active:scale-[0.99]"
+                  className="min-h-[52px] flex items-center justify-between p-3.5 rounded-2xl border bg-neutral-50 hover:bg-neutral-100 border-neutral-200 text-neutral-800 transition-all active:scale-[0.99]"
                 >
-                  <div className="flex items-center gap-3.5">
-                    <div className="p-2.5 rounded-xl bg-white shadow-sm border border-neutral-200 text-blue-500 shrink-0">
-                      <ShieldCheck className="w-5 h-5" />
-                    </div>
-                    <div>
-                      <span className="text-sm font-bold text-neutral-900 block">Müştəri Dəstəyi (FAQ)</span>
-                      <span className="text-xs text-neutral-500 block mt-0.5">Çatdırılma, Qapıda Ödəniş, Zəmanət</span>
-                    </div>
+                  <div>
+                    <span className="text-sm font-bold text-neutral-900 block">Müştəri Dəstəyi (FAQ)</span>
+                    <span className="text-xs text-neutral-500 block mt-0.5">Çatdırılma, Qapıda Ödəniş, Zəmanət</span>
                   </div>
-                  <ChevronRight className="w-5 h-5 text-neutral-400 shrink-0" />
+                  <ChevronRight className="w-5 h-5 text-neutral-400 shrink-0 ml-3" />
                 </Link>
               </div>
             </div>

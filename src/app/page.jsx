@@ -1,6 +1,5 @@
 import React from 'react';
 import HeroSlider from '@/components/home/HeroSlider';
-import CategoryCircles from '@/components/home/CategoryCircles';
 import FlashSales from '@/components/home/FlashSales';
 import BestsellersGrid from '@/components/home/BestsellersGrid';
 import HomeComparison from '@/components/home/HomeComparison';
@@ -29,8 +28,6 @@ export default async function HomePage() {
         {/* 1. Ən Üstdə Slider (Hero Banner) - Kampaniyalar və Endirimlər üçün */}
         <HeroSlider products={products} />
 
-        {/* 2. Dairəvi İkonlarla 'Kateqoriyalar' */}
-        <CategoryCircles />
 
         {/* 3. 'Günün Fürsətləri' (Flash Sales) Bloku - Mobildə 2-li Grid */}
         <FlashSales products={products} />
