@@ -2,6 +2,7 @@
 
 import React, { createContext, useContext, useState, useEffect } from 'react';
 import { trackAddToCart } from '@/lib/metaPixel';
+import { trackShopifyAddToCart } from '@/lib/shopifyAnalytics';
 
 const CartContext = createContext(null);
 
@@ -91,8 +92,9 @@ export function CartProvider({ children }) {
       setIsCartOpen(true);
     }
 
-    // Meta Pixel AddToCart Hadisəsi: Səbətə atma və ya İndi Sifariş Et
+    // Meta Pixel və Shopify Analytics AddToCart Hadisəsi: Səbətə atma və ya İndi Sifariş Et
     trackAddToCart(product, quantity, variant);
+    trackShopifyAddToCart(product, quantity, variant);
   };
 
   /**
@@ -126,8 +128,9 @@ export function CartProvider({ children }) {
     });
     setIsCartOpen(true);
 
-    // Meta Pixel AddToCart Hadisəsi: Tamamlayıcı məhsul əlavəsi
+    // Meta Pixel və Shopify Analytics AddToCart Hadisəsi: Tamamlayıcı məhsul əlavəsi
     trackAddToCart(crossProduct, 1);
+    trackShopifyAddToCart(crossProduct, 1);
   };
 
   /**

@@ -21,6 +21,7 @@ import {
 } from 'lucide-react';
 import { useCart } from '@/context/CartContext';
 import { trackPurchase } from '@/lib/metaPixel';
+import { trackShopifyPurchase } from '@/lib/shopifyAnalytics';
 
 export default function CheckoutPage() {
   const { items, subtotal, subtotalNumber, isFreeShipping, hasTwoOrMoreItems, clearCart } = useCart();
@@ -178,6 +179,13 @@ export default function CheckoutPage() {
           orderId: data.shopifyOrderName || data.orderNumber || `ORD-${Date.now()}`,
           value: totalAmount,
           currency: 'AZN',
+          items: orderSnapshot.items,
+        });
+
+        // Shopify Analytics Purchase Hadisəsi: Konversiyanı Shopify Storefront Analytics-ə qeyd edir
+        trackShopifyPurchase({
+          orderNumber: data.shopifyOrderName || data.orderNumber,
+          total: totalAmount,
           items: orderSnapshot.items,
         });
       } else {

@@ -182,6 +182,12 @@ export async function createShopifyAdminOrder({
   total = 0,
   paymentType = 'Qapıda Nağd Ödəniş (COD)',
   orderNumber = '',
+  clientIp = '',
+  userAgent = '',
+  acceptLanguage = '',
+  referringSite = 'https://electrolify.com',
+  shopifySessionToken = '',
+  shopifyBuyerToken = '',
 }) {
   let token = await getShopifyAdminAccessToken();
   if (!token) {
@@ -298,6 +304,12 @@ export async function createShopifyAdminOrder({
       gateway: 'Cash on Delivery (Qapıda Nağd Ödəniş)',
       note: `Electrolify Saytından Yeni Sifariş:\nSifariş Kodu: ${orderNumber}\nMüştəri: ${customerFullName}\nTelefon: ${phone}\nŞəhər: ${city}\nPoçt: ${postalCode}\nÇatdırılma: ${shippingMethod} (${shippingFee} AZN)\nÖdəniş növü: ${paymentType}\nÜmumi Məbləğ: ${total} AZN`,
       tags: 'Electrolify, Web Sifarişi, Qapıda Ödəniş, COD',
+      note_attributes: [
+        { name: 'Kanal', value: 'Veb Sayt (electrolify.com)' },
+        ...(shopifySessionToken ? [{ name: 'Shopify Session Token', value: String(shopifySessionToken) }] : []),
+        ...(shopifyBuyerToken ? [{ name: 'Shopify Buyer Token', value: String(shopifyBuyerToken) }] : []),
+        ...(clientIp ? [{ name: 'Müştəri IP', value: String(clientIp) }] : []),
+      ],
       send_receipt: Boolean(isRealCustomerEmail),
       send_fulfillment_receipt: Boolean(isRealCustomerEmail),
     },
@@ -372,6 +384,29 @@ export async function createShopifyAdminOrder({
       console.log(
         `[Shopify Admin UĞURLU]: Sifariş Shopify-a yazıldı! Sifariş Nömrəsi: ${data.order.name}, ID: ${data.order.id}`
       );
+
+      // Sifarişi Shopify-ın rəsmi "Onlayn Mağaza" ('web') satış kanalına bağlayırıq
+      // Bu, Shopify Analytics-də Konversiya dərəcəsinin (Online store conversion rate) dəqiq hesablanmasını təmin edir
+      try {
+        await fetch(`https://${STORE_DOMAIN}/admin/api/${API_VERSION}/orders/${data.order.id}.json`, {
+          method: 'PUT',
+          headers: {
+            'Content-Type': 'application/json',
+            'X-Shopify-Access-Token': token,
+          },
+          body: JSON.stringify({
+            order: {
+              id: data.order.id,
+              source_name: 'web',
+              referring_site: referringSite || 'https://electrolify.com',
+            },
+          }),
+        });
+        console.log(`[Shopify Admin]: Sifariş ${data.order.name} Onlayn Mağaza ('web') kanalına uğurla bağlandı.`);
+      } catch (attrErr) {
+        console.warn('[Shopify Admin Web Attribution Xəbərdarlıq]:', attrErr.message);
+      }
+
       return {
         success: true,
         order: data.order,

@@ -88,6 +88,16 @@ export async function POST(request) {
     // Unikal Sifariş Kodu
     const orderNumber = `EL-${Math.floor(10000 + Math.random() * 90000)}`;
 
+    // Müştərinin şəbəkə və seans məlumatları (Shopify Analytics seanslarını və konversiyanı bağlamaq üçün)
+    const forwardedFor = request.headers.get('x-forwarded-for');
+    const realIp = request.headers.get('x-real-ip');
+    const clientIp = forwardedFor ? forwardedFor.split(',')[0].trim() : realIp || '';
+    const userAgent = request.headers.get('user-agent') || '';
+    const acceptLanguage = request.headers.get('accept-language') || 'az,en;q=0.9';
+    const referringSite = request.headers.get('referer') || 'https://electrolify.com';
+    const shopifySessionToken = request.cookies.get('_shopify_s')?.value || customer.sessionToken || '';
+    const shopifyBuyerToken = request.cookies.get('_shopify_y')?.value || customer.buyerToken || '';
+
     // Shopify Admin API inteqrasiyası (Avtomatik token yeniləmə və Shopify panelinə yazma)
     let shopifyOrderId = null;
     let shopifyOrderName = null;
@@ -101,6 +111,12 @@ export async function POST(request) {
         total,
         paymentType,
         orderNumber,
+        clientIp,
+        userAgent,
+        acceptLanguage,
+        referringSite,
+        shopifySessionToken,
+        shopifyBuyerToken,
       });
 
       if (shopifyResult.success) {

@@ -64,6 +64,94 @@ export default function RootLayout({ children }) {
             alt=""
           />
         </noscript>
+
+        {/* Shopify Storefront Analytics (Trekkie & Monorail) - Shopify Live View və Seans Sayğacı üçün */}
+        <Script
+          id="shopify-analytics-setup"
+          strategy="afterInteractive"
+          dangerouslySetInnerHTML={{
+            __html: `
+              (function() {
+                try {
+                  function genUUID() {
+                    if (typeof crypto !== 'undefined' && typeof crypto.randomUUID === 'function') {
+                      return crypto.randomUUID();
+                    }
+                    return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
+                      var r = Math.random() * 16 | 0, v = c == 'x' ? r : (r & 0x3 | 0x8);
+                      return v.toString(16);
+                    });
+                  }
+                  function getCookie(name) {
+                    var m = document.cookie.match(new RegExp('(?:^|; )' + name.replace(/([\\.$?*|{}\\(\\)\\[\\]\\\\\\/+^])/g, '\\\\$1') + '=([^;]*)'));
+                    return m ? decodeURIComponent(m[1]) : '';
+                  }
+                  function setCookie(name, val, maxAge) {
+                    document.cookie = name + '=' + encodeURIComponent(val) + '; path=/; max-age=' + maxAge + '; SameSite=Lax';
+                  }
+                  if (!getCookie('_shopify_y')) {
+                    setCookie('_shopify_y', genUUID(), 31536000);
+                  }
+                  if (!getCookie('_shopify_s')) {
+                    setCookie('_shopify_s', genUUID(), 1800);
+                  }
+
+                  window.Shopify = window.Shopify || {};
+                  window.Shopify.shop = 'zi73g2-zx.myshopify.com';
+                  window.Shopify.currency = { active: 'AZN', rate: '1.0' };
+                  window.ShopifyAnalytics = window.ShopifyAnalytics || {};
+                  window.ShopifyAnalytics.meta = window.ShopifyAnalytics.meta || {};
+                  window.ShopifyAnalytics.meta.currency = 'AZN';
+                  window.ShopifyAnalytics.merchantGoogleAnalytics = function() {};
+
+                  var trekkie = window.ShopifyAnalytics.lib = window.trekkie = window.trekkie || [];
+                  if (!trekkie.integrations) {
+                    trekkie.methods = ['identify', 'page', 'ready', 'track', 'trackForm', 'trackLink'];
+                    trekkie.factory = function(method) {
+                      return function() {
+                        var args = Array.prototype.slice.call(arguments);
+                        args.unshift(method);
+                        trekkie.push(args);
+                        return trekkie;
+                      };
+                    };
+                    for (var i = 0; i < trekkie.methods.length; i++) {
+                      var key = trekkie.methods[i];
+                      trekkie[key] = trekkie.factory(key);
+                    }
+                  }
+                  trekkie.load({
+                    "Trekkie": {
+                      "appName": "storefront",
+                      "development": false,
+                      "defaultAttributes": {
+                        "shopId": 85294186752,
+                        "isMerchantRequest": null,
+                        "themeId": 165263671552,
+                        "themeCityHash": "15481927197172546807",
+                        "contentLanguage": "az",
+                        "currency": "AZN"
+                      },
+                      "isServerSideCookieWritingEnabled": true,
+                      "monorailRegion": "shop_domain"
+                    },
+                    "Session Attribution": {}
+                  });
+                  trekkie.ready(function() {
+                    window.ShopifyAnalytics.lib = window.trekkie;
+                  });
+                } catch(e) {
+                  console.warn('[Shopify Analytics Init]', e);
+                }
+              })();
+            `,
+          }}
+        />
+        <Script
+          id="shopify-trekkie-lib"
+          strategy="afterInteractive"
+          src="https://cdn.shopify.com/s/trekkie.storefront.min.js"
+        />
       </head>
       <body className="min-h-screen bg-[#F8F9FA] text-neutral-900 selection:bg-[#FF5B00] selection:text-white flex flex-col">
         <CartProvider>

@@ -16,6 +16,7 @@ import { useCart } from '@/context/CartContext';
 import StickyAddToCart from '@/components/product/StickyAddToCart';
 import CustomerSalesBadge from '@/components/product/CustomerSalesBadge';
 import { trackViewContent } from '@/lib/metaPixel';
+import { trackShopifyViewContent } from '@/lib/shopifyAnalytics';
 import { getProductTheme } from '@/lib/productTheme';
 
 export default function ProductPurchaseClient({ product, theme }) {
@@ -23,10 +24,11 @@ export default function ProductPurchaseClient({ product, theme }) {
   const { addToCart } = useCart();
   const activeTheme = theme || getProductTheme(product);
 
-  // Meta Pixel ViewContent Hadisəsi: İstifadəçi məhsul səhifəsinə daxil olduqda işə düşür
+  // Meta Pixel və Shopify Analytics ViewContent Hadisəsi: İstifadəçi məhsul səhifəsinə daxil olduqda işə düşür
   useEffect(() => {
     if (product) {
       trackViewContent(product);
+      trackShopifyViewContent(product);
     }
   }, [product?.id, product?.handle]);
 
