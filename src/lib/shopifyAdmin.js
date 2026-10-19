@@ -193,7 +193,7 @@ export async function createShopifyAdminOrder({
   const phone = formatPhone(customer.phone);
   const city = customer.city?.trim() || 'Bakı';
   const postalCode = customer.postalCode?.trim() || 'AZ1000';
-  const fullAddress = `${city}, Poçt İndeksi: ${postalCode}`;
+  const fullAddress = customer.postalCode?.trim() ? `${city}, Poçt İndeksi: ${customer.postalCode.trim()}` : city;
   const shippingMethod = customer.shippingMethod || 'Standart Çatdırılma (Qapıda)';
 
   // YALNIZ alıcının özü real və unikal e-poçt daxil etdikdə qəbul et.

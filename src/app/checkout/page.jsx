@@ -25,12 +25,10 @@ import { trackPurchase } from '@/lib/metaPixel';
 export default function CheckoutPage() {
   const { items, subtotal, subtotalNumber, isFreeShipping, hasTwoOrMoreItems, clearCart } = useCart();
 
-  // Tələb olunan xanalar: Ad, Soyad, Mobil Nömrə, Şəhər, Poçt İndeksi (Gmail tamamilə silindi)
+  // Tələb olunan xanalar: Yalnız Ad, Mobil Nömrə, Şəhər/Rayon (Gmail, Soyad və Poçt İndeksi tamamilə silindi)
   const [firstName, setFirstName] = useState('');
-  const [lastName, setLastName] = useState('');
   const [phone, setPhone] = useState('');
   const [city, setCity] = useState('');
-  const [postalCode, setPostalCode] = useState('');
 
   // Çatdırılma seçimi: 'metro' | 'door' | 'post'
   const [shippingOption, setShippingOption] = useState('door');
@@ -118,20 +116,12 @@ export default function CheckoutPage() {
       setErrorMsg('Zəhmət olmasa adınızı daxil edin.');
       return;
     }
-    if (!lastName.trim()) {
-      setErrorMsg('Zəhmət olmasa soyadınızı daxil edin.');
-      return;
-    }
     if (!phone.trim() || phone.length < 9) {
       setErrorMsg('Zəhmət olmasa düzgün mobil telefon nömrəsi daxil edin.');
       return;
     }
     if (!city.trim()) {
       setErrorMsg('Zəhmət olmasa çatdırılma şəhərini və ya rayonunu daxil edin.');
-      return;
-    }
-    if (!postalCode.trim()) {
-      setErrorMsg('Zəhmət olmasa poçt indeksinizi daxil edin (Məsələn: AZ1000).');
       return;
     }
     if (items.length === 0) {
@@ -144,11 +134,11 @@ export default function CheckoutPage() {
     const orderSnapshot = {
       customer: {
         firstName: firstName.trim(),
-        lastName: lastName.trim(),
-        name: `${firstName.trim()} ${lastName.trim()}`,
+        lastName: '',
+        name: firstName.trim(),
         phone: phone.trim(),
         city: city.trim(),
-        postalCode: postalCode.trim(),
+        postalCode: '',
         shippingMethod: isFreeShipping ? `${shippingMethodLabel} (PULSUZ)` : shippingMethodLabel,
         paymentType,
       },
@@ -219,7 +209,7 @@ export default function CheckoutPage() {
 🧾 Sifariş Çeki: ${orderNumberDisplay}
 👤 Müştəri: ${submittedDetails.customer.name}
 📞 Telefon: ${submittedDetails.customer.phone}
-📍 Ünvan: ${submittedDetails.customer.city} (${submittedDetails.customer.postalCode})
+📍 Ünvan: ${submittedDetails.customer.city}
 🚚 Çatdırılma: ${submittedDetails.customer.shippingMethod}
 
 📦 Məhsullar:
@@ -303,7 +293,7 @@ Zəhmət olmasa sifarişimi qəbul edin və çatdırılmanı başladın.`;
             <div className="flex justify-between items-center pb-2 border-b border-dashed border-neutral-300 text-[11px]">
               <span className="text-neutral-500">Çatdırılma Ünvanı:</span>
               <span className="text-neutral-800 font-medium text-right max-w-[200px] truncate">
-                {submittedDetails.customer.city} ({submittedDetails.customer.postalCode})
+                {submittedDetails.customer.city}
               </span>
             </div>
 
@@ -511,35 +501,19 @@ Zəhmət olmasa sifarişimi qəbul edin və çatdırılmanı başladın.`;
             </div>
 
             <form id="checkout-form" onSubmit={handleSubmitOrder} className="space-y-3.5">
-              {/* Ad və Soyad */}
-              <div className="grid grid-cols-2 gap-3">
-                <div>
-                  <label className="block text-[11px] font-bold text-neutral-700 mb-1">
-                    Adınız <span className="text-[#FF5B00]">*</span>
-                  </label>
-                  <input
-                    type="text"
-                    required
-                    placeholder="Məs: Rəşad"
-                    value={firstName}
-                    onChange={(e) => setFirstName(e.target.value)}
-                    className="w-full bg-white border border-neutral-200 focus:border-[#FF5B00] focus:ring-2 focus:ring-[#FF5B00]/20 rounded-xl h-11 px-3.5 text-xs sm:text-sm text-neutral-900 placeholder-neutral-400 focus:outline-none transition-all shadow-xs"
-                  />
-                </div>
-
-                <div>
-                  <label className="block text-[11px] font-bold text-neutral-700 mb-1">
-                    Soyadınız <span className="text-[#FF5B00]">*</span>
-                  </label>
-                  <input
-                    type="text"
-                    required
-                    placeholder="Məs: Məmmədov"
-                    value={lastName}
-                    onChange={(e) => setLastName(e.target.value)}
-                    className="w-full bg-white border border-neutral-200 focus:border-[#FF5B00] focus:ring-2 focus:ring-[#FF5B00]/20 rounded-xl h-11 px-3.5 text-xs sm:text-sm text-neutral-900 placeholder-neutral-400 focus:outline-none transition-all shadow-xs"
-                  />
-                </div>
+              {/* Adınız (Soyad tamamilə silindi) */}
+              <div>
+                <label className="block text-[11px] font-bold text-neutral-700 mb-1">
+                  Adınız <span className="text-[#FF5B00]">*</span>
+                </label>
+                <input
+                  type="text"
+                  required
+                  placeholder="Məs: Rəşad"
+                  value={firstName}
+                  onChange={(e) => setFirstName(e.target.value)}
+                  className="w-full bg-white border border-neutral-200 focus:border-[#FF5B00] focus:ring-2 focus:ring-[#FF5B00]/20 rounded-xl h-11 px-3.5 text-xs sm:text-sm text-neutral-900 placeholder-neutral-400 focus:outline-none transition-all shadow-xs"
+                />
               </div>
 
               {/* Mobil Telefon Nömrəsi */}
@@ -563,40 +537,21 @@ Zəhmət olmasa sifarişimi qəbul edin və çatdırılmanı başladın.`;
                 </span>
               </div>
 
-              {/* Şəhər və Poçt İndeksi */}
-              <div className="grid grid-cols-2 gap-3">
-                <div>
-                  <label className="block text-[11px] font-bold text-neutral-700 mb-1 flex items-center justify-between">
-                    <span>Şəhər / Rayon <span className="text-[#FF5B00]">*</span></span>
-                  </label>
-                  <div className="relative">
-                    <input
-                      type="text"
-                      required
-                      placeholder="Məs: Bakı, Gəncə..."
-                      value={city}
-                      onChange={(e) => handleCityChange(e.target.value)}
-                      className="w-full bg-white border border-neutral-200 focus:border-[#FF5B00] focus:ring-2 focus:ring-[#FF5B00]/20 rounded-xl h-11 pl-3.5 pr-9 text-xs sm:text-sm text-neutral-900 placeholder-neutral-400 focus:outline-none transition-all shadow-xs"
-                    />
-                    <Building className="w-4 h-4 text-neutral-400 absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none" />
-                  </div>
-                </div>
-
-                <div>
-                  <label className="block text-[11px] font-bold text-neutral-700 mb-1">
-                    Poçt İndeksi <span className="text-[#FF5B00]">*</span>
-                  </label>
-                  <div className="relative">
-                    <input
-                      type="text"
-                      required
-                      placeholder="Məs: AZ1000"
-                      value={postalCode}
-                      onChange={(e) => setPostalCode(e.target.value)}
-                      className="w-full bg-white border border-neutral-200 focus:border-[#FF5B00] focus:ring-2 focus:ring-[#FF5B00]/20 rounded-xl h-11 pl-3.5 pr-9 text-xs sm:text-sm text-neutral-900 placeholder-neutral-400 focus:outline-none transition-all font-mono shadow-xs"
-                    />
-                    <MapPin className="w-4 h-4 text-neutral-400 absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none" />
-                  </div>
+              {/* Şəhər / Rayon (Poçt indeksi tamamilə silindi) */}
+              <div>
+                <label className="block text-[11px] font-bold text-neutral-700 mb-1 flex items-center justify-between">
+                  <span>Şəhər / Rayon <span className="text-[#FF5B00]">*</span></span>
+                </label>
+                <div className="relative">
+                  <input
+                    type="text"
+                    required
+                    placeholder="Məs: Bakı, Gəncə, Sumqayıt..."
+                    value={city}
+                    onChange={(e) => handleCityChange(e.target.value)}
+                    className="w-full bg-white border border-neutral-200 focus:border-[#FF5B00] focus:ring-2 focus:ring-[#FF5B00]/20 rounded-xl h-11 pl-3.5 pr-9 text-xs sm:text-sm text-neutral-900 placeholder-neutral-400 focus:outline-none transition-all shadow-xs"
+                  />
+                  <Building className="w-4 h-4 text-neutral-400 absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none" />
                 </div>
               </div>
 
