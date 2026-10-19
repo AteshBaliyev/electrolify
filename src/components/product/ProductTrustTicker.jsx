@@ -29,9 +29,10 @@ const TICKER_ITEMS = [
   },
 ];
 
-export default function ProductTrustTicker() {
+export default function ProductTrustTicker({ theme }) {
   // Ticker-in fasiləsiz və qüsursuz dövr etməsi üçün elementləri 2 dəfə təkrarlayırıq
   const repeatedItems = [...TICKER_ITEMS, ...TICKER_ITEMS];
+  const activeColor = theme?.primary || '#FF5B00';
 
   return (
     <div className="relative w-full overflow-hidden bg-black text-white rounded-xl py-2.5 sm:py-3 border border-neutral-800 shadow-sm my-1">
@@ -45,13 +46,18 @@ export default function ProductTrustTicker() {
           const Icon = item.icon;
           return (
             <div key={idx} className="flex items-center gap-2 whitespace-nowrap px-4">
-              <span className="p-1 rounded-md bg-[#FF5B00]/20 text-[#FF5B00] flex items-center justify-center shrink-0">
-                <Icon className="w-3.5 h-3.5 text-[#FF5B00]" />
+              <span
+                style={{ backgroundColor: `${activeColor}33`, color: activeColor }}
+                className="p-1 rounded-md flex items-center justify-center shrink-0"
+              >
+                <Icon className="w-3.5 h-3.5" style={{ color: activeColor }} />
               </span>
               <span className="text-xs sm:text-[13px] font-bold tracking-tight text-white">
                 {item.text}
               </span>
-              <span className="text-[#FF5B00] text-xs font-black ml-4 select-none">✦</span>
+              <span className="text-xs font-black ml-4 select-none" style={{ color: activeColor }}>
+                ✦
+              </span>
             </div>
           );
         })}

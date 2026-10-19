@@ -4,10 +4,13 @@ import React, { useState } from 'react';
 import Image from 'next/image';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 
-export default function ProductGallery({ images = [], title = '' }) {
+export default function ProductGallery({ images = [], title = '', theme }) {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [touchStart, setTouchStart] = useState(null);
   const [touchEnd, setTouchEnd] = useState(null);
+
+  const activeColor = theme?.primary || '#FF5B00';
+  const activeRing = theme?.ring || 'rgba(255, 91, 0, 0.3)';
 
   const imageList = images.length > 0 ? images : [
     {
@@ -94,14 +97,30 @@ export default function ProductGallery({ images = [], title = '' }) {
             <button
               onClick={handlePrev}
               aria-label="Əvvəlki şəkil"
-              className="absolute left-3 top-1/2 -translate-y-1/2 z-20 min-w-[48px] min-h-[48px] rounded-full bg-white/90 hover:bg-[#FF5B00] text-neutral-800 hover:text-white border border-neutral-200 shadow-md flex items-center justify-center backdrop-blur-md transition-all active:scale-90 cursor-pointer"
+              onMouseEnter={(e) => {
+                e.currentTarget.style.backgroundColor = activeColor;
+                e.currentTarget.style.color = '#ffffff';
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.backgroundColor = '';
+                e.currentTarget.style.color = '';
+              }}
+              className="absolute left-3 top-1/2 -translate-y-1/2 z-20 min-w-[48px] min-h-[48px] rounded-full bg-white/90 text-neutral-800 border border-neutral-200 shadow-md flex items-center justify-center backdrop-blur-md transition-all active:scale-90 cursor-pointer"
             >
               <ChevronLeft className="w-6 h-6" />
             </button>
             <button
               onClick={handleNext}
               aria-label="Növbəti şəkil"
-              className="absolute right-3 top-1/2 -translate-y-1/2 z-20 min-w-[48px] min-h-[48px] rounded-full bg-white/90 hover:bg-[#FF5B00] text-neutral-800 hover:text-white border border-neutral-200 shadow-md flex items-center justify-center backdrop-blur-md transition-all active:scale-90 cursor-pointer"
+              onMouseEnter={(e) => {
+                e.currentTarget.style.backgroundColor = activeColor;
+                e.currentTarget.style.color = '#ffffff';
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.backgroundColor = '';
+                e.currentTarget.style.color = '';
+              }}
+              className="absolute right-3 top-1/2 -translate-y-1/2 z-20 min-w-[48px] min-h-[48px] rounded-full bg-white/90 text-neutral-800 border border-neutral-200 shadow-md flex items-center justify-center backdrop-blur-md transition-all active:scale-90 cursor-pointer"
             >
               <ChevronRight className="w-6 h-6" />
             </button>
@@ -112,28 +131,39 @@ export default function ProductGallery({ images = [], title = '' }) {
       {/* Miniatürlər (Thumbnails Strip: Rahat toxunulan miniatürlər) */}
       {imageList.length > 1 && (
         <div className="flex items-center gap-2.5 overflow-x-auto pb-2 scrollbar-none touch-pan-x">
-          {imageList.map((img, idx) => (
-            <button
-              key={idx}
-              onClick={() => setCurrentIndex(idx)}
-              className={`relative min-w-[60px] min-h-[60px] w-16 h-16 md:w-20 md:h-20 rounded-2xl overflow-hidden shrink-0 border-2 transition-all p-1 bg-white cursor-pointer ${
-                currentIndex === idx
-                  ? 'border-[#FF5B00] ring-2 ring-[#FF5B00]/40 scale-105'
-                  : 'border-neutral-200 hover:border-neutral-400'
-              }`}
-            >
-              <div className="relative w-full h-full">
-                <Image
-                  src={img.node.url}
-                  alt={img.node.altText || `${title} miniatür ${idx + 1}`}
-                  fill
-                  sizes="80px"
-                  className="object-cover rounded-xl"
-                  loading="lazy"
-                />
-              </div>
-            </button>
-          ))}
+          {imageList.map((img, idx) => {
+            const isCurrent = currentIndex === idx;
+            return (
+              <button
+                key={idx}
+                onClick={() => setCurrentIndex(idx)}
+                style={
+                  isCurrent
+                    ? {
+                        borderColor: activeColor,
+                        boxShadow: `0 0 0 2px ${activeRing}`,
+                      }
+                    : {}
+                }
+                className={`relative min-w-[60px] min-h-[60px] w-16 h-16 md:w-20 md:h-20 rounded-2xl overflow-hidden shrink-0 border-2 transition-all p-1 bg-white cursor-pointer ${
+                  isCurrent
+                    ? 'scale-105'
+                    : 'border-neutral-200 hover:border-neutral-400'
+                }`}
+              >
+                <div className="relative w-full h-full">
+                  <Image
+                    src={img.node.url}
+                    alt={img.node.altText || `${title} miniatür ${idx + 1}`}
+                    fill
+                    sizes="80px"
+                    className="object-cover rounded-xl"
+                    loading="lazy"
+                  />
+                </div>
+              </button>
+            );
+          })}
         </div>
       )}
     </div>

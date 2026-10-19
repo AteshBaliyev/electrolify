@@ -7,9 +7,10 @@ import Image from 'next/image';
  * Electrolify - Real Müştəri və Son 24 Saat Sifariş Statistikası Nişanı
  * İstifadəçinin təqdim etdiyi vizual dizayna (media_1789164209399.png) 100% uyğunlaşdırılıb.
  */
-export default function CustomerSalesBadge({ product, className = '' }) {
+export default function CustomerSalesBadge({ product, className = '', theme }) {
   const handle = (product?.handle || '').toLowerCase();
   const title = (product?.title || '').toLowerCase();
+  const activeColor = theme?.primary;
 
   // Məhsula uyğun real və sabit statistika
   let satisfiedCount = '1200+';
@@ -37,6 +38,7 @@ export default function CustomerSalesBadge({ product, className = '' }) {
 
   return (
     <div
+      style={theme?.primaryBorder ? { borderColor: theme.primaryBorder } : {}}
       className={`inline-flex items-center gap-3 sm:gap-3.5 py-2 px-3 sm:py-2.5 sm:px-4 rounded-2xl bg-neutral-100/80 hover:bg-neutral-100/95 border border-neutral-200/90 shadow-xs transition-colors w-fit max-w-full ${className}`}
     >
       {/* 4 Ədəd Üst-üstə Düşən Real Müştəri Şəkilləri */}
@@ -67,7 +69,7 @@ export default function CustomerSalesBadge({ product, className = '' }) {
           </span>
         </div>
         <p className="text-[11px] sm:text-xs text-neutral-600 font-medium leading-tight mt-1">
-          Son 24 saatda <strong className="text-neutral-800 font-bold">{ordersLast24h} nəfər</strong> sifariş etdi.
+          Son 24 saatda <strong className="font-bold" style={activeColor ? { color: activeColor } : { color: '#262626' }}>{ordersLast24h} nəfər</strong> sifariş etdi.
         </p>
       </div>
     </div>

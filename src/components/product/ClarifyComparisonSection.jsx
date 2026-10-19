@@ -14,8 +14,10 @@ import {
   Clock,
   HeartHandshake,
 } from 'lucide-react';
+import { getProductTheme } from '@/lib/productTheme';
 
-export default function ClarifyComparisonSection({ product }) {
+export default function ClarifyComparisonSection({ product, theme }) {
+  const activeTheme = theme || getProductTheme(product || 'clarify');
   const scrollToOrder = (e) => {
     e.preventDefault();
     const orderBtn = document.getElementById('main-order-button') || document.getElementById('checkout-form');
@@ -56,8 +58,15 @@ export default function ClarifyComparisonSection({ product }) {
           ========================================================================= */}
       <div className="bg-white border border-neutral-200 rounded-3xl p-5 sm:p-8 md:p-10 shadow-sm">
         <div className="text-center max-w-2xl mx-auto mb-8 sm:mb-10">
-          <span className="text-[11px] font-mono uppercase tracking-widest text-[#FF5B00] font-bold bg-orange-50 px-3.5 py-1 rounded-full border border-orange-200 inline-flex items-center gap-1.5 mb-2.5">
-            <Sparkles className="w-3.5 h-3.5 text-[#FF5B00]" />
+          <span
+            className="text-[11px] font-mono uppercase tracking-widest font-bold px-3.5 py-1 rounded-full border inline-flex items-center gap-1.5 mb-2.5 transition-colors"
+            style={{
+              color: activeTheme.primary,
+              backgroundColor: activeTheme.primaryLight,
+              borderColor: activeTheme.primaryBorder,
+            }}
+          >
+            <Sparkles className="w-3.5 h-3.5" style={{ color: activeTheme.primary }} />
             Gözlə Görünən Dəri Fərqi
           </span>
           <h2 className="text-2xl sm:text-3xl font-black text-neutral-900 tracking-tight">
@@ -157,7 +166,7 @@ export default function ClarifyComparisonSection({ product }) {
         {/* 3 Əsas Sübut Göstəricisi */}
         <div className="mt-8 pt-6 border-t border-neutral-200 grid grid-cols-1 sm:grid-cols-3 gap-4 text-center">
           <div className="p-3 rounded-xl bg-neutral-50 border border-neutral-200/80">
-            <span className="block text-2xl font-black text-[#FF5B00] font-mono">98%</span>
+            <span className="block text-2xl font-black font-mono" style={{ color: activeTheme.primary }}>98%</span>
             <span className="text-xs text-neutral-600 font-medium mt-0.5 block">
               Qara nöqtələrdə dərhal azalma
             </span>
@@ -238,7 +247,10 @@ export default function ClarifyComparisonSection({ product }) {
           {/* Sağ Tərəf: İstifadəçinin Şəklindəki Elektrolify Mətni və Düyməsi */}
           <div className="lg:col-span-5 flex flex-col items-center lg:items-start text-center lg:text-left space-y-4">
             <div className="flex items-center gap-3">
-              <div className="relative w-11 h-11 rounded-2xl bg-neutral-950 border border-orange-500/30 overflow-hidden shadow-lg shadow-orange-500/10 shrink-0">
+              <div
+                className="relative w-11 h-11 rounded-2xl bg-neutral-950 border overflow-hidden shadow-lg shrink-0"
+                style={{ borderColor: `${activeTheme.primary}50` }}
+              >
                 <Image
                   src="/logo-icon.png"
                   alt="Electrolify Logo"
@@ -260,7 +272,11 @@ export default function ClarifyComparisonSection({ product }) {
               <button
                 type="button"
                 onClick={scrollToOrder}
-                className="w-full sm:w-auto min-h-[50px] px-6 py-3.5 rounded-2xl bg-[#FF5B00] hover:bg-[#E64D00] text-white font-black text-xs sm:text-sm uppercase tracking-wider shadow-lg shadow-[#FF5B00]/30 transition-all transform active:scale-95 flex items-center justify-center gap-2 cursor-pointer"
+                style={{
+                  backgroundColor: activeTheme.primary,
+                  boxShadow: `0 10px 25px -5px ${activeTheme.primaryGlow}`,
+                }}
+                className="w-full sm:w-auto min-h-[50px] px-6 py-3.5 rounded-2xl text-white font-black text-xs sm:text-sm uppercase tracking-wider transition-all transform active:scale-95 flex items-center justify-center gap-2 cursor-pointer hover:brightness-95"
               >
                 <Zap className="w-4 h-4 fill-white text-white" />
                 <span>İndi Al, Qapıda Ödə</span>

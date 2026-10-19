@@ -16,10 +16,12 @@ import { useCart } from '@/context/CartContext';
 import StickyAddToCart from '@/components/product/StickyAddToCart';
 import CustomerSalesBadge from '@/components/product/CustomerSalesBadge';
 import { trackViewContent } from '@/lib/metaPixel';
+import { getProductTheme } from '@/lib/productTheme';
 
-export default function ProductPurchaseClient({ product }) {
+export default function ProductPurchaseClient({ product, theme }) {
   const router = useRouter();
   const { addToCart } = useCart();
+  const activeTheme = theme || getProductTheme(product);
 
   // Meta Pixel ViewContent Hadisəsi: İstifadəçi məhsul səhifəsinə daxil olduqda işə düşür
   useEffect(() => {
@@ -69,12 +71,19 @@ export default function ProductPurchaseClient({ product }) {
         selectedVariant={selectedVariant}
         onOrderClick={handleBuyNow}
         onAddToCartClick={handleAddToCart}
+        theme={activeTheme}
       />
 
       {/* Dinamik Qiymət Bloku */}
-      <div className="p-3.5 sm:p-4 rounded-2xl bg-white border border-neutral-200 shadow-sm flex items-center justify-between gap-3">
+      <div
+        className="p-3.5 sm:p-4 rounded-2xl bg-white border shadow-sm flex items-center justify-between gap-3 transition-colors"
+        style={{ borderColor: activeTheme.primaryBorder || '#e5e7eb' }}
+      >
         <div className="flex items-baseline gap-2.5 flex-wrap">
-          <span className="text-3xl sm:text-4xl font-black text-[#FF5B00] tracking-tight">
+          <span
+            className="text-3xl sm:text-4xl font-black tracking-tight"
+            style={{ color: activeTheme.primary }}
+          >
             {(Number(currentPrice) * quantity).toFixed(2)} AZN
           </span>
           {comparePrice && (
@@ -89,7 +98,10 @@ export default function ProductPurchaseClient({ product }) {
           )}
         </div>
         {discountPercent && discountPercent > 0 && (
-          <span className="text-xs font-black text-white bg-[#10B981] px-2.5 py-1 rounded-lg uppercase tracking-wider shrink-0 shadow-xs">
+          <span
+            className="text-xs font-black text-white px-2.5 py-1 rounded-lg uppercase tracking-wider shrink-0 shadow-xs"
+            style={{ backgroundColor: activeTheme.primary }}
+          >
             -{discountPercent}% ENDİRİM
           </span>
         )}
@@ -100,7 +112,7 @@ export default function ProductPurchaseClient({ product }) {
         <div className="flex flex-col gap-2 p-3 rounded-2xl bg-white border border-neutral-200 shadow-sm">
           <div className="flex items-center justify-between text-xs">
             <span className="font-bold text-neutral-700">
-              Variant: <span className="text-[#FF5B00] font-black">{selectedVariant?.title}</span>
+              Variant: <span className="font-black" style={{ color: activeTheme.primary }}>{selectedVariant?.title}</span>
             </span>
             <span className="text-[#10B981] font-semibold text-[11px] flex items-center gap-1">
               <Check className="w-3 h-3" /> Stokda var
@@ -115,9 +127,18 @@ export default function ProductPurchaseClient({ product }) {
                   key={v.id}
                   type="button"
                   onClick={() => setSelectedVariant(v)}
+                  style={
+                    isSelected
+                      ? {
+                          backgroundColor: activeTheme.primary,
+                          borderColor: activeTheme.primary,
+                          color: '#ffffff',
+                        }
+                      : {}
+                  }
                   className={`min-h-[40px] px-3.5 py-1.5 rounded-xl text-xs font-bold transition-all border flex items-center gap-2 active:scale-95 cursor-pointer ${
                     isSelected
-                      ? 'bg-[#FF5B00] text-white border-[#FF5B00] shadow-sm font-black'
+                      ? 'shadow-sm font-black'
                       : 'bg-neutral-100 text-neutral-800 border-neutral-200 hover:border-neutral-300 hover:bg-neutral-200/60'
                   }`}
                 >
@@ -150,7 +171,7 @@ export default function ProductPurchaseClient({ product }) {
             </span>
           ) : (
             <span className="text-neutral-500 text-[11px]">
-              2 ədəd alanda <strong className="text-[#FF5B00]">Pulsuz Karqo</strong>
+              2 ədəd alanda <strong style={{ color: activeTheme.primary }}>Pulsuz Karqo</strong>
             </span>
           )}
         </div>
@@ -160,9 +181,18 @@ export default function ProductPurchaseClient({ product }) {
           <button
             type="button"
             onClick={() => setQuantity(1)}
+            style={
+              quantity === 1
+                ? {
+                    borderColor: activeTheme.primary,
+                    backgroundColor: activeTheme.primaryLight,
+                    boxShadow: `0 0 0 2px ${activeTheme.ring}`,
+                  }
+                : {}
+            }
             className={`p-3 rounded-xl border text-left transition-all relative flex flex-col justify-between cursor-pointer ${
               quantity === 1
-                ? 'border-[#FF5B00] bg-orange-50/50 ring-2 ring-[#FF5B00]/20 shadow-sm'
+                ? 'shadow-sm'
                 : 'border-neutral-200 bg-white hover:border-neutral-300 hover:bg-neutral-50'
             }`}
           >
@@ -171,10 +201,17 @@ export default function ProductPurchaseClient({ product }) {
                 1 Ədəd
               </span>
               <div
-                className={`w-4 h-4 rounded-full border flex items-center justify-center ${
+                style={
                   quantity === 1
-                    ? 'border-[#FF5B00] bg-[#FF5B00] text-white'
-                    : 'border-neutral-300'
+                    ? {
+                        borderColor: activeTheme.primary,
+                        backgroundColor: activeTheme.primary,
+                        color: '#ffffff',
+                      }
+                    : {}
+                }
+                className={`w-4 h-4 rounded-full border flex items-center justify-center ${
+                  quantity === 1 ? '' : 'border-neutral-300'
                 }`}
               >
                 {quantity === 1 && <div className="w-1.5 h-1.5 rounded-full bg-white" />}
@@ -190,14 +227,26 @@ export default function ProductPurchaseClient({ product }) {
           <button
             type="button"
             onClick={() => setQuantity(2)}
+            style={
+              quantity === 2
+                ? {
+                    borderColor: activeTheme.primary,
+                    backgroundColor: activeTheme.primaryLight,
+                    boxShadow: `0 0 0 2px ${activeTheme.ring}`,
+                  }
+                : {}
+            }
             className={`p-3 rounded-xl border text-left transition-all relative flex flex-col justify-between cursor-pointer ${
               quantity === 2
-                ? 'border-[#FF5B00] bg-orange-50/50 ring-2 ring-[#FF5B00]/20 shadow-sm'
+                ? 'shadow-sm'
                 : 'border-neutral-200 bg-white hover:border-neutral-300 hover:bg-neutral-50'
             }`}
           >
             {/* Pulsuz Karqo Nişanı */}
-            <span className="absolute -top-2.5 right-2 bg-gradient-to-r from-emerald-600 to-[#10B981] text-white text-[10px] font-black px-2 py-0.5 rounded-full shadow-sm tracking-wide">
+            <span
+              style={{ backgroundColor: activeTheme.primary }}
+              className="absolute -top-2.5 right-2 text-white text-[10px] font-black px-2 py-0.5 rounded-full shadow-sm tracking-wide"
+            >
               🚚 Pulsuz Karqo
             </span>
 
@@ -206,17 +255,27 @@ export default function ProductPurchaseClient({ product }) {
                 2 Ədəd
               </span>
               <div
-                className={`w-4 h-4 rounded-full border flex items-center justify-center ${
+                style={
                   quantity === 2
-                    ? 'border-[#FF5B00] bg-[#FF5B00] text-white'
-                    : 'border-neutral-300'
+                    ? {
+                        borderColor: activeTheme.primary,
+                        backgroundColor: activeTheme.primary,
+                        color: '#ffffff',
+                      }
+                    : {}
+                }
+                className={`w-4 h-4 rounded-full border flex items-center justify-center ${
+                  quantity === 2 ? '' : 'border-neutral-300'
                 }`}
               >
                 {quantity === 2 && <div className="w-1.5 h-1.5 rounded-full bg-white" />}
               </div>
             </div>
             <span className="text-[11px] text-emerald-700 font-bold mt-0.5">Çatdırılma Pulsuz</span>
-            <span className="text-xs sm:text-sm font-black text-[#FF5B00] mt-2">
+            <span
+              className="text-xs sm:text-sm font-black mt-2"
+              style={{ color: activeTheme.primary }}
+            >
               {(Number(currentPrice) * 2).toFixed(2)} AZN
             </span>
           </button>
@@ -253,7 +312,11 @@ export default function ProductPurchaseClient({ product }) {
             id="main-order-button"
             type="button"
             onClick={handleBuyNow}
-            className="flex-1 min-h-[52px] py-3.5 px-4 rounded-2xl bg-[#FF5B00] hover:bg-[#E64D00] text-white font-black text-sm sm:text-base tracking-wide uppercase flex items-center justify-center gap-2 shadow-xl shadow-[#FF5B00]/30 transition-all active:scale-[0.98] glow-orange cursor-pointer"
+            style={{
+              backgroundColor: activeTheme.primary,
+              boxShadow: `0 10px 25px -5px ${activeTheme.primaryGlow}`,
+            }}
+            className="flex-1 min-h-[52px] py-3.5 px-4 rounded-2xl text-white font-black text-sm sm:text-base tracking-wide uppercase flex items-center justify-center gap-2 transition-all active:scale-[0.98] cursor-pointer hover:brightness-95"
           >
             <Zap className="w-5 h-5 fill-white text-white shrink-0" />
             <span>İNDİ AL, QAPIDA ÖDƏ</span>
@@ -261,19 +324,32 @@ export default function ProductPurchaseClient({ product }) {
           </button>
         </div>
 
-        {/* Səbətə Əlavə Et Düyməsi (İndi Al Qapıda Ödə-nin Tam Altında) */}
+        {/* Səbətə Əlavə Et Düyməsi (İndi Al Qapıda Ödə-nin Tam Altında, məhsulun kənar və yazı rənginə uyğunlaşdırılmış) */}
         <button
           id="add-to-cart-button"
           type="button"
           onClick={handleAddToCart}
-          className="w-full min-h-[50px] py-3 px-4 rounded-2xl bg-white hover:bg-neutral-900 text-neutral-900 hover:text-white border-2 border-neutral-900 font-black text-sm sm:text-base tracking-wide uppercase flex items-center justify-center gap-2.5 shadow-sm transition-all active:scale-[0.98] cursor-pointer group"
+          style={{
+            borderColor: activeTheme.primary,
+            color: activeTheme.primary,
+            backgroundColor: '#ffffff',
+          }}
+          onMouseEnter={(e) => {
+            e.currentTarget.style.backgroundColor = activeTheme.primary;
+            e.currentTarget.style.color = '#ffffff';
+          }}
+          onMouseLeave={(e) => {
+            e.currentTarget.style.backgroundColor = '#ffffff';
+            e.currentTarget.style.color = activeTheme.primary;
+          }}
+          className="w-full min-h-[50px] py-3 px-4 rounded-2xl border-2 font-black text-sm sm:text-base tracking-wide uppercase flex items-center justify-center gap-2.5 shadow-sm transition-all active:scale-[0.98] cursor-pointer group"
         >
-          <ShoppingBag className="w-5 h-5 text-neutral-900 group-hover:text-white transition-colors shrink-0" />
+          <ShoppingBag className="w-5 h-5 shrink-0 transition-colors" />
           <span>SƏBƏTƏ ƏLAVƏ ET</span>
         </button>
 
         {/* Məmnun Müştəri Sayı Nişanı */}
-        <CustomerSalesBadge product={product} className="w-full justify-start sm:justify-start" />
+        <CustomerSalesBadge product={product} className="w-full justify-start sm:justify-start" theme={activeTheme} />
       </div>
 
       {/* Sürətli Qapıda Sifariş Təsdiq Modalı (Saf CSS ilə) */}
@@ -309,7 +385,7 @@ export default function ProductPurchaseClient({ product }) {
               </div>
               <div className="flex justify-between text-neutral-600">
                 <span>Məbləğ (Qapıda):</span>
-                <strong className="text-[#FF5B00] font-black text-sm">
+                <strong className="font-black text-sm" style={{ color: activeTheme.primary }}>
                   {parseInt(currentPrice) * quantity} AZN
                 </strong>
               </div>
@@ -317,7 +393,8 @@ export default function ProductPurchaseClient({ product }) {
 
             <button
               onClick={() => setIsSuccessModalOpen(false)}
-              className="w-full py-3.5 rounded-xl bg-[#FF5B00] hover:bg-[#E64D00] text-white font-black text-xs uppercase tracking-wider transition-colors cursor-pointer"
+              style={{ backgroundColor: activeTheme.primary }}
+              className="w-full py-3.5 rounded-xl text-white font-black text-xs uppercase tracking-wider transition-colors cursor-pointer hover:brightness-95"
             >
               Alış-verişə Davam Et
             </button>

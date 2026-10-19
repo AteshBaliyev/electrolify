@@ -2,7 +2,7 @@
 
 import React, { useState } from 'react';
 
-export default function ProductDescription({ description }) {
+export default function ProductDescription({ description, theme }) {
   const [isExpanded, setIsExpanded] = useState(false);
 
   if (!description) return null;
@@ -19,6 +19,12 @@ export default function ProductDescription({ description }) {
       <button
         type="button"
         onClick={() => setIsExpanded(!isExpanded)}
+        onMouseEnter={(e) => {
+          if (theme?.primary) e.currentTarget.style.color = theme.primary;
+        }}
+        onMouseLeave={(e) => {
+          e.currentTarget.style.color = '';
+        }}
         className="mt-1 text-[11px] sm:text-xs font-semibold text-neutral-500 hover:text-[#FF5B00] inline-flex items-center gap-1 transition-colors cursor-pointer py-0.5"
       >
         <span>{isExpanded ? 'Bağla ▴' : 'Ətraflı Bax ▾'}</span>

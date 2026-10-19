@@ -54,10 +54,11 @@ function getAvatarBg(rev) {
   return PALETTE[Math.abs(hash) % PALETTE.length];
 }
 
-export default function ProductReviews({ product }) {
+export default function ProductReviews({ product, theme }) {
   const reviews = getProductReviews(product);
   const [showAll, setShowAll] = useState(false);
   const [helpfulCounts, setHelpfulCounts] = useState({});
+  const activeColor = theme?.primary || '#FF5B00';
 
   const displayedReviews = showAll ? reviews : reviews.slice(0, 3);
 
@@ -78,7 +79,7 @@ export default function ProductReviews({ product }) {
       <div className="flex flex-col lg:flex-row items-start lg:items-center justify-between gap-6 pb-8 border-b border-neutral-200">
         <div>
           <div className="flex items-center gap-2 mb-1">
-            <MessageSquare className="w-5 h-5 text-[#FF5B00]" />
+            <MessageSquare className="w-5 h-5" style={{ color: activeColor }} />
             <h2 className="text-xl md:text-2xl font-black text-neutral-900 tracking-tight">
               Müştəri Rəyləri və Təcrübələri
             </h2>
@@ -179,7 +180,10 @@ export default function ProductReviews({ product }) {
                     isClicked ? 'text-[#FF5B00] font-bold' : 'hover:text-neutral-900'
                   }`}
                 >
-                  <ThumbsUp className={`w-3 h-3 ${isClicked ? 'text-[#FF5B00] fill-[#FF5B00]' : 'text-neutral-400'}`} />
+                  <ThumbsUp
+                    style={isClicked ? { color: activeColor, fill: activeColor } : {}}
+                    className={`w-3 h-3 ${isClicked ? '' : 'text-neutral-400'}`}
+                  />
                   <span>Bu rəy faydalı oldu ({currentHelpful})</span>
                 </button>
               </div>
@@ -194,18 +198,26 @@ export default function ProductReviews({ product }) {
           <button
             type="button"
             onClick={() => setShowAll(!showAll)}
-            className="group inline-flex items-center justify-center gap-2 px-8 py-3.5 rounded-xl text-xs sm:text-sm font-bold bg-white hover:bg-neutral-50 text-neutral-900 border-2 border-neutral-200 hover:border-[#FF5B00] hover:text-[#FF5B00] shadow-sm transition-all duration-200 cursor-pointer active:scale-[0.99]"
+            onMouseEnter={(e) => {
+              e.currentTarget.style.borderColor = activeColor;
+              e.currentTarget.style.color = activeColor;
+            }}
+            onMouseLeave={(e) => {
+              e.currentTarget.style.borderColor = '';
+              e.currentTarget.style.color = '';
+            }}
+            className="group inline-flex items-center justify-center gap-2 px-8 py-3.5 rounded-xl text-xs sm:text-sm font-bold bg-white hover:bg-neutral-50 text-neutral-900 border-2 border-neutral-200 shadow-sm transition-all duration-200 cursor-pointer active:scale-[0.99]"
           >
             {showAll ? (
               <>
-                <ChevronUp className="w-4 h-4 text-[#FF5B00] transition-transform group-hover:-translate-y-0.5" />
+                <ChevronUp className="w-4 h-4 transition-transform group-hover:-translate-y-0.5" style={{ color: activeColor }} />
                 <span>Daha Az Göstər</span>
               </>
             ) : (
               <>
-                <MessageSquare className="w-4 h-4 text-[#FF5B00]" />
+                <MessageSquare className="w-4 h-4" style={{ color: activeColor }} />
                 <span>Ətraflı Bax ({reviews.length - 3} digər rəy)</span>
-                <ChevronDown className="w-4 h-4 text-[#FF5B00] transition-transform group-hover:translate-y-0.5" />
+                <ChevronDown className="w-4 h-4 transition-transform group-hover:translate-y-0.5" style={{ color: activeColor }} />
               </>
             )}
           </button>

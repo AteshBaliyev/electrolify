@@ -16,6 +16,7 @@ import ProductReviews from '@/components/product/ProductReviews';
 import ProductCrossSell from '@/components/product/ProductCrossSell';
 import CustomerSalesBadge from '@/components/product/CustomerSalesBadge';
 import ClarifyComparisonSection from '@/components/product/ClarifyComparisonSection';
+import { getProductTheme } from '@/lib/productTheme';
 
 export async function generateMetadata({ params }) {
   const handle = params?.handle || 'electrolify-pro-watch-series-9';
@@ -63,6 +64,9 @@ export default async function ProductPage({ params }) {
     (p) => String(p.id) !== String(product.id) && p.handle !== product.handle
   );
 
+  // Məhsulun xüsusi rəng və dizayn mövzusu (Məs: Clarify Pro üçün canlı "50% ENDİRİM" magenta rəngi)
+  const theme = getProductTheme(product);
+
   // Clarify Pro vakum cihazı üçün xüsusi Qarşılaşdırma və Əvvəl / Sonra bölməsi
   const isClarifyPro =
     String(handle).toLowerCase().includes('clarify') ||
@@ -73,7 +77,17 @@ export default async function ProductPage({ params }) {
     String(product.title || '').toLowerCase().includes('qara');
 
   return (
-    <div className="bg-[#F8F9FA] text-neutral-900 min-h-screen pb-24 sm:pb-20">
+    <div
+      className="bg-[#F8F9FA] text-neutral-900 min-h-screen pb-24 sm:pb-20"
+      style={{
+        '--product-primary': theme.primary,
+        '--product-primary-hover': theme.primaryHover,
+        '--product-primary-light': theme.primaryLight,
+        '--product-primary-border': theme.primaryBorder,
+        '--product-primary-glow': theme.primaryGlow,
+        '--product-primary-ring': theme.ring,
+      }}
+    >
       <div className="max-w-7xl mx-auto px-4 py-6 md:py-10">
         {/* Breadcrumb Naviqasiya (SSR) */}
         <nav className="flex items-center gap-2 text-xs text-neutral-500 mb-6 overflow-x-auto whitespace-nowrap pb-1">
@@ -97,6 +111,7 @@ export default async function ProductPage({ params }) {
             <ProductGallery
               images={product.images?.edges || []}
               title={product.title}
+              theme={theme}
             />
           </div>
 
@@ -105,7 +120,15 @@ export default async function ProductPage({ params }) {
             {/* 1. Başlıq, Ulduzlar və 'Read More' Açıqlama (SSR) */}
             <div className="flex flex-col gap-1.5">
               <div className="flex items-center justify-between gap-2">
-                <span className="text-[11px] font-mono uppercase tracking-widest text-[#FF5B00] bg-[#FF5B00]/10 px-2.5 py-0.5 rounded-full border border-[#FF5B00]/20 font-bold">
+                <span
+                  className="text-[11px] font-mono uppercase tracking-widest px-2.5 py-0.5 rounded-full font-bold"
+                  style={{
+                    color: theme.primary,
+                    backgroundColor: theme.primaryLight,
+                    borderColor: theme.primaryBorder,
+                    borderWidth: 1,
+                  }}
+                >
                   Orijinal Seçim
                 </span>
                 <div className="flex items-center gap-1.5 text-xs text-neutral-600">
@@ -124,29 +147,29 @@ export default async function ProductPage({ params }) {
               </h1>
 
               {/* Rəyin / Başlığın Altında Real Müştəri Statistikası Nişanı */}
-              <CustomerSalesBadge product={product} className="my-1" />
+              <CustomerSalesBadge product={product} className="my-1" theme={theme} />
 
               {/* 'Read More' Açıqlama Sistemi */}
-              <ProductDescription description={product.description} />
+              <ProductDescription description={product.description} theme={theme} />
             </div>
 
             {/* 2. Dinamik Qiymət, Variantlar, Sifariş Düymələri və Qapıda Sifariş Modalı (İzolyasiya olunmuş Client Component) */}
-            <ProductPurchaseClient product={product} />
+            <ProductPurchaseClient product={product} theme={theme} />
 
             {/* 3. Kompakt Statistika (Live Social Proof) */}
-            <ProductSocialProof product={product} productId={product.id} />
+            <ProductSocialProof product={product} productId={product.id} theme={theme} />
 
             {/* 4. Horizontal Güvən Nişanları (Təmiz SSR Server Component) */}
-            <ProductTrustBadges />
+            <ProductTrustBadges theme={theme} />
 
             {/* 5. Horizontal Ticker - Sayt Haqqında 5 Qısa Məlumat (Arxa fonu qara, yazılar ağ) */}
-            <ProductTrustTicker />
+            <ProductTrustTicker theme={theme} />
           </div>
         </div>
 
         {/* Clarify Pro üçün Əvvəl / Sonra Şəkilləri və Dəqiq Qarşılaşdırma Bölməsi */}
         {isClarifyPro && (
-          <ClarifyComparisonSection product={product} />
+          <ClarifyComparisonSection product={product} theme={theme} />
         )}
 
         {/* Bununla Birlikdə Tez-tez Alınırlar (Mağazanın digər real məhsullarından ibarət dəst) */}
@@ -154,10 +177,11 @@ export default async function ProductPage({ params }) {
           mainProduct={product}
           currentVariant={product.variants?.edges?.[0]?.node}
           recommendedProducts={recommendedStoreProducts}
+          theme={theme}
         />
 
         {/* Müştəri Rəyləri Bölməsi - Məhsula xüsusi rəylər */}
-        <ProductReviews product={product} />
+        <ProductReviews product={product} theme={theme} />
       </div>
     </div>
   );

@@ -1,13 +1,15 @@
 import React from 'react';
 import { Truck, Banknote, ShieldCheck } from 'lucide-react';
 
-export default function ProductTrustBadges() {
+export default function ProductTrustBadges({ theme }) {
   const badges = [
     {
       title: 'Sürətli Çatdırılma',
       icon: Truck,
-      color: 'text-[#FF5B00]',
-      borderColor: 'border-orange-200',
+      color: theme?.primary ? '' : 'text-[#FF5B00]',
+      style: theme?.primary ? { color: theme.primary } : {},
+      borderStyle: theme?.primaryBorder ? { borderColor: theme.primaryBorder } : {},
+      borderColor: theme?.primaryBorder ? '' : 'border-orange-200',
     },
     {
       title: 'Qapıda Ödəniş',
@@ -30,9 +32,10 @@ export default function ProductTrustBadges() {
         return (
           <div
             key={idx}
-            className={`flex items-center justify-center gap-1.5 py-2 px-2 rounded-xl bg-white border ${b.borderColor} text-center shadow-sm`}
+            style={b.borderStyle || {}}
+            className={`flex items-center justify-center gap-1.5 py-2 px-2 rounded-xl bg-white border ${b.borderColor || ''} text-center shadow-sm`}
           >
-            <Icon className={`w-3.5 h-3.5 ${b.color} shrink-0`} />
+            <Icon style={b.style || {}} className={`w-3.5 h-3.5 ${b.color || ''} shrink-0`} />
             <span className="text-[10px] sm:text-xs font-bold text-neutral-800 truncate">
               {b.title}
             </span>

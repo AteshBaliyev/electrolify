@@ -11,8 +11,10 @@ export default function ProductCrossSell({
   mainProduct,
   currentVariant,
   recommendedProducts = [],
+  theme,
 }) {
   const { addToCart, addCrossSellItem } = useCart();
+  const activeColor = theme?.primary || '#FF5B00';
 
   // Mağazanın digər məhsullarından tövsiyə siyahısını formalaşdır
   const bundleItems = useMemo(() => {
@@ -90,8 +92,11 @@ export default function ProductCrossSell({
     <section className="w-full my-10 p-5 sm:p-7 rounded-3xl bg-white border border-neutral-200 shadow-sm">
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 pb-4 border-b border-neutral-100">
         <div>
-          <span className="text-[11px] font-mono uppercase tracking-widest text-[#FF5B00] flex items-center gap-1.5 mb-1 font-bold">
-            <Zap className="w-3.5 h-3.5 fill-[#FF5B00]" /> Tövsiyə Edilən Məhsullar
+          <span
+            className="text-[11px] font-mono uppercase tracking-widest flex items-center gap-1.5 mb-1 font-bold"
+            style={{ color: activeColor }}
+          >
+            <Zap className="w-3.5 h-3.5" style={{ fill: activeColor, color: activeColor }} /> Tövsiyə Edilən Məhsullar
           </span>
           <h3 className="text-lg sm:text-xl font-black text-neutral-900 tracking-tight">
             Bununla Birlikdə Tez-tez Alınırlar
@@ -179,7 +184,11 @@ export default function ProductCrossSell({
                   <button
                     type="button"
                     onClick={() => handleOrderProduct(cross)}
-                    className="min-h-[42px] px-3 py-2 rounded-xl bg-[#FF5B00] hover:bg-[#E64D00] text-white text-xs font-black uppercase tracking-wider flex items-center justify-center gap-1.5 shadow-md shadow-[#FF5B00]/25 transition-all active:scale-95 cursor-pointer text-center"
+                    style={{
+                      backgroundColor: activeColor,
+                      boxShadow: `0 4px 14px -2px ${theme?.primaryGlow || 'rgba(255,91,0,0.25)'}`,
+                    }}
+                    className="min-h-[42px] px-3 py-2 rounded-xl text-white text-xs font-black uppercase tracking-wider flex items-center justify-center gap-1.5 transition-all active:scale-95 cursor-pointer text-center hover:brightness-95"
                   >
                     <ShoppingBag className="w-3.5 h-3.5" />
                     <span>Səbətə At</span>

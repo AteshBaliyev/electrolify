@@ -3,10 +3,12 @@
 import React from 'react';
 import Image from 'next/image';
 import { ArrowRight, Zap, ShoppingBag } from 'lucide-react';
+import { getProductTheme } from '@/lib/productTheme';
 
-export default function StickyAddToCart({ product, selectedVariant, onOrderClick, onAddToCartClick }) {
+export default function StickyAddToCart({ product, selectedVariant, onOrderClick, onAddToCartClick, theme }) {
   if (!product || !selectedVariant) return null;
 
+  const activeTheme = theme || getProductTheme(product);
   const currentPrice = selectedVariant.price?.amount || product.priceRange?.minVariantPrice?.amount;
   const comparePrice = selectedVariant.compareAtPrice?.amount || product.compareAtPriceRange?.minVariantPrice?.amount;
   const imageUrl = product.images?.edges?.[0]?.node?.url;
@@ -38,7 +40,7 @@ export default function StickyAddToCart({ product, selectedVariant, onOrderClick
                     {selectedVariant.title}
                   </span>
                 )}
-              <span className="text-xs sm:text-sm font-black text-[#FF5B00]">
+              <span className="text-xs sm:text-sm font-black" style={{ color: activeTheme.primary }}>
                 {currentPrice} AZN
               </span>
               {comparePrice && (
@@ -57,11 +59,24 @@ export default function StickyAddToCart({ product, selectedVariant, onOrderClick
               id="sticky-cart-button"
               type="button"
               onClick={onAddToCartClick}
-              className="min-h-[46px] sm:min-h-[48px] px-3 sm:px-4 rounded-xl bg-white hover:bg-neutral-100 text-neutral-900 border-2 border-neutral-900 font-bold text-xs flex items-center justify-center gap-1.5 transition-all active:scale-95 cursor-pointer shadow-xs"
+              style={{
+                borderColor: activeTheme.primary,
+                color: activeTheme.primary,
+                backgroundColor: '#ffffff',
+              }}
+              onMouseEnter={(e) => {
+                e.currentTarget.style.backgroundColor = activeTheme.primary;
+                e.currentTarget.style.color = '#ffffff';
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.backgroundColor = '#ffffff';
+                e.currentTarget.style.color = activeTheme.primary;
+              }}
+              className="min-h-[46px] sm:min-h-[48px] px-3 sm:px-4 rounded-xl border-2 font-bold text-xs flex items-center justify-center gap-1.5 transition-all active:scale-95 cursor-pointer shadow-xs"
               title="Səbətə Əlavə Et"
               aria-label="Səbətə Əlavə Et"
             >
-              <ShoppingBag className="w-4 h-4 text-neutral-900" />
+              <ShoppingBag className="w-4 h-4 shrink-0" />
               <span className="hidden sm:inline-block font-black text-xs uppercase">Səbətə At</span>
             </button>
           )}
@@ -70,7 +85,11 @@ export default function StickyAddToCart({ product, selectedVariant, onOrderClick
             id="sticky-order-button"
             type="button"
             onClick={onOrderClick}
-            className="min-h-[46px] sm:min-h-[48px] py-2 sm:py-3 px-3.5 sm:px-6 rounded-xl bg-[#FF5B00] hover:bg-[#E64D00] text-white font-black text-xs sm:text-sm uppercase tracking-wide flex items-center justify-center gap-1.5 sm:gap-2 shadow-lg shadow-[#FF5B00]/30 transition-all active:scale-95 glow-orange cursor-pointer"
+            style={{
+              backgroundColor: activeTheme.primary,
+              boxShadow: `0 8px 20px -4px ${activeTheme.primaryGlow}`,
+            }}
+            className="min-h-[46px] sm:min-h-[48px] py-2 sm:py-3 px-3.5 sm:px-6 rounded-xl text-white font-black text-xs sm:text-sm uppercase tracking-wide flex items-center justify-center gap-1.5 sm:gap-2 transition-all active:scale-95 cursor-pointer hover:brightness-95"
           >
             <Zap className="w-4 h-4 fill-white text-white shrink-0" />
             <span>İNDİ AL, QAPIDA ÖDƏ</span>
