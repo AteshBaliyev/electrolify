@@ -274,6 +274,7 @@ export async function fetchLiveShopifyProducts() {
     const res = await fetch(`https://${cleanDomain}/products.json?limit=250`, {
       next: { revalidate: 60, tags: ['products'] },
       headers: { 'User-Agent': 'Electrolify-NextJS/1.0' },
+      signal: AbortSignal.timeout(3500),
     });
     if (!res.ok) return null;
     const data = await res.json();
@@ -337,6 +338,9 @@ export async function getProductByHandle(handle) {
       pHandle === decodedHandle ||
       String(p.id) === String(handle) ||
       (decodedHandle.includes('clarify') && (pHandle.includes('clarify') || pTitle.includes('clarify'))) ||
+      (decodedHandle.includes('lumify') && (pHandle.includes('lumify') || pTitle.includes('lumify'))) ||
+      ((decodedHandle.includes('bayram') || decodedHandle.includes('isiq') || decodedHandle.includes('işıq')) &&
+        (pHandle.includes('lumify') || pTitle.includes('lumify') || pHandle.includes('bayram'))) ||
       ((decodedHandle.includes('isti') || decodedHandle.includes('masaj')) &&
         (pHandle.includes('isti') || pHandle.includes('masaj') || pTitle.includes('masaj')))
     );
@@ -362,6 +366,9 @@ export async function getProductsByCategory(categorySlug, first = 20) {
     if (slug.includes('deri') || slug.includes('vakum') || slug.includes('qulluq')) {
       return handle.includes('clarify') || handle.includes('vakum') || title.includes('vakum') || title.includes('qara');
     }
+    if (slug.includes('bayram') || slug.includes('isiq') || slug.includes('işıq') || slug.includes('dekor')) {
+      return handle.includes('lumify') || handle.includes('bayram') || handle.includes('isiq') || title.includes('lumify');
+    }
     return true;
   });
 
@@ -386,6 +393,68 @@ export async function createCart(lines = []) {
 // Real Shopify Mağazası Məlumatları (Yalnız Admin Paneldə olan məhsullar)
 // -------------------------------------------------------------
 export const MOCK_PRODUCTS = [
+  {
+    id: '10234502316288',
+    title: 'Lumify Pro – Sehrli Bayram İşıqları! 🎄',
+    handle: 'lumify-pro-sehrli-bayram-i̇siqlari-🎄',
+    description:
+      'Evinizdə bayram ab-havasını bir düymə ilə yaradın! 16 fərqli canlı işıq naxışı (qar dənələri, Şaxta baba, maral və bayram fiqurları), 270° tənzimlənən fırlanan bucaq və USB ilə rahat enerji təchizatı. Yeni il, Milad və digər bayramlar üçün ideal hədiyyə və sehrli dekorasiya.',
+    availableForSale: true,
+    priceRange: {
+      minVariantPrice: { amount: '24.90', currencyCode: 'AZN' },
+      maxVariantPrice: { amount: '24.90', currencyCode: 'AZN' },
+    },
+    compareAtPriceRange: {
+      minVariantPrice: { amount: '39.90', currencyCode: 'AZN' },
+    },
+    images: {
+      edges: [
+        {
+          node: {
+            url: 'https://cdn.shopify.com/s/files/1/0852/9418/6752/files/08338e9d-3bbf-4cc4-9130-2bdee2893246.jpg?v=1792431154',
+            altText: 'Lumify Pro – Sehrli Bayram İşıqları!',
+          },
+        },
+        {
+          node: {
+            url: 'https://cdn.shopify.com/s/files/1/0852/9418/6752/files/512d6254-ad6a-4fe4-8264-667b8d575652.jpg?v=1792430765',
+            altText: 'Lumify Pro 16 Fərqli Bayram Naxışı',
+          },
+        },
+        {
+          node: {
+            url: 'https://cdn.shopify.com/s/files/1/0852/9418/6752/files/723f2d20-65e0-4cf7-9266-cc3c25ae69e4.jpg?v=1792430728',
+            altText: 'Lumify Pro 270 Dərəcə Tənzimlənən Bucağı',
+          },
+        },
+        {
+          node: {
+            url: 'https://cdn.shopify.com/s/files/1/0852/9418/6752/files/9fc531f6-7586-4131-9986-b0fc813cc3b6.jpg?v=1792430752',
+            altText: 'Lumify Pro USB Güclü Lazer LED Proyektor',
+          },
+        },
+        {
+          node: {
+            url: 'https://cdn.shopify.com/s/files/1/0852/9418/6752/files/723c70d6-dbe9-49f2-98ce-b10759a195b5.jpg?v=1792430737',
+            altText: 'Lumify Pro Otaqda Sehrli Yeni İl Mənzərəsi',
+          },
+        },
+      ],
+    },
+    variants: {
+      edges: [
+        {
+          node: {
+            id: '50691530293504',
+            title: 'Standart',
+            availableForSale: true,
+            price: { amount: '24.90', currencyCode: 'AZN' },
+            compareAtPrice: { amount: '39.90', currencyCode: 'AZN' },
+          },
+        },
+      ],
+    },
+  },
   {
     id: '9625190498560',
     title: 'ClarifyPro - Qara Nöktə Təmizləyici Vakum Cihazı',

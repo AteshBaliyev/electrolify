@@ -32,6 +32,19 @@ const SLIDES = [
     ctaText: 'Fürsəti Əldə Et',
     bgGradient: 'from-amber-50 via-white to-orange-50/50',
   },
+  {
+    id: 3,
+    badge: '🎄 YENİ GƏLƏN SEHRLİ BAYRAM İŞIQLARI',
+    title: 'Lumify Pro – Sehrli Bayram İşıqları',
+    subtitle: '16 fərqli nağıl naxışı və 270° fırlanan bucaqla evinizdə bayram ab-havasını yaradın.',
+    discount: '-38% ENDİRİM',
+    price: '24.90 AZN',
+    comparePrice: '39.90 AZN',
+    link: '/products/lumify-pro-sehrli-bayram-i̇siqlari-🎄',
+    image: 'https://cdn.shopify.com/s/files/1/0852/9418/6752/files/08338e9d-3bbf-4cc4-9130-2bdee2893246.jpg?v=1792431154',
+    ctaText: 'İndi Al, Qapıda Ödə',
+    bgGradient: 'from-indigo-50 via-white to-purple-50/50',
+  },
 ];
 
 export default function HeroSlider({ products = [] }) {

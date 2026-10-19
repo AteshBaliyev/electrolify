@@ -58,6 +58,33 @@ export const PRODUCT_THEMES = {
     accentBadgeBorder: 'border-[#FED7AA]',
   },
 
+  // Lumify Pro - Sehrli Bayram İşıqları (Gözoxşayan Sehrli Kosmik Bənövşəyi / İndiqo İşıq mövzusu)
+  lumify: {
+    id: 'lumify',
+    name: 'Lumify Pro Festive Indigo',
+    primary: '#6366F1',
+    primaryHover: '#4F46E5',
+    primaryActive: '#4338CA',
+    primaryLight: '#EEF2FF',         // indigo-50
+    primaryLightHover: '#E0E7FF',    // indigo-100
+    primaryBorder: '#C7D2FE',        // indigo-200
+    primaryBorderStrong: '#6366F1',
+    primaryText: '#4F46E5',
+    primaryGlow: 'rgba(99, 102, 241, 0.35)',
+    ring: 'rgba(99, 102, 241, 0.25)',
+    gradient: 'from-[#6366F1] via-[#7C3AED] to-[#4F46E5]',
+    urgencyBg: 'bg-indigo-50/80',
+    urgencyBorder: 'border-indigo-200/90',
+    urgencyText: 'text-indigo-950',
+    urgencyIcon: 'text-[#6366F1]',
+    tickerBadgeBg: 'bg-[#6366F1]/20',
+    tickerBadgeText: 'text-[#4F46E5]',
+    tickerStar: 'text-[#6366F1]',
+    accentBadgeBg: 'bg-[#EEF2FF]',
+    accentBadgeText: 'text-[#4F46E5]',
+    accentBadgeBorder: 'border-[#C7D2FE]',
+  },
+
   // Standart / Fallback Electrolify Narıncısı
   default: {
     id: 'default',
@@ -101,6 +128,21 @@ export function getProductTheme(productOrHandle) {
   const title = (
     typeof productOrHandle === 'object' ? productOrHandle?.title || '' : ''
   ).toLowerCase();
+
+  // Lumify Pro Sehrli Bayram İşıqları (Sehrli İndiqo / Bənövşəyi tonu)
+  if (
+    handle.includes('lumify') ||
+    handle.includes('bayram') ||
+    handle.includes('i̇siqlari') ||
+    handle.includes('isiq') ||
+    handle.includes('işıq') ||
+    handle.includes('proyektor') ||
+    title.includes('lumify') ||
+    title.includes('bayram') ||
+    title.includes('işıq')
+  ) {
+    return PRODUCT_THEMES.lumify;
+  }
 
   // Clarify Pro Vakum Cihazı (Şəkildəki çəhrayı/magenta 50% ENDİRİM tonu)
   if (

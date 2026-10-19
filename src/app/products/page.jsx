@@ -63,6 +63,12 @@ export default async function AllProductsPage() {
               Dəri Qulluğu & Vakum
             </Link>
             <Link
+              href="/category/bayram"
+              className="px-4 py-2 rounded-xl bg-neutral-100 hover:bg-neutral-200 text-neutral-700 font-semibold whitespace-nowrap transition-colors"
+            >
+              🎄 Bayram & İşıqlar
+            </Link>
+            <Link
               href="/category/masaj"
               className="px-4 py-2 rounded-xl bg-neutral-100 hover:bg-neutral-200 text-neutral-700 font-semibold whitespace-nowrap transition-colors"
             >

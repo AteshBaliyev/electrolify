@@ -22,6 +22,7 @@ const API_VERSION = process.env.SHOPIFY_API_VERSION || '2024-04';
 const KNOWN_SHOPIFY_VARIANTS = {
   clarifypro: 49547097932032,
   istiel: 49192144306432,
+  lumifypro: 50691530293504,
 };
 
 // Yaddaşda saxlanılan token və etibarlılıq vaxtı
@@ -91,6 +92,9 @@ function resolveVariantId(item) {
   const searchKey = `${item.handle || ''} ${item.title || ''}`.toLowerCase();
   if (searchKey.includes('clarify') || searchKey.includes('vakum') || searchKey.includes('qara')) {
     return KNOWN_SHOPIFY_VARIANTS.clarifypro;
+  }
+  if (searchKey.includes('lumify') || searchKey.includes('bayram') || searchKey.includes('isiq') || searchKey.includes('işıq') || searchKey.includes('proyektor')) {
+    return KNOWN_SHOPIFY_VARIANTS.lumifypro;
   }
   if (searchKey.includes('istiəl') || searchKey.includes('istiel') || searchKey.includes('masaj')) {
     return KNOWN_SHOPIFY_VARIANTS.istiel;

@@ -22,6 +22,12 @@ export default function MobileMenu({ isOpen, onClose, searchQuery, setSearchQuer
       badge: 'Hit',
     },
     {
+      title: 'Bayram & Ağıllı İşıqlar',
+      desc: 'Lumify Pro – 16 Naxışlı Bayram Proyektoru',
+      href: '/products/lumify-pro-sehrli-bayram-i̇siqlari-🎄',
+      badge: '🎄 Yeni',
+    },
+    {
       title: 'Masaj & Sağlamlıq',
       desc: 'İstiƏl - İstilikli Boyun və Çiyin Masajı',
       href: '/category/masaj',

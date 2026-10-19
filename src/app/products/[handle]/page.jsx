@@ -16,6 +16,7 @@ import ProductReviews from '@/components/product/ProductReviews';
 import ProductCrossSell from '@/components/product/ProductCrossSell';
 import CustomerSalesBadge from '@/components/product/CustomerSalesBadge';
 import ClarifyComparisonSection from '@/components/product/ClarifyComparisonSection';
+import LumifyComparisonSection from '@/components/product/LumifyComparisonSection';
 import { getProductTheme } from '@/lib/productTheme';
 
 export async function generateMetadata({ params }) {
@@ -75,6 +76,18 @@ export default async function ProductPage({ params }) {
     String(product.title || '').toLowerCase().includes('clarify') ||
     String(product.title || '').toLowerCase().includes('vakum') ||
     String(product.title || '').toLowerCase().includes('qara');
+
+  // Lumify Pro bayram işıqları üçün xüsusi Qarşılaşdırma və Vizual Bölmə
+  const isLumifyPro =
+    String(handle).toLowerCase().includes('lumify') ||
+    String(handle).toLowerCase().includes('bayram') ||
+    String(handle).toLowerCase().includes('isiq') ||
+    String(handle).toLowerCase().includes('işıq') ||
+    String(handle).toLowerCase().includes('proyektor') ||
+    String(product.handle || '').toLowerCase().includes('lumify') ||
+    String(product.title || '').toLowerCase().includes('lumify') ||
+    String(product.title || '').toLowerCase().includes('bayram') ||
+    String(product.title || '').toLowerCase().includes('işıq');
 
   return (
     <div
@@ -170,6 +183,11 @@ export default async function ProductPage({ params }) {
         {/* Clarify Pro üçün Əvvəl / Sonra Şəkilləri və Dəqiq Qarşılaşdırma Bölməsi */}
         {isClarifyPro && (
           <ClarifyComparisonSection product={product} theme={theme} />
+        )}
+
+        {/* Lumify Pro üçün Xüsusi Qarşılaşdırma və Vizual Xüsusiyyət Bölməsi */}
+        {isLumifyPro && (
+          <LumifyComparisonSection product={product} theme={theme} />
         )}
 
         {/* Bununla Birlikdə Tez-tez Alınırlar (Mağazanın digər real məhsullarından ibarət dəst) */}

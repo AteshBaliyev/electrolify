@@ -10,6 +10,7 @@ export default function BestsellersGrid({ products = MOCK_PRODUCTS }) {
 
   const tabs = [
     { id: 'all', label: 'Bütün Məhsullar' },
+    { id: 'bayram', label: '🎄 Bayram & İşıqlar' },
     { id: 'deri', label: 'Dəri Qulluğu & Vakum' },
     { id: 'masaj', label: 'Masaj & Sağlamlıq' },
   ];
@@ -20,6 +21,17 @@ export default function BestsellersGrid({ products = MOCK_PRODUCTS }) {
     if (activeTab === 'all') return true;
     const title = (prod.title || '').toLowerCase();
     const handle = (prod.handle || '').toLowerCase();
+    if (activeTab === 'bayram') {
+      return (
+        handle.includes('lumify') ||
+        handle.includes('bayram') ||
+        handle.includes('isiq') ||
+        handle.includes('işıq') ||
+        title.includes('lumify') ||
+        title.includes('bayram') ||
+        title.includes('işıq')
+      );
+    }
     if (activeTab === 'deri') {
       return (
         handle.includes('clarify') ||

@@ -19,6 +19,9 @@ export default function CustomerSalesBadge({ product, className = '', theme }) {
   if (handle.includes('clarify') || title.includes('vakum') || title.includes('clarify')) {
     satisfiedCount = '1200+';
     ordersLast24h = 19;
+  } else if (handle.includes('lumify') || title.includes('lumify') || handle.includes('bayram') || title.includes('işıq')) {
+    satisfiedCount = '1050+';
+    ordersLast24h = 32;
   } else if (handle.includes('isti') || title.includes('masaj') || handle.includes('masaj')) {
     satisfiedCount = '890+';
     ordersLast24h = 24;
