@@ -76,35 +76,31 @@ export default function ProductPurchaseClient({ product, theme }) {
         theme={activeTheme}
       />
 
-      {/* Dinamik Qiymət Bloku */}
-      <div
-        className="p-3.5 sm:p-4 rounded-2xl bg-white border shadow-sm flex items-center justify-between gap-3 transition-colors"
-        style={{ borderColor: activeTheme.primaryBorder || '#e5e7eb' }}
-      >
-        <div className="flex items-baseline gap-2.5 flex-wrap">
-          <span
-            className="text-3xl sm:text-4xl font-black tracking-tight"
-            style={{ color: activeTheme.primary }}
-          >
-            {(Number(currentPrice) * quantity).toFixed(2)} AZN
+      {/* Dinamik Qiymət Bloku - Shopify / Modern E-ticarət Standartı */}
+      <div className="py-2 sm:py-2.5 px-3.5 sm:px-4 rounded-xl sm:rounded-2xl bg-gray-50/50 border border-gray-100/80 flex items-center gap-3 flex-wrap">
+        {/* 1. Yeni Qiymət */}
+        <span className="text-3xl sm:text-4xl font-extrabold text-gray-900 tracking-tight">
+          {(Number(currentPrice) * quantity).toFixed(2)} AZN
+        </span>
+
+        {/* 2. Köhnə Qiymət */}
+        {comparePrice && (
+          <span className="text-base sm:text-lg text-gray-400 line-through font-medium">
+            {(Number(comparePrice) * quantity).toFixed(2)} AZN
           </span>
-          {comparePrice && (
-            <span className="text-base sm:text-lg text-neutral-400 line-through font-semibold">
-              {(Number(comparePrice) * quantity).toFixed(2)} AZN
-            </span>
-          )}
-          {quantity > 1 && (
-            <span className="text-xs text-neutral-500 font-bold">
-              ({Number(currentPrice).toFixed(2)} AZN / ədəd)
-            </span>
-          )}
-        </div>
+        )}
+
+        {/* 3. Endirim Nişanı (Badge) */}
         {discountPercent && discountPercent > 0 && (
-          <span
-            className="text-xs font-black text-white px-2.5 py-1 rounded-lg uppercase tracking-wider shrink-0 shadow-xs"
-            style={{ backgroundColor: activeTheme.primary }}
-          >
+          <span className="bg-red-100 text-red-600 rounded-full px-3 py-1 text-xs sm:text-sm font-bold tracking-tight inline-flex items-center shrink-0">
             -{discountPercent}% ENDİRİM
+          </span>
+        )}
+
+        {/* Say 1-dən çox olduqda tək ədəd qiyməti */}
+        {quantity > 1 && (
+          <span className="text-xs text-gray-500 font-semibold ml-auto sm:ml-0">
+            ({Number(currentPrice).toFixed(2)} AZN / ədəd)
           </span>
         )}
       </div>
