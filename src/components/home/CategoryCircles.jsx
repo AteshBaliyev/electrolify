@@ -17,7 +17,7 @@ const CATEGORIES = [
     name: 'Dəri Qulluğu & Vakum',
     icon: Sparkles,
     href: '/category/deri-qullugu',
-    gradient: 'from-[#FF5B00] to-yellow-500',
+    gradient: 'from-[#111827] to-slate-700',
     badge: 'Hit',
   },
   {
@@ -33,7 +33,7 @@ const CATEGORIES = [
     name: 'Ən Çox Satanlar',
     icon: Zap,
     href: '/#bestsellers',
-    gradient: 'from-amber-500 to-orange-400',
+    gradient: 'from-slate-800 to-slate-600',
     badge: 'Top',
   },
   {
@@ -41,7 +41,7 @@ const CATEGORIES = [
     name: 'Günün Fürsətləri',
     icon: Flame,
     href: '/#flashsales',
-    gradient: 'from-red-600 to-[#FF5B00]',
+    gradient: 'from-rose-600 to-red-600',
     badge: '-49%',
     highlight: true,
   },
@@ -81,8 +81,8 @@ export default function CategoryCircles() {
                   <span
                     className={`absolute -bottom-1 left-1/2 -translate-x-1/2 text-[9px] font-black px-2 py-0.2 rounded-full uppercase shadow-md ${
                       cat.highlight
-                        ? 'bg-red-600 text-white animate-pulse'
-                        : 'bg-[#FF5B00] text-white'
+                        ? 'bg-rose-600 text-white animate-pulse'
+                        : 'bg-[#111827] text-white'
                     }`}
                   >
                     {cat.badge}
@@ -91,7 +91,7 @@ export default function CategoryCircles() {
               </div>
 
               {/* Kateqoriya Adı */}
-              <span className="text-[11px] sm:text-xs font-bold text-neutral-800 group-hover:text-[#FF5B00] transition-colors text-center max-w-[80px] truncate">
+              <span className="text-[11px] sm:text-xs font-bold text-neutral-800 group-hover:text-[#111827] transition-colors text-center max-w-[80px] truncate">
                 {cat.name}
               </span>
             </Link>

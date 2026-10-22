@@ -32,7 +32,7 @@ const TICKER_ITEMS = [
 export default function ProductTrustTicker({ theme }) {
   // Ticker-in fasiləsiz və qüsursuz dövr etməsi üçün elementləri 2 dəfə təkrarlayırıq
   const repeatedItems = [...TICKER_ITEMS, ...TICKER_ITEMS];
-  const activeColor = theme?.primary || '#FF5B00';
+  const activeColor = theme?.primary || '#111827';
 
   return (
     <div className="relative w-full overflow-hidden bg-black text-white rounded-xl py-2.5 sm:py-3 border border-neutral-800 shadow-sm my-1">

@@ -4,7 +4,7 @@ import React from 'react';
 import Image from 'next/image';
 
 /**
- * Electrolify - Real Müştəri və Son 24 Saat Sifariş Statistikası Nişanı
+ * Trendim - Real Müştəri və Son 24 Saat Sifariş Statistikası Nişanı
  * İstifadəçinin təqdim etdiyi vizual dizayna (media_1789164209399.png) 100% uyğunlaşdırılıb.
  */
 export default function CustomerSalesBadge({ product, className = '', theme }) {

@@ -21,6 +21,18 @@ export default function ProductCard({ product, badge = null, discount = null }) 
 
   const defaultVariant = product.variants?.edges?.[0]?.node;
 
+  // Dəqiq endirim faizi: Math.round(((compareAtPrice - price) / compareAtPrice) * 100)
+  const priceNum = parseFloat(currentPrice);
+  const compareNum = parseFloat(comparePrice || 0);
+
+  let computedDiscount = null;
+  if (compareNum > priceNum && priceNum > 0) {
+    const percent = Math.round(((compareNum - priceNum) / compareNum) * 100);
+    computedDiscount = `-${percent}% ENDİRİM`;
+  } else if (discount) {
+    computedDiscount = discount.includes('ENDİRİM') ? discount : `${discount} ENDİRİM`;
+  }
+
   const handleQuickAdd = (e) => {
     e.preventDefault();
     e.stopPropagation();
@@ -28,7 +40,7 @@ export default function ProductCard({ product, badge = null, discount = null }) 
   };
 
   return (
-    <div className="group relative flex flex-col justify-between rounded-2xl sm:rounded-3xl bg-white border border-neutral-200 hover:border-[#FF5B00]/50 transition-all duration-300 overflow-hidden shadow-sm hover:shadow-xl">
+    <div className="group relative flex flex-col justify-between rounded-2xl sm:rounded-3xl bg-white border border-neutral-200 hover:border-slate-300 transition-all duration-300 overflow-hidden shadow-sm hover:shadow-xl">
       {/* Üst Şəkil Çərçivəsi (Kliklənən Link) */}
       <Link
         href={`/products/${product.handle}`}
@@ -37,13 +49,13 @@ export default function ProductCard({ product, badge = null, discount = null }) 
       >
         {/* Endirim və ya Xüsusi Nişan */}
         <div className="absolute top-2 sm:top-3 left-2 sm:left-3 z-10 flex flex-col gap-1">
-          {discount && (
-            <span className="bg-[#FF5B00] text-white text-[9px] sm:text-[10px] font-black px-1.5 sm:px-2 py-0.5 rounded shadow-md">
-              {discount}
+          {computedDiscount && (
+            <span className="bg-rose-600 text-white text-[9px] sm:text-[10px] font-black px-1.5 sm:px-2 py-0.5 rounded shadow-md">
+              {computedDiscount}
             </span>
           )}
           {badge && (
-            <span className="bg-red-600 text-white text-[9px] sm:text-[10px] font-black px-1.5 sm:px-2 py-0.5 rounded shadow-md">
+            <span className="bg-[#111827] text-white text-[9px] sm:text-[10px] font-black px-1.5 sm:px-2 py-0.5 rounded shadow-md">
               {badge}
             </span>
           )}
@@ -63,7 +75,7 @@ export default function ProductCard({ product, badge = null, discount = null }) 
         <button
           onClick={handleQuickAdd}
           aria-label="Səbətə əlavə et"
-          className="absolute bottom-2.5 right-2.5 w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-[#FF5B00] hover:bg-[#E64D00] text-white hidden sm:flex items-center justify-center shadow-xl transition-all transform translate-y-2 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 active:scale-90 cursor-pointer"
+          className="absolute bottom-2.5 right-2.5 w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-[#111827] hover:bg-[#1f2937] text-white hidden sm:flex items-center justify-center shadow-xl transition-all transform translate-y-2 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 active:scale-90 cursor-pointer"
         >
           <ShoppingBag className="w-4 h-4 sm:w-5 sm:h-5 text-white" />
         </button>
@@ -85,7 +97,7 @@ export default function ProductCard({ product, badge = null, discount = null }) 
 
           {/* Başlıq */}
           <Link href={`/products/${product.handle}`} className="block group/title">
-            <h4 className="text-xs sm:text-sm font-bold text-neutral-900 group-hover/title:text-[#FF5B00] transition-colors line-clamp-2 leading-snug">
+            <h4 className="text-xs sm:text-sm font-bold text-neutral-900 group-hover/title:text-slate-900 transition-colors line-clamp-2 leading-snug">
               {product.title}
             </h4>
           </Link>
@@ -94,7 +106,7 @@ export default function ProductCard({ product, badge = null, discount = null }) 
         <div>
           {/* Qiymət Bloku */}
           <div className="flex items-baseline gap-1.5 sm:gap-2 pt-1 border-t border-neutral-100">
-            <span className="text-sm sm:text-lg md:text-xl font-black text-[#FF5B00]">
+            <span className="text-sm sm:text-lg md:text-xl font-bold text-[#111827]">
               {currentPrice} AZN
             </span>
             {comparePrice && (
@@ -108,7 +120,7 @@ export default function ProductCard({ product, badge = null, discount = null }) 
           <div className="pt-2">
             <button
               onClick={handleQuickAdd}
-              className="w-full min-h-[42px] sm:min-h-[46px] py-2 sm:py-2.5 px-2.5 sm:px-4 rounded-xl bg-neutral-900 hover:bg-[#FF5B00] text-white font-black text-[11px] sm:text-xs uppercase tracking-wider flex items-center justify-center gap-1.5 sm:gap-2 transition-all active:scale-95 shadow-sm cursor-pointer"
+              className="w-full min-h-[42px] sm:min-h-[46px] py-2 sm:py-2.5 px-2.5 sm:px-4 rounded-xl bg-[#111827] hover:bg-[#1f2937] text-white font-black text-[11px] sm:text-xs uppercase tracking-wider flex items-center justify-center gap-1.5 sm:gap-2 transition-all active:scale-95 shadow-sm cursor-pointer"
             >
               <ShoppingBag className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-white" />
               <span>Səbətə At</span>

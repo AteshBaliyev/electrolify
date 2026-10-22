@@ -9,8 +9,8 @@ export default function ProductGallery({ images = [], title = '', theme }) {
   const [touchStart, setTouchStart] = useState(null);
   const [touchEnd, setTouchEnd] = useState(null);
 
-  const activeColor = theme?.primary || '#FF5B00';
-  const activeRing = theme?.ring || 'rgba(255, 91, 0, 0.3)';
+  const activeColor = theme?.primary || '#111827';
+  const activeRing = theme?.ring || 'rgba(17, 24, 39, 0.3)';
 
   const imageList = images.length > 0 ? images : [
     {

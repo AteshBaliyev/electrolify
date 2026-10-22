@@ -14,7 +14,7 @@ export default function ProductCrossSell({
   theme,
 }) {
   const { addToCart, addCrossSellItem } = useCart();
-  const activeColor = theme?.primary || '#FF5B00';
+  const activeColor = theme?.primary || '#111827';
 
   // Mağazanın digər məhsullarından tövsiyə siyahısını formalaşdır
   const bundleItems = useMemo(() => {
@@ -49,7 +49,7 @@ export default function ProductCrossSell({
           return {
             id: String(p.id || `rec-${idx}`),
             title: p.title,
-            category: 'Electrolify Seçimi',
+            category: 'Trendim Seçimi',
             price,
             compareAtPrice,
             discount: `-${discountVal}%`,
@@ -147,7 +147,7 @@ export default function ProductCrossSell({
 
                 {/* Ad (Kliklənən Link - birbaşa məhsul səhifəsinə aparır) */}
                 <Link href={productHref} className="block group/title">
-                  <h4 className="text-sm font-bold text-neutral-900 leading-snug line-clamp-2 group-hover/title:text-[#FF5B00] transition-colors">
+                  <h4 className="text-sm font-bold text-neutral-900 leading-snug line-clamp-2 group-hover/title:text-[#111827] transition-colors">
                     {cross.title}
                   </h4>
                 </Link>
@@ -161,7 +161,7 @@ export default function ProductCrossSell({
               <div className="mt-4 pt-3 border-t border-neutral-100">
                 {/* Qiymət */}
                 <div className="flex items-baseline gap-2 mb-3">
-                  <span className="text-base font-black text-[#FF5B00]">
+                  <span className="text-base font-black text-[#111827]">
                     {cross.price.toFixed(2)} AZN
                   </span>
                   {cross.compareAtPrice > cross.price && (

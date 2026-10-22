@@ -17,7 +17,7 @@ export function CartProvider({ children }) {
   useEffect(() => {
     setIsMounted(true);
     try {
-      const savedCart = localStorage.getItem('electrolify_cart');
+      const savedCart = localStorage.getItem('trendim_cart') || localStorage.getItem('electrolify_cart');
       if (savedCart) {
         setItems(JSON.parse(savedCart));
       } else {
@@ -32,7 +32,7 @@ export function CartProvider({ children }) {
   useEffect(() => {
     if (!isMounted) return;
     try {
-      localStorage.setItem('electrolify_cart', JSON.stringify(items));
+      localStorage.setItem('trendim_cart', JSON.stringify(items));
     } catch (e) {
       console.warn('localStorage yazma xətası:', e);
     }

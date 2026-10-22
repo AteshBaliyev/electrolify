@@ -273,7 +273,7 @@ export async function fetchLiveShopifyProducts() {
     const cleanDomain = rawStoreDomain.replace(/^https?:\/\//, '').replace(/\/$/, '');
     const res = await fetch(`https://${cleanDomain}/products.json?limit=250`, {
       next: { revalidate: 60, tags: ['products'] },
-      headers: { 'User-Agent': 'Electrolify-NextJS/1.0' },
+      headers: { 'User-Agent': 'Trendim-NextJS/1.0' },
       signal: AbortSignal.timeout(3500),
     });
     if (!res.ok) return null;
@@ -457,7 +457,7 @@ export const MOCK_PRODUCTS = [
   },
   {
     id: '9625190498560',
-    title: 'ClarifyPro - Qara Nöktə Təmizləyici Vakum Cihazı',
+    title: 'ClarifyPro - Qara Nöqtə Təmizləyici Vakum Cihazı',
     handle: 'clarifypro-qara-noktə-təmizləyici-vakum-cihazi',
     description:
       'Dəridəki qara nöqtələri, məsamələri və artıq yağı dərini zədələmədən dərindən təmizləyən 3 rejimli güclü vakum cihazı. Dəyişdirilə bilən 3 xüsusi ucluq və uzunömürlü akkumulyator ilə ev şəraitində peşəkar dəri qulluğu.',
@@ -467,14 +467,14 @@ export const MOCK_PRODUCTS = [
       maxVariantPrice: { amount: '24.99', currencyCode: 'AZN' },
     },
     compareAtPriceRange: {
-      minVariantPrice: { amount: '49.00', currencyCode: 'AZN' },
+      minVariantPrice: { amount: '49.98', currencyCode: 'AZN' },
     },
     images: {
       edges: [
         {
           node: {
             url: 'https://cdn.shopify.com/s/files/1/0852/9418/6752/files/ChatGPTImage26Agu202603_24_34.png?v=1787700289',
-            altText: 'ClarifyPro - Qara Nöktə Təmizləyici Vakum Cihazı',
+            altText: 'ClarifyPro - Qara Nöqtə Təmizləyici Vakum Cihazı',
           },
         },
       ],
@@ -487,7 +487,7 @@ export const MOCK_PRODUCTS = [
             title: 'Standart',
             availableForSale: true,
             price: { amount: '24.99', currencyCode: 'AZN' },
-            compareAtPrice: { amount: '49.00', currencyCode: 'AZN' },
+            compareAtPrice: { amount: '49.98', currencyCode: 'AZN' },
           },
         },
       ],

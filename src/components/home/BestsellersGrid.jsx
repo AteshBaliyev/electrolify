@@ -60,8 +60,8 @@ export default function BestsellersGrid({ products = MOCK_PRODUCTS }) {
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-3 sm:gap-4 mb-6 sm:mb-8 pb-3 sm:pb-4 border-b border-neutral-200">
         <div>
           <div className="flex items-center gap-2 mb-1">
-            <TrendingUp className="w-4 h-4 sm:w-5 sm:h-5 text-[#FF5B00]" />
-            <span className="text-[10px] sm:text-xs font-mono uppercase tracking-widest text-[#FF5B00] font-bold">
+            <TrendingUp className="w-4 h-4 sm:w-5 sm:h-5 text-rose-600" />
+            <span className="text-[10px] sm:text-xs font-mono uppercase tracking-widest text-rose-600 font-bold">
               Hit Məhsullar
             </span>
           </div>
@@ -78,7 +78,7 @@ export default function BestsellersGrid({ products = MOCK_PRODUCTS }) {
               onClick={() => setActiveTab(tab.id)}
               className={`min-h-[40px] sm:min-h-[44px] py-2 px-3.5 sm:px-5 rounded-xl text-xs font-bold transition-all whitespace-nowrap select-none flex items-center justify-center cursor-pointer ${
                 activeTab === tab.id
-                  ? 'bg-[#FF5B00] text-white font-black shadow-md shadow-[#FF5B00]/25 scale-105'
+                  ? 'bg-[#111827] text-white font-black shadow-md shadow-slate-900/25 scale-105'
                   : 'bg-white text-neutral-700 hover:text-neutral-900 border border-neutral-200 hover:bg-neutral-50 shadow-sm'
               }`}
             >

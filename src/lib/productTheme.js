@@ -1,10 +1,10 @@
 /**
- * Electrolify - Dinamik Məhsul Rəng və Dizayn Mövzuları (Product Theming)
+ * Trendim - Dinamik Məhsul Rəng və Dizayn Mövzuları (Product Theming)
  * Hər bir məhsulun öz vizual rənglərinə və şəkillərindəki vurğulara uyğun unikal rəng sxemi.
  */
 
 export const PRODUCT_THEMES = {
-  // ClarifyPro - Qara Nöktə Vakum Cihazı (Şəkildəki "50% ENDİRİM" canlı magenta / fuchsia rəngi)
+  // ClarifyPro - Qara Nöqtə Vakum Cihazı (Şəkildəki "50% ENDİRİM" canlı magenta / fuchsia rəngi)
   clarify: {
     id: 'clarify',
     name: 'ClarifyPro Magenta',
@@ -85,10 +85,10 @@ export const PRODUCT_THEMES = {
     accentBadgeBorder: 'border-[#C7D2FE]',
   },
 
-  // Standart / Fallback Electrolify Narıncısı
+  // Standart / Fallback Trendim
   default: {
     id: 'default',
-    name: 'Electrolify Default',
+    name: 'Trendim Default',
     primary: '#FF5B00',
     primaryHover: '#E64D00',
     primaryActive: '#CC4400',

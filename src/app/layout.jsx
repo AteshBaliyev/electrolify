@@ -5,26 +5,26 @@ import AppLayout from '@/components/layout/AppLayout';
 import { FB_PIXEL_ID } from '@/lib/metaPixel';
 
 export const metadata = {
-  metadataBase: new URL('https://electrolify.com'),
-  title: 'Electrolify | Premium Elektronika və Ağıllı Qadcetlər',
-  description: 'Azərbaycanın ən etibarlı e-ticarət platforması. Orijinal məhsullar, 50 AZN-dən yuxarı pulsuz çatdırılma və 100% zəmanət.',
-  keywords: 'elektronika, smart saat, simsiz qulaqlıq, magsafe, baku, azərbaycan, online alisveris',
+  metadataBase: new URL('https://trendim.store'),
+  title: 'Trendim — Seçilmiş Trend Məhsullar | Qapıda Ödəniş',
+  description: 'Azərbaycanın ən sürətli və güvənli onlayn alış-veriş mərkəzidir. Biz yalnız sınaqdan keçmiş, seçilmiş trend məhsulları və keyfiyyətli qadcetləri birbaşa qapınıza çatdırırıq.',
+  keywords: 'trend məhsullar, elektronika, smart saat, simsiz qulaqlıq, baku, azərbaycan, online alisveris, qapida odenis',
   icons: {
     icon: '/icon.png',
     shortcut: '/icon.png',
     apple: '/icon.png',
   },
   openGraph: {
-    title: 'Electrolify | Premium Elektronika',
+    title: 'Trendim — Seçilmiş Trend Məhsullar | Qapıda Ödəniş',
     description: 'Xüsusi endirimlər və sürətli çatdırılma ilə sifariş verin.',
-    url: 'https://electrolify.com',
-    siteName: 'Electrolify',
+    url: 'https://trendim.store',
+    siteName: 'Trendim',
     images: [
       {
         url: '/logo.png',
         width: 1024,
         height: 1024,
-        alt: 'Electrolify Logo',
+        alt: 'Trendim Logo',
       },
     ],
     locale: 'az_AZ',
@@ -153,7 +153,7 @@ export default function RootLayout({ children }) {
           src="https://cdn.shopify.com/s/trekkie.storefront.min.js"
         />
       </head>
-      <body className="min-h-screen bg-[#F8F9FA] text-neutral-900 selection:bg-[#FF5B00] selection:text-white flex flex-col">
+      <body className="min-h-screen bg-[#F8F9FA] text-neutral-900 selection:bg-[#111827] selection:text-white flex flex-col">
         <CartProvider>
           <AppLayout>{children}</AppLayout>
         </CartProvider>

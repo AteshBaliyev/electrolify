@@ -20,7 +20,7 @@ export async function generateMetadata({ params }) {
   const title = CATEGORY_NAMES[slug] || 'Elektronika Məhsulları';
 
   return {
-    title: `${title} | Ən Sərfəli Qiymətlər | Electrolify.com`,
+    title: `${title} | Ən Sərfəli Qiymətlər | Trendim`,
     description: `${title} kateqoriyasında ən populyar modellər, 24 saatda sürətli çatdırılma və qapıda nağd/kartla ödəniş.`,
   };
 }
@@ -47,7 +47,7 @@ export default async function CategoryPage({ params }) {
         {/* Kateqoriya Başlığı */}
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-8 pb-4 border-b border-neutral-200">
           <div>
-            <span className="text-xs font-mono uppercase tracking-widest text-[#FF5B00] font-bold">
+            <span className="text-xs font-mono uppercase tracking-widest text-rose-600 font-bold">
               Kateqoriya
             </span>
             <h1 className="text-2xl sm:text-4xl font-black text-neutral-900 tracking-tight mt-1">
@@ -84,7 +84,7 @@ export default async function CategoryPage({ params }) {
             <p className="text-neutral-600 text-sm">Bu kateqoriyada hazırda məhsul tapılmadı.</p>
             <Link
               href="/"
-              className="mt-4 inline-flex items-center justify-center py-2.5 px-6 rounded-xl bg-[#FF5B00] hover:bg-[#E64D00] text-white font-black text-xs uppercase tracking-wider transition-colors"
+              className="mt-4 inline-flex items-center justify-center py-2.5 px-6 rounded-xl bg-[#111827] hover:bg-[#1f2937] text-white font-black text-xs uppercase tracking-wider transition-colors"
             >
               Ana Səhifəyə Keç
             </Link>

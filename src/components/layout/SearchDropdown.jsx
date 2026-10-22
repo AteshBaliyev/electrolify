@@ -24,7 +24,7 @@ export default function SearchDropdown({
       {/* Başlıq Hissəsi */}
       <div className="px-4 py-2.5 bg-neutral-50/90 border-b border-neutral-200/80 flex items-center justify-between text-xs text-neutral-500">
         <span className="font-bold flex items-center gap-1.5 text-neutral-700">
-          <Sparkles className="w-3.5 h-3.5 text-[#FF5B00]" />
+          <Sparkles className="w-3.5 h-3.5 text-rose-600" />
           {isQueryEmpty ? 'Tövsiyə Olunan Məhsullar' : `Axtarış Nəticələri (${results.length})`}
         </span>
         <span className="text-[11px] text-neutral-400">
@@ -57,11 +57,11 @@ export default function SearchDropdown({
                 {/* Ad, Kateqoriya və Qiymət */}
                 <div className="flex flex-col min-w-0">
                   <div className="flex items-center gap-1.5">
-                    <span className="text-xs sm:text-sm font-bold text-neutral-900 truncate group-hover:text-[#FF5B00] transition-colors">
+                    <span className="text-xs sm:text-sm font-bold text-neutral-900 truncate group-hover:text-[#111827] transition-colors">
                       {product.shortTitle || product.title}
                     </span>
                     {product.badge && (
-                      <span className="text-[10px] font-black px-1.5 py-0.2 rounded bg-[#FF5B00]/10 text-[#FF5B00] shrink-0">
+                      <span className="text-[10px] font-black px-1.5 py-0.2 rounded bg-rose-50 text-rose-600 shrink-0">
                         {product.badge}
                       </span>
                     )}
@@ -85,7 +85,7 @@ export default function SearchDropdown({
               </div>
 
               {/* Sağ Ox */}
-              <div className="w-8 h-8 rounded-lg flex items-center justify-center text-neutral-400 group-hover:text-[#FF5B00] group-hover:translate-x-0.5 transition-all shrink-0">
+              <div className="w-8 h-8 rounded-lg flex items-center justify-center text-neutral-400 group-hover:text-[#111827] group-hover:translate-x-0.5 transition-all shrink-0">
                 <ChevronRight className="w-4 h-4" />
               </div>
             </Link>
@@ -113,7 +113,7 @@ export default function SearchDropdown({
           className="w-full py-2 px-3 rounded-xl bg-white hover:bg-neutral-100 border border-neutral-200 text-xs font-bold text-neutral-700 flex items-center justify-center gap-1.5 transition-colors shadow-2xs"
         >
           <span>Bütün Məhsullar Kataloquna Bax ({SEARCHABLE_PRODUCTS.length})</span>
-          <ArrowRight className="w-3.5 h-3.5 text-[#FF5B00]" />
+          <ArrowRight className="w-3.5 h-3.5 text-slate-900" />
         </Link>
       </div>
     </div>

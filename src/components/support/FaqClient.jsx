@@ -18,9 +18,9 @@ const FAQ_ITEMS = [
     question: 'Çatdırılma necə həyata keçirilir və neçə gün çəkir?',
     category: 'Çatdırılma',
     icon: Truck,
-    iconColor: 'text-[#FF5B00]',
+    iconColor: 'text-slate-900',
     answer: `
-      Electrolify olaraq bütün Azərbaycan ərazisinə operativ və güvənli çatdırılma təşkil edirik:
+      Trendim olaraq bütün Azərbaycan ərazisinə operativ və güvənli çatdırılma təşkil edirik:
 
       • Bakı şəhəri: Sifarişiniz təsdiqləndikdən sonra 24 saat ərzində birbaşa qapınıza çatdırılır. Əksər hallarda günorta saat 15:00-dək verilən sifarişlər elə həmin gün təhvil verilir.
       • Sumqayıt və Abşeron: Eyni gün və ya ən geci növbəti gün çatdırılır.
@@ -51,7 +51,7 @@ const FAQ_ITEMS = [
     icon: ShieldCheck,
     iconColor: 'text-blue-600',
     answer: `
-      Electrolify-dan aldığınız hər bir məhsul rəsmi qanunvericilik və daxili keyfiyyət standartlarımızla qorunur:
+      Trendim-dən aldığınız hər bir məhsul rəsmi qanunvericilik və daxili keyfiyyət standartlarımızla qorunur:
 
       • 14 Gün Şərtsiz İadə / Dəyişmə: Məhsulu təhvil aldığınız tarixdən etibarən 14 gün ərzində bəyənmədiyiniz halda dərhal başqa modellə dəyişdirə və ya 100% pulunuzu geri ala bilərsiniz.
       • Qaytarma Qaydası: Məhsulun əmtəə görünüşü, zavod qutusu və aksesuarları zədələnməmiş vəziyyətdə olmalıdır.
@@ -79,7 +79,7 @@ const FAQ_ITEMS = [
     icon: CheckCircle2,
     iconColor: 'text-amber-600',
     answer: `
-      Electrolify yalnız yoxlanılmış və beynəlxalq sertifikatlara (CE, RoHS, FCC) malik orijinal qadcetlərin satışını həyata keçirir:
+      Trendim yalnız yoxlanılmış və beynəlxalq sertifikatlara (CE, RoHS, FCC) malik orijinal qadcetlərin satışını həyata keçirir:
 
       • Hər bir məhsul zavod qablaşdırmasında, toxunulmaz qoruyucu lentlərlə təqdim edilir.
       • Smart saatlar və qulaqlıqlar rəsmi tətbiqlər (məs. Wearfit Pro, FitCloudPro və s.) vasitəsilə smartfona problemsiz qoşulur və proqram təminatı yenilənmələrini dəstəkləyir.
@@ -125,7 +125,7 @@ export default function FaqClient() {
           placeholder="Sualınızı axtarın (çatdırılma, ödəniş, zəmanət...)"
           value={searchQuery}
           onChange={(e) => setSearchQuery(e.target.value)}
-          className="w-full bg-white border border-neutral-200 focus:border-[#FF5B00] rounded-2xl py-3 pl-11 pr-4 text-xs text-neutral-900 placeholder-neutral-400 focus:outline-none transition-colors shadow-sm"
+          className="w-full bg-white border border-neutral-200 focus:border-[#111827] rounded-2xl py-3 pl-11 pr-4 text-xs text-neutral-900 placeholder-neutral-400 focus:outline-none transition-colors shadow-sm"
         />
         <Search className="w-4 h-4 text-neutral-400 absolute left-4 top-1/2 -translate-y-1/2" />
       </div>
@@ -142,7 +142,7 @@ export default function FaqClient() {
               id={item.id}
               className={`rounded-2xl border transition-all overflow-hidden ${
                 isOpen
-                  ? 'bg-white border-[#FF5B00] shadow-md ring-1 ring-[#FF5B00]/20'
+                  ? 'bg-white border-[#111827] shadow-md ring-1 ring-[#111827]/15'
                   : 'bg-white border-neutral-200 hover:border-neutral-300 shadow-sm'
               }`}
             >
@@ -168,7 +168,7 @@ export default function FaqClient() {
 
                 <div
                   className={`w-8 h-8 rounded-xl bg-neutral-100 border border-neutral-200 flex items-center justify-center text-neutral-500 transition-transform duration-300 shrink-0 ${
-                    isOpen ? 'rotate-180 text-[#FF5B00]' : ''
+                    isOpen ? 'rotate-180 text-[#111827]' : ''
                   }`}
                 >
                   <ChevronDown className="w-4 h-4" />
@@ -190,7 +190,7 @@ export default function FaqClient() {
                       )}"%20haqq%C4%B1nda%20əlavə%20sualım%20var.`}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="text-[#FF5B00] hover:underline font-semibold flex items-center gap-1"
+                      className="text-slate-900 hover:underline font-semibold flex items-center gap-1"
                     >
                       Əlavə sual ver <ArrowRight className="w-3 h-3" />
                     </a>

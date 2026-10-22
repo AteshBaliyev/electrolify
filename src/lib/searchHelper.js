@@ -65,13 +65,13 @@ export const SEARCHABLE_PRODUCTS = [
   },
   {
     id: '9625190498560',
-    title: 'ClarifyPro - Qara Nöktə Təmizləyici Vakum Cihazı',
+    title: 'ClarifyPro - Qara Nöqtə Təmizləyici Vakum Cihazı',
     shortTitle: 'ClarifyPro Vakum Cihazı',
     handle: 'clarifypro-qara-noktə-təmizləyici-vakum-cihazi',
     category: 'Dəri Qulluğu & Vakum',
     price: '24.99',
-    compareAtPrice: '49.00',
-    discount: '-49%',
+    compareAtPrice: '49.98',
+    discount: '-50%',
     image:
       'https://cdn.shopify.com/s/files/1/0852/9418/6752/files/ChatGPTImage26Agu202603_24_34.png?v=1787700289',
     badge: 'Hit',

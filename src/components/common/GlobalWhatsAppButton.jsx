@@ -11,7 +11,7 @@ export default function GlobalWhatsAppButton() {
 
   return (
     <div
-      className="fixed bottom-20 sm:bottom-6 right-4 sm:right-6 z-[60] flex items-center group pointer-events-auto animate-in fade-in zoom-in-75 duration-300"
+      className="fixed bottom-24 right-4 sm:right-6 z-[60] flex items-center group pointer-events-auto animate-in fade-in zoom-in-75 duration-300"
     >
       {/* Desktop Tooltip */}
       <span className="hidden sm:inline-flex items-center gap-1.5 mr-2.5 px-3 py-1.5 rounded-full bg-white text-neutral-900 text-xs font-semibold border border-neutral-200 shadow-lg opacity-0 group-hover:opacity-100 transition-opacity duration-200 pointer-events-none whitespace-nowrap">

@@ -13,6 +13,7 @@ import {
   ArrowRight,
   Clock,
   HeartHandshake,
+  ShoppingBag,
 } from 'lucide-react';
 import { getProductTheme } from '@/lib/productTheme';
 
@@ -244,23 +245,14 @@ export default function ClarifyComparisonSection({ product, theme }) {
 
           </div>
 
-          {/* Sağ Tərəf: İstifadəçinin Şəklindəki Elektrolify Mətni və Düyməsi */}
+          {/* Sağ Tərəf: Trendim Mətni və Düyməsi */}
           <div className="lg:col-span-5 flex flex-col items-center lg:items-start text-center lg:text-left space-y-4">
             <div className="flex items-center gap-3">
-              <div
-                className="relative w-11 h-11 rounded-2xl bg-neutral-950 border overflow-hidden shadow-lg shrink-0"
-                style={{ borderColor: `${activeTheme.primary}50` }}
-              >
-                <Image
-                  src="/logo-icon.png"
-                  alt="Electrolify Logo"
-                  fill
-                  sizes="44px"
-                  className="object-cover"
-                />
+              <div className="w-11 h-11 rounded-xl bg-[#111827] flex items-center justify-center text-white shadow-md shrink-0">
+                <ShoppingBag className="w-6 h-6 stroke-[2.2]" />
               </div>
               <h2 className="text-3xl sm:text-4xl font-black text-neutral-900 tracking-tight">
-                Elektrolify®
+                Trendim®
               </h2>
             </div>
 

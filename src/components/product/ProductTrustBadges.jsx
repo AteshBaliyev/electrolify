@@ -6,10 +6,10 @@ export default function ProductTrustBadges({ theme }) {
     {
       title: 'Sürətli Çatdırılma',
       icon: Truck,
-      color: theme?.primary ? '' : 'text-[#FF5B00]',
+      color: theme?.primary ? '' : 'text-[#111827]',
       style: theme?.primary ? { color: theme.primary } : {},
       borderStyle: theme?.primaryBorder ? { borderColor: theme.primaryBorder } : {},
-      borderColor: theme?.primaryBorder ? '' : 'border-orange-200',
+      borderColor: theme?.primaryBorder ? '' : 'border-slate-200',
     },
     {
       title: 'Qapıda Ödəniş',

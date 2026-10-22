@@ -69,10 +69,10 @@ export default function CartDrawer() {
 
   const handleApplyPromo = (e) => {
     e.preventDefault();
-    if (promoCode.trim().toUpperCase() === 'ELECTROLIFY10') {
+    if (promoCode.trim().toUpperCase() === 'TRENDIM10') {
       setPromoApplied(true);
     } else {
-      alert('Zəhmət olmasa düzgün promo kod daxil edin (Məsələn: ELECTROLIFY10)');
+      alert('Zəhmət olmasa düzgün promo kod daxil edin (Məsələn: TRENDIM10)');
     }
   };
 
@@ -103,13 +103,13 @@ export default function CartDrawer() {
             {/* 1. Səbət Başlığı */}
             <div className="p-4 md:p-5 border-b border-neutral-200 flex items-center justify-between bg-neutral-50">
               <div className="flex items-center gap-2.5">
-                <div className="w-10 h-10 rounded-xl bg-[#FF5B00]/15 flex items-center justify-center text-[#FF5B00] shrink-0">
+                <div className="w-10 h-10 rounded-xl bg-[#111827]/10 flex items-center justify-center text-[#111827] shrink-0">
                   <ShoppingBag className="w-5 h-5" />
                 </div>
                 <div>
                   <h3 className="font-black text-neutral-900 text-base tracking-tight flex items-center gap-2">
                     Səbətiniz
-                    <span className="text-xs font-bold bg-[#FF5B00] text-white px-2 py-0.5 rounded-full">
+                    <span className="text-xs font-bold bg-[#111827] text-white px-2 py-0.5 rounded-full">
                       {totalCount}
                     </span>
                   </h3>
@@ -130,7 +130,7 @@ export default function CartDrawer() {
 
             {/* 2. Dinamik Pulsuz Çatdırılma Hədəf Zolağı (Yalnız səbətdə məhsul olduqda göstərilir) */}
             {items.length > 0 && (
-              <div className="p-4 bg-orange-50/60 border-b border-orange-200">
+              <div className="p-4 bg-slate-50 border-b border-slate-200/80">
                 <div className="flex items-center justify-between text-xs font-bold mb-2">
                   {isFreeShipping ? (
                     <span className="text-[#10B981] flex items-center gap-1.5 font-bold">
@@ -139,9 +139,9 @@ export default function CartDrawer() {
                     </span>
                   ) : (
                     <span className="text-neutral-700 flex items-center gap-1.5">
-                      <Truck className="w-4 h-4 text-[#FF5B00]" />
+                      <Truck className="w-4 h-4 text-slate-900" />
                       Pulsuz çatdırılmaya yalnız{' '}
-                      <strong className="text-[#FF5B00]">
+                      <strong className="text-slate-900">
                         {(Number(remainingForFreeShipping) || 0).toFixed(2)} AZN
                       </strong>{' '}
                       qaldı!
@@ -159,7 +159,7 @@ export default function CartDrawer() {
                     className={`h-full rounded-full transition-all duration-500 ease-out ${
                       isFreeShipping
                         ? 'bg-gradient-to-r from-emerald-500 to-[#10B981] glow-green'
-                        : 'bg-gradient-to-r from-yellow-500 to-[#FF5B00]'
+                        : 'bg-gradient-to-r from-slate-700 to-[#111827]'
                     }`}
                   />
                 </div>
@@ -184,7 +184,7 @@ export default function CartDrawer() {
                       closeCart();
                       router.push('/#bestsellers');
                     }}
-                    className="py-3 px-6 rounded-xl bg-[#FF5B00] text-white font-black text-xs uppercase tracking-wider hover:bg-[#E64D00] transition-colors cursor-pointer flex items-center gap-2 shadow-md shadow-[#FF5B00]/20 active:scale-95"
+                    className="py-3 px-6 rounded-xl bg-[#111827] text-white font-black text-xs uppercase tracking-wider hover:bg-[#1f2937] transition-colors cursor-pointer flex items-center gap-2 shadow-md shadow-slate-900/20 active:scale-95"
                   >
                     <ShoppingBag className="w-4 h-4" />
                     <span>Digər Məhsullara Bax</span>
@@ -196,7 +196,7 @@ export default function CartDrawer() {
                   <div className="flex flex-col gap-3">
                     <div className="flex items-center justify-between text-xs font-bold text-neutral-700 px-0.5">
                       <span className="flex items-center gap-1.5 text-neutral-900">
-                        <ShoppingBag className="w-3.5 h-3.5 text-[#FF5B00]" />
+                        <ShoppingBag className="w-3.5 h-3.5 text-[#111827]" />
                         Səbətdəki Məhsullar ({totalCount})
                       </span>
                       <span className="text-[10px] text-[#10B981] font-semibold bg-[#10B981]/10 px-2 py-0.5 rounded-full">
@@ -205,11 +205,11 @@ export default function CartDrawer() {
                     </div>
 
                     {items.map((item) => {
-                      const productHref = `/products/${item.handle || 'electrolify-pro-watch-series-9'}`;
+                      const productHref = `/products/${item.handle || 'trendim-pro-watch-series-9'}`;
                       return (
                         <div
                           key={item.lineId}
-                          className="p-3.5 rounded-2xl bg-neutral-50 border-l-4 border-l-[#FF5B00] border-y border-r border-neutral-200 hover:border-neutral-300 transition-all flex gap-3 items-center shadow-sm relative"
+                          className="p-3.5 rounded-2xl bg-neutral-50 border-l-4 border-l-[#111827] border-y border-r border-neutral-200 hover:border-neutral-300 transition-all flex gap-3 items-center shadow-sm relative"
                         >
                           {/* Şəkil (Kliklənən Link) */}
                           <Link
@@ -234,7 +234,7 @@ export default function CartDrawer() {
                               onClick={closeCart}
                               className="block group"
                             >
-                              <h4 className="text-xs font-bold text-neutral-900 truncate group-hover:text-[#FF5B00] transition-colors">
+                              <h4 className="text-xs font-bold text-neutral-900 truncate group-hover:text-[#111827] transition-colors">
                                 {item.title}
                               </h4>
                             </Link>
@@ -274,7 +274,7 @@ export default function CartDrawer() {
 
                               {/* Qiymət */}
                               <div className="text-right">
-                                <span className="text-xs font-black text-[#FF5B00] block">
+                                <span className="text-xs font-black text-[#111827] block">
                                   {(item.price * item.quantity).toFixed(2)} AZN
                                 </span>
                                 {item.compareAtPrice > item.price && (
@@ -301,24 +301,24 @@ export default function CartDrawer() {
 
                   {/* 4. Səbət Daxili Tövsiyə Edilən Məhsullar (Balaca formada və kliklənən) */}
                   {unaddedRecommendations.length > 0 && (
-                    <div className="mt-5 p-3 rounded-2xl bg-orange-50/50 border border-dashed border-orange-200 shadow-xs">
+                    <div className="mt-5 p-3 rounded-2xl bg-slate-50 border border-dashed border-slate-300 shadow-xs">
                       <div className="flex items-center justify-between mb-2 px-0.5">
                         <span className="text-[11px] font-bold text-neutral-900 flex items-center gap-1.5">
-                          <Zap className="w-3.5 h-3.5 text-[#FF5B00] fill-[#FF5B00]" />
+                          <Zap className="w-3.5 h-3.5 text-rose-600 fill-rose-600" />
                           Önərilən Məhsullar
                         </span>
-                        <span className="text-[9px] text-[#FF5B00] font-bold bg-[#FF5B00]/10 px-2 py-0.5 rounded-full">
+                        <span className="text-[9px] text-rose-600 font-bold bg-rose-50 px-2 py-0.5 rounded-full border border-rose-200">
                           Xüsusi Təklif
                         </span>
                       </div>
 
                       <div className="space-y-2">
                         {unaddedRecommendations.map((cross) => {
-                          const crossHref = `/products/${cross.handle || 'clarifypro-qara-noktə-təmizləyici-vakum-cihazi'}`;
+                          const crossHref = `/products/${cross.handle || 'clarifypro-qara-nokte-temizleyici-vakum-cihazi'}`;
                           return (
                             <div
                               key={cross.id}
-                              className="p-2 rounded-xl bg-white border border-neutral-200 hover:border-orange-300 flex items-center justify-between gap-2.5 transition-all shadow-xs"
+                              className="p-2 rounded-xl bg-white border border-neutral-200 hover:border-slate-300 flex items-center justify-between gap-2.5 transition-all shadow-xs"
                             >
                               {/* Şəkil və Başlıq (Kliklənən Link - birbaşa məhsul səhifəsinə aparır) */}
                               <Link
@@ -336,11 +336,11 @@ export default function CartDrawer() {
                                   />
                                 </div>
                                 <div className="min-w-0 flex-1">
-                                  <h5 className="text-[11px] font-bold text-neutral-800 truncate group-hover:text-[#FF5B00] transition-colors">
+                                  <h5 className="text-[11px] font-bold text-neutral-800 truncate group-hover:text-[#111827] transition-colors">
                                     {cross.title}
                                   </h5>
                                   <div className="flex items-center gap-1.5 mt-0.5">
-                                    <span className="text-xs font-black text-[#FF5B00]">
+                                    <span className="text-xs font-black text-[#111827]">
                                       {cross.price.toFixed(2)} AZN
                                     </span>
                                     {cross.compareAtPrice > cross.price && (
@@ -361,7 +361,7 @@ export default function CartDrawer() {
                               <button
                                 type="button"
                                 onClick={() => addCrossSellItem(cross)}
-                                className="shrink-0 py-1.5 px-2.5 rounded-lg bg-orange-50 hover:bg-[#FF5B00] hover:text-white text-[#FF5B00] font-bold text-[11px] flex items-center gap-1 border border-orange-200 transition-all active:scale-95 cursor-pointer"
+                                className="shrink-0 py-1.5 px-2.5 rounded-lg bg-slate-100 hover:bg-[#111827] hover:text-white text-slate-800 font-bold text-[11px] flex items-center gap-1 border border-slate-200 transition-all active:scale-95 cursor-pointer"
                                 title="Səbətə əlavə et"
                               >
                                 <Plus className="w-3.5 h-3.5" />
@@ -388,11 +388,11 @@ export default function CartDrawer() {
                         <div className="relative flex-1">
                           <input
                             type="text"
-                            placeholder="Kupon kodu (ELECTROLIFY10)"
+                            placeholder="Kupon kodu (TRENDIM10)"
                             value={promoCode}
                             onChange={(e) => setPromoCode(e.target.value)}
                             autoFocus
-                            className="w-full bg-white border border-neutral-200 focus:border-[#FF5B00] rounded-xl min-h-[44px] py-2 pl-9 pr-3 text-sm sm:text-xs text-neutral-900 placeholder-neutral-400 focus:outline-none uppercase font-mono shadow-sm"
+                            className="w-full bg-white border border-neutral-200 focus:border-[#111827] rounded-xl min-h-[44px] py-2 pl-9 pr-3 text-sm sm:text-xs text-neutral-900 placeholder-neutral-400 focus:outline-none uppercase font-mono shadow-sm"
                           />
                           <Tag className="w-4 h-4 text-neutral-400 absolute left-3 top-1/2 -translate-y-1/2" />
                         </div>
@@ -407,9 +407,9 @@ export default function CartDrawer() {
                       <button
                         type="button"
                         onClick={() => setShowPromoInput(true)}
-                        className="text-xs text-neutral-600 hover:text-[#FF5B00] flex items-center gap-1.5 transition-colors py-0.5 cursor-pointer"
+                        className="text-xs text-neutral-600 hover:text-[#111827] flex items-center gap-1.5 transition-colors py-0.5 cursor-pointer"
                       >
-                        <Tag className="w-3.5 h-3.5 text-[#FF5B00]" />
+                        <Tag className="w-3.5 h-3.5 text-[#111827]" />
                         <span>Promo kodunuz var? Daxil edin</span>
                       </button>
                     )}
@@ -448,7 +448,7 @@ export default function CartDrawer() {
                   </div>
                   <div className="flex justify-between items-baseline pt-2 border-t border-neutral-200">
                     <span className="font-bold text-neutral-900 text-sm">Yekun Məbləğ:</span>
-                    <span className="font-black text-[#FF5B00] text-xl">
+                    <span className="font-black text-[#111827] text-xl">
                       {finalTotal} AZN
                     </span>
                   </div>
@@ -457,7 +457,7 @@ export default function CartDrawer() {
                 {/* Sifariş Düyməsi (Min 52px hündürlükdə) */}
                 <button
                   onClick={handleCheckout}
-                  className="w-full min-h-[52px] py-4 px-6 rounded-2xl bg-[#FF5B00] hover:bg-[#E64D00] text-white font-black text-sm uppercase tracking-wide flex items-center justify-center gap-2.5 shadow-xl shadow-[#FF5B00]/25 transition-all transform active:scale-[0.98] glow-orange cursor-pointer"
+                  className="w-full min-h-[52px] py-4 px-6 rounded-2xl bg-[#111827] hover:bg-[#1f2937] text-white font-black text-sm uppercase tracking-wide flex items-center justify-center gap-2.5 shadow-xl shadow-slate-900/25 transition-all transform active:scale-[0.98] cursor-pointer"
                 >
                   <Zap className="w-4 h-4 fill-white text-white" />
                   <span>SİFARİŞİ TAMAMLA (Qapıda Ödəniş)</span>
@@ -473,7 +473,7 @@ export default function CartDrawer() {
                   }}
                   className="w-full min-h-[46px] py-2.5 px-4 rounded-2xl border border-neutral-300 hover:border-neutral-400 bg-white hover:bg-neutral-100 text-neutral-800 font-bold text-xs sm:text-sm flex items-center justify-center gap-2 transition-all active:scale-[0.98] cursor-pointer shadow-xs"
                 >
-                  <ShoppingBag className="w-4 h-4 text-[#FF5B00]" />
+                  <ShoppingBag className="w-4 h-4 text-[#111827]" />
                   <span>Digər Məhsullara Bax</span>
                 </button>
 

@@ -9,15 +9,15 @@ const SLIDES = [
   {
     id: 1,
     badge: '✨ ÇOX SATAN DƏRİ QULLUĞU',
-    title: 'ClarifyPro - Qara Nöktə Vakum Cihazı',
+    title: 'ClarifyPro - Qara Nöqtə Vakum Cihazı',
     subtitle: 'Dəridəki qara nöqtələri və artıq yağı zədələmədən dərindən təmizləyən 3 rejimli güclü vakum.',
-    discount: '-49% ENDİRİM',
+    discount: '-50% ENDİRİM',
     price: '24.99 AZN',
-    comparePrice: '49.00 AZN',
+    comparePrice: '49.98 AZN',
     link: '/products/clarifypro-qara-noktə-təmizləyici-vakum-cihazi',
     image: 'https://cdn.shopify.com/s/files/1/0852/9418/6752/files/ChatGPTImage26Agu202603_24_34.png?v=1787700289',
     ctaText: 'İndi Al, Qapıda Ödə',
-    bgGradient: 'from-orange-50 via-white to-amber-50/50',
+    bgGradient: 'from-slate-50 via-white to-neutral-50',
   },
   {
     id: 2,
@@ -30,7 +30,7 @@ const SLIDES = [
     link: '/products/i̇stiəl-masaj-aparati-i̇stilikli-verən-və-avtomatik-sixaraq-masaj-edən-boyun-bel-və-ciyin-masaj-cihazi',
     image: 'https://cdn.shopify.com/s/files/1/0852/9418/6752/files/ChatGPT_Image_16_Agu_2026_00_10_34.png?v=1786880634',
     ctaText: 'Fürsəti Əldə Et',
-    bgGradient: 'from-amber-50 via-white to-orange-50/50',
+    bgGradient: 'from-neutral-50 via-white to-slate-50',
   },
   {
     id: 3,
@@ -43,7 +43,7 @@ const SLIDES = [
     link: '/products/lumify-pro-sehrli-bayram-i̇siqlari-🎄',
     image: 'https://cdn.shopify.com/s/files/1/0852/9418/6752/files/08338e9d-3bbf-4cc4-9130-2bdee2893246.jpg?v=1792431154',
     ctaText: 'İndi Al, Qapıda Ödə',
-    bgGradient: 'from-indigo-50 via-white to-purple-50/50',
+    bgGradient: 'from-slate-50 via-white to-neutral-50',
   },
 ];
 
@@ -57,9 +57,9 @@ export default function HeroSlider({ products = [] }) {
         const comparePrice = prod.compareAtPriceRange?.minVariantPrice?.amount;
         const badges = ['🔥 HƏFTƏNİN MEQA FÜRSƏTİ', '⚡ ÇOX SATAN MƏHSUL', '✨ YENİ GƏLƏN'];
         const gradients = [
-          'from-orange-50/90 via-white to-amber-50/50',
+          'from-slate-50 via-white to-neutral-50',
           'from-sky-50/90 via-white to-neutral-50',
-          'from-amber-50/90 via-white to-orange-50/50',
+          'from-slate-100/70 via-white to-slate-50',
         ];
         let discount = 'XÜSUSİ TƏKLİF';
         if (comparePrice && parseFloat(comparePrice) > parseFloat(price)) {
@@ -146,7 +146,7 @@ export default function HeroSlider({ products = [] }) {
           <div className="md:col-span-7 flex flex-col gap-2.5 sm:gap-4 max-w-xl">
             {/* 1. Badges */}
             <div className="flex items-center gap-2 flex-wrap">
-              <span className="text-[11px] font-black bg-[#FF5B00] text-white px-3 py-1 rounded-full uppercase tracking-wider shadow-md">
+              <span className="text-[11px] font-black bg-[#111827] text-white px-3 py-1 rounded-full uppercase tracking-wider shadow-md">
                 {slide.badge}
               </span>
               <span className="text-[11px] font-bold text-[#10B981] bg-emerald-50 border border-emerald-200 px-2.5 py-0.5 rounded-full flex items-center gap-1 shadow-sm">
@@ -159,7 +159,7 @@ export default function HeroSlider({ products = [] }) {
               href={slide.link}
               className="group/title block cursor-pointer"
             >
-              <h1 className="text-xl sm:text-4xl md:text-5xl font-black text-neutral-900 group-hover/title:text-[#FF5B00] tracking-tight leading-tight transition-colors">
+              <h1 className="text-xl sm:text-4xl md:text-5xl font-black text-neutral-900 group-hover/title:text-slate-900 tracking-tight leading-tight transition-colors">
                 {slide.title}
               </h1>
             </Link>
@@ -196,7 +196,7 @@ export default function HeroSlider({ products = [] }) {
 
             {/* 5. Qiymət və Qənaət */}
             <div className="flex items-baseline gap-3 pt-1">
-              <span className="text-2xl sm:text-4xl font-black text-[#FF5B00]">
+              <span className="text-2xl sm:text-4xl font-black text-[#111827]">
                 {slide.price}
               </span>
               {slide.comparePrice && (
@@ -204,7 +204,7 @@ export default function HeroSlider({ products = [] }) {
                   {slide.comparePrice}
                 </span>
               )}
-              <span className="text-xs font-black bg-red-600 text-white px-2 py-0.5 rounded shadow-sm">
+              <span className="text-xs font-black bg-rose-600 text-white px-2 py-0.5 rounded shadow-sm">
                 {slide.discount}
               </span>
             </div>
@@ -213,7 +213,7 @@ export default function HeroSlider({ products = [] }) {
             <div className="pt-2">
               <Link
                 href={slide.link}
-                className="w-full sm:w-auto inline-flex items-center justify-center gap-3 min-h-[48px] sm:min-h-[50px] py-3.5 px-8 rounded-2xl bg-[#FF5B00] hover:bg-[#E64D00] text-white font-black text-xs sm:text-sm uppercase tracking-wide shadow-xl shadow-[#FF5B00]/25 transition-all transform active:scale-95 glow-orange"
+                className="w-full sm:w-auto inline-flex items-center justify-center gap-3 min-h-[48px] sm:min-h-[50px] py-3.5 px-8 rounded-2xl bg-[#111827] hover:bg-[#1f2937] text-white font-black text-xs sm:text-sm uppercase tracking-wide shadow-xl shadow-slate-900/10 transition-all transform active:scale-95"
               >
                 <Zap className="w-4 h-4 fill-white text-white" />
                 <span>{slide.ctaText}</span>
@@ -248,14 +248,14 @@ export default function HeroSlider({ products = [] }) {
       <button
         onClick={handlePrev}
         aria-label="Əvvəlki slayd"
-        className="absolute left-2 sm:left-3 top-1/2 -translate-y-1/2 z-20 min-w-[38px] min-h-[38px] sm:min-w-[48px] sm:min-h-[48px] rounded-full bg-white/90 hover:bg-[#FF5B00] text-neutral-800 hover:text-white border border-neutral-200 flex items-center justify-center shadow-md transition-all active:scale-90"
+        className="absolute left-2 sm:left-3 top-1/2 -translate-y-1/2 z-20 min-w-[38px] min-h-[38px] sm:min-w-[48px] sm:min-h-[48px] rounded-full bg-white/90 hover:bg-[#111827] text-neutral-800 hover:text-white border border-neutral-200 flex items-center justify-center shadow-md transition-all active:scale-90"
       >
         <ChevronLeft className="w-5 h-5 sm:w-6 sm:h-6" />
       </button>
       <button
         onClick={handleNext}
         aria-label="Növbəti slayd"
-        className="absolute right-2 sm:right-3 top-1/2 -translate-y-1/2 z-20 min-w-[38px] min-h-[38px] sm:min-w-[48px] sm:min-h-[48px] rounded-full bg-white/90 hover:bg-[#FF5B00] text-neutral-800 hover:text-white border border-neutral-200 flex items-center justify-center shadow-md transition-all active:scale-90"
+        className="absolute right-2 sm:right-3 top-1/2 -translate-y-1/2 z-20 min-w-[38px] min-h-[38px] sm:min-w-[48px] sm:min-h-[48px] rounded-full bg-white/90 hover:bg-[#111827] text-neutral-800 hover:text-white border border-neutral-200 flex items-center justify-center shadow-md transition-all active:scale-90"
       >
         <ChevronRight className="w-5 h-5 sm:w-6 sm:h-6" />
       </button>
@@ -267,7 +267,7 @@ export default function HeroSlider({ products = [] }) {
             key={idx}
             onClick={() => setCurrentSlide(idx)}
             className={`h-2 rounded-full transition-all ${
-              currentSlide === idx ? 'w-8 bg-[#FF5B00]' : 'w-2 bg-neutral-300 hover:bg-neutral-400'
+              currentSlide === idx ? 'w-8 bg-[#111827]' : 'w-2 bg-neutral-300 hover:bg-neutral-400'
             }`}
           />
         ))}

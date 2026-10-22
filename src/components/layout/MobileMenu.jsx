@@ -9,6 +9,7 @@ import {
   Truck,
   ShieldCheck,
   ChevronRight,
+  ShoppingBag,
 } from 'lucide-react';
 import Link from 'next/link';
 import Image from 'next/image';
@@ -66,21 +67,15 @@ export default function MobileMenu({ isOpen, onClose, searchQuery, setSearchQuer
             {/* Menyu Başlığı (Min 48px toxunma sahəsi) */}
             <div className="p-4 sm:p-5 border-b border-neutral-200 flex items-center justify-between bg-white shrink-0">
               <div className="flex items-center gap-2.5">
-                <div className="relative w-10 h-10 rounded-xl bg-neutral-950 border border-orange-500/30 overflow-hidden shadow-md flex items-center justify-center shrink-0">
-                  <Image
-                    src="/logo-icon.png"
-                    alt="Electrolify Logo"
-                    width={40}
-                    height={40}
-                    className="w-full h-full object-cover"
-                  />
+                <div className="w-10 h-10 rounded-xl bg-[#111827] shadow-md flex items-center justify-center shrink-0">
+                  <ShoppingBag className="w-5 h-5 text-white" />
                 </div>
                 <div className="flex flex-col">
                   <span className="font-black text-xl tracking-tight text-neutral-900">
-                    ELECTROLIFY
+                    TRENDİM
                   </span>
                   <span className="text-[10px] text-neutral-500 font-semibold tracking-wider uppercase">
-                    Ağıllı Elektronika
+                    Seçilmiş Trend Məhsullar
                   </span>
                 </div>
               </div>
@@ -109,7 +104,7 @@ export default function MobileMenu({ isOpen, onClose, searchQuery, setSearchQuer
                   placeholder="Məhsul və ya model axtar..."
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
-                  className="w-full bg-neutral-100 border border-neutral-200 focus:border-[#FF5B00] focus:bg-white rounded-xl min-h-[48px] py-3 pl-11 pr-10 text-base text-neutral-900 placeholder-neutral-500 focus:outline-none transition-colors"
+                  className="w-full bg-neutral-100 border border-neutral-200 focus:border-[#111827] focus:bg-white rounded-xl min-h-[48px] py-3 pl-11 pr-10 text-base text-neutral-900 placeholder-neutral-500 focus:outline-none transition-colors"
                 />
                 <Search className="w-5 h-5 text-neutral-400 absolute left-3.5 top-1/2 -translate-y-1/2" />
                 {searchQuery && (
@@ -161,7 +156,7 @@ export default function MobileMenu({ isOpen, onClose, searchQuery, setSearchQuer
                             className={`text-[10px] font-black px-2 py-0.5 rounded-md ${
                               cat.highlight
                                 ? 'bg-red-500 text-white animate-pulse'
-                                : 'bg-[#FF5B00]/10 text-[#FF5B00]'
+                                : 'bg-slate-100 text-slate-800'
                             }`}
                           >
                             {cat.badge}
@@ -192,7 +187,7 @@ export default function MobileMenu({ isOpen, onClose, searchQuery, setSearchQuer
             {/* WhatsApp ilə Birbaşa Sürətli Sifariş */}
             <div className="p-4 sm:p-5 border-t border-neutral-200 bg-neutral-50 flex flex-col gap-3 shrink-0 pb-[calc(1rem+env(safe-area-inset-bottom,0px))]">
               <a
-                href="https://wa.me/994559031176?text=Salam,%20Electrolify-dan%20sifari%C5%9F%20verm%C9%99k%20ist%C9%99yir%C9%99m"
+                href="https://wa.me/994559031176?text=Salam,%20Trendim-d%C9%99n%20sifari%C5%9F%20verm%C9%99k%20ist%C9%99yir%C9%99m"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="w-full min-h-[52px] py-3.5 px-4 rounded-2xl bg-[#25D366] hover:bg-[#20bd5a] text-white font-black text-sm uppercase tracking-wide flex items-center justify-center gap-2.5 shadow-md transition-transform active:scale-95"
@@ -206,14 +201,14 @@ export default function MobileMenu({ isOpen, onClose, searchQuery, setSearchQuer
                 className="min-h-[48px] flex items-center justify-between text-xs text-neutral-700 bg-white border border-neutral-200 px-4 py-2.5 rounded-xl shadow-sm"
               >
                 <span className="flex items-center gap-2 font-bold text-neutral-900">
-                  <PhoneCall className="w-4 h-4 text-[#FF5B00]" /> 055 903 11 76
+                  <PhoneCall className="w-4 h-4 text-slate-900" /> 055 903 11 76
                 </span>
                 <span className="text-[11px] text-emerald-600 font-semibold">Hər gün: 09:00 - 22:00</span>
               </a>
 
               <div className="pt-2 border-t border-neutral-200 flex items-center justify-around text-xs text-neutral-500">
                 <span className="flex items-center gap-1.5">
-                  <Truck className="w-3.5 h-3.5 text-[#FF5B00]" /> 24 Saat Çatdırılma
+                  <Truck className="w-3.5 h-3.5 text-slate-900" /> 24 Saat Çatdırılma
                 </span>
                 <span className="flex items-center gap-1.5">
                   <ShieldCheck className="w-3.5 h-3.5 text-[#10B981]" /> Qapıda Ödəniş

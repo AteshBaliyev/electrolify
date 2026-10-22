@@ -58,7 +58,7 @@ export default function ProductReviews({ product, theme }) {
   const reviews = getProductReviews(product);
   const [showAll, setShowAll] = useState(false);
   const [helpfulCounts, setHelpfulCounts] = useState({});
-  const activeColor = theme?.primary || '#FF5B00';
+  const activeColor = theme?.primary || '#111827';
 
   const displayedReviews = showAll ? reviews : reviews.slice(0, 3);
 
@@ -177,8 +177,9 @@ export default function ProductReviews({ product, theme }) {
                   type="button"
                   onClick={() => handleHelpful(rev.id, rev.helpful)}
                   className={`flex items-center gap-1.5 transition-colors cursor-pointer ${
-                    isClicked ? 'text-[#FF5B00] font-bold' : 'hover:text-neutral-900'
+                    isClicked ? 'font-bold' : 'hover:text-neutral-900'
                   }`}
+                  style={isClicked ? { color: activeColor } : {}}
                 >
                   <ThumbsUp
                     style={isClicked ? { color: activeColor, fill: activeColor } : {}}

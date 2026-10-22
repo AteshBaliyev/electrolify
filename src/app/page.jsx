@@ -6,7 +6,7 @@ import HomeComparison from '@/components/home/HomeComparison';
 import { getProducts, MOCK_PRODUCTS } from '@/lib/shopify';
 
 export const metadata = {
-  title: 'Electrolify.com | Premium Elektronika və Ağıllı Qadcetlər',
+  title: 'Trendim — Seçilmiş Trend Məhsullar | Qapıda Ödəniş',
   description: 'Günün meqa endirimləri, qapıda nağd və ya kartla ödəniş, 24 saatda sürətli çatdırılma.',
 };
 
@@ -35,7 +35,7 @@ export default async function HomePage() {
         {/* 4. 'Çox Satanlar' Grid-i - Mobildə 2-li Grid */}
         <BestsellersGrid products={products} />
 
-        {/* 5. Sayt Üzrə Qarşılaşdırma Cədvəli və Elektrolify Xüsusi Endirim Bloku */}
+        {/* 5. Sayt Üzrə Qarşılaşdırma Cədvəli və Trendim Xüsusi Endirim Bloku */}
         <HomeComparison />
       </div>
     </div>

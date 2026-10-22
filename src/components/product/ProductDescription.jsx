@@ -25,7 +25,7 @@ export default function ProductDescription({ description, theme }) {
         onMouseLeave={(e) => {
           e.currentTarget.style.color = '';
         }}
-        className="mt-1 text-[11px] sm:text-xs font-semibold text-neutral-500 hover:text-[#FF5B00] inline-flex items-center gap-1 transition-colors cursor-pointer py-0.5"
+        className="mt-1 text-[11px] sm:text-xs font-semibold text-neutral-500 hover:text-neutral-900 inline-flex items-center gap-1 transition-colors cursor-pointer py-0.5"
       >
         <span>{isExpanded ? 'Bağla ▴' : 'Ətraflı Bax ▾'}</span>
       </button>

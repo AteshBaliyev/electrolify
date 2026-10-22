@@ -185,7 +185,7 @@ export async function createShopifyAdminOrder({
   clientIp = '',
   userAgent = '',
   acceptLanguage = '',
-  referringSite = 'https://electrolify.com',
+  referringSite = 'https://trendim.store',
   shopifySessionToken = '',
   shopifyBuyerToken = '',
 }) {
@@ -302,10 +302,10 @@ export async function createShopifyAdminOrder({
       ],
       financial_status: 'pending',
       gateway: 'Cash on Delivery (Qapıda Nağd Ödəniş)',
-      note: `Electrolify Saytından Yeni Sifariş:\nSifariş Kodu: ${orderNumber}\nMüştəri: ${customerFullName}\nTelefon: ${phone}\nŞəhər: ${city}\nPoçt: ${postalCode}\nÇatdırılma: ${shippingMethod} (${shippingFee} AZN)\nÖdəniş növü: ${paymentType}\nÜmumi Məbləğ: ${total} AZN`,
-      tags: 'Electrolify, Web Sifarişi, Qapıda Ödəniş, COD',
+      note: `Trendim Saytından Yeni Sifariş:\nSifariş Kodu: ${orderNumber}\nMüştəri: ${customerFullName}\nTelefon: ${phone}\nŞəhər: ${city}\nPoçt: ${postalCode}\nÇatdırılma: ${shippingMethod} (${shippingFee} AZN)\nÖdəniş növü: ${paymentType}\nÜmumi Məbləğ: ${total} AZN`,
+      tags: 'Trendim, Web Sifarişi, Qapıda Ödəniş, COD',
       note_attributes: [
-        { name: 'Kanal', value: 'Veb Sayt (electrolify.com)' },
+        { name: 'Kanal', value: 'Veb Sayt (trendim.store)' },
         ...(shopifySessionToken ? [{ name: 'Shopify Session Token', value: String(shopifySessionToken) }] : []),
         ...(shopifyBuyerToken ? [{ name: 'Shopify Buyer Token', value: String(shopifyBuyerToken) }] : []),
         ...(clientIp ? [{ name: 'Müştəri IP', value: String(clientIp) }] : []),
@@ -398,7 +398,7 @@ export async function createShopifyAdminOrder({
             order: {
               id: data.order.id,
               source_name: 'web',
-              referring_site: referringSite || 'https://electrolify.com',
+              referring_site: referringSite || 'https://trendim.store',
             },
           }),
         });

@@ -213,7 +213,7 @@ export default function CheckoutPage() {
       )
       .join('\n');
 
-    const whatsappMessage = `Salam! Electrolify.com saytından sifarişimi təsdiq edirəm:
+    const whatsappMessage = `Salam! Trendim.store saytından sifarişimi təsdiq edirəm:
 🧾 Sifariş Çeki: ${orderNumberDisplay}
 👤 Müştəri: ${submittedDetails.customer.name}
 📞 Telefon: ${submittedDetails.customer.phone}
@@ -360,7 +360,7 @@ Zəhmət olmasa sifarişimi qəbul edin və çatdırılmanı başladın.`;
                   Nağd və ya POS terminal ilə
                 </span>
               </div>
-              <span className="text-xl font-mono font-black text-[#FF5B00]">
+              <span className="text-xl font-mono font-black text-[#111827]">
                 {submittedDetails.total} AZN
               </span>
             </div>
@@ -394,16 +394,10 @@ Zəhmət olmasa sifarişimi qəbul edin və çatdırılmanı başladın.`;
               <span>Geri</span>
             </Link>
             <Link href="/" className="flex items-center gap-2">
-              <div className="relative w-7 h-7 rounded-lg bg-neutral-950 border border-orange-500/30 overflow-hidden shadow-xs flex items-center justify-center shrink-0">
-                <Image
-                  src="/logo-icon.png"
-                  alt="Electrolify Logo"
-                  width={28}
-                  height={28}
-                  className="w-full h-full object-cover"
-                />
+              <div className="w-8 h-8 rounded-xl bg-[#111827] flex items-center justify-center text-white shadow-xs shrink-0">
+                <ShoppingBag className="w-4 h-4 stroke-[2.2]" />
               </div>
-              <span className="font-black text-sm tracking-wider text-neutral-900">ELECTROLIFY</span>
+              <span className="font-black text-sm tracking-wider text-neutral-900">TRENDİM</span>
             </Link>
             <div className="w-10" />
           </div>
@@ -411,7 +405,7 @@ Zəhmət olmasa sifarişimi qəbul edin və çatdırılmanı başladın.`;
 
         <div className="flex-1 flex items-center justify-center px-4 py-12">
           <div className="max-w-md w-full bg-white border border-neutral-200 rounded-3xl p-8 text-center shadow-sm">
-            <div className="w-16 h-16 rounded-2xl bg-orange-50 text-[#FF5B00] flex items-center justify-center mx-auto mb-4">
+            <div className="w-16 h-16 rounded-2xl bg-slate-100 text-[#111827] flex items-center justify-center mx-auto mb-4">
               <ShoppingBag className="w-8 h-8" />
             </div>
             <h2 className="text-xl font-black text-neutral-900">Səbətiniz Boşdur</h2>
@@ -420,7 +414,7 @@ Zəhmət olmasa sifarişimi qəbul edin və çatdırılmanı başladın.`;
             </p>
             <Link
               href="/"
-              className="w-full py-3.5 px-6 rounded-xl bg-[#FF5B00] text-white font-black text-xs uppercase tracking-wider inline-flex items-center justify-center shadow-md hover:bg-[#e05000] transition-colors"
+              className="w-full py-3.5 px-6 rounded-xl bg-[#111827] text-white font-black text-xs uppercase tracking-wider inline-flex items-center justify-center shadow-md hover:bg-[#1f2937] transition-colors"
             >
               Məhsullara Bax
             </Link>
@@ -440,23 +434,17 @@ Zəhmət olmasa sifarişimi qəbul edin və çatdırılmanı başladın.`;
         <div className="max-w-xl mx-auto px-4 h-14 flex items-center justify-between">
           <Link
             href="/"
-            className="flex items-center gap-1 text-xs font-semibold text-neutral-600 hover:text-[#FF5B00] transition-colors"
+            className="flex items-center gap-1 text-xs font-semibold text-neutral-600 hover:text-[#111827] transition-colors"
           >
             <ArrowLeft className="w-4 h-4" />
             <span className="hidden xs:inline">Alış-verişə qayıt</span>
           </Link>
 
           <Link href="/" className="flex items-center gap-2 group">
-            <div className="relative w-8 h-8 rounded-xl bg-neutral-950 border border-orange-500/30 overflow-hidden shadow-xs flex items-center justify-center shrink-0">
-              <Image
-                src="/logo-icon.png"
-                alt="Electrolify Logo"
-                width={32}
-                height={32}
-                className="w-full h-full object-cover"
-              />
+            <div className="w-8 h-8 rounded-xl bg-[#111827] flex items-center justify-center text-white shadow-xs shrink-0">
+              <ShoppingBag className="w-4 h-4 stroke-[2.2]" />
             </div>
-            <span className="font-black text-sm tracking-wider text-neutral-900">ELECTROLIFY</span>
+            <span className="font-black text-sm tracking-wider text-neutral-900">TRENDİM</span>
           </Link>
 
           <div className="flex items-center gap-1 text-[11px] font-bold text-emerald-700 bg-emerald-50 px-2.5 py-1 rounded-full border border-emerald-200">
@@ -470,11 +458,11 @@ Zəhmət olmasa sifarişimi qəbul edin və çatdırılmanı başladın.`;
       <div className="bg-gradient-to-r from-neutral-950 via-neutral-900 to-neutral-950 text-white py-2 px-3 sm:px-4 text-center border-b border-neutral-800 shadow-sm">
         <div className="max-w-xl mx-auto flex items-center justify-center gap-2 text-xs font-bold">
           <span className="relative flex h-2 w-2">
-            <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#FF5B00] opacity-75"></span>
-            <span className="relative inline-flex rounded-full h-2 w-2 bg-[#FF5B00]"></span>
+            <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-rose-600 opacity-75"></span>
+            <span className="relative inline-flex rounded-full h-2 w-2 bg-rose-600"></span>
           </span>
           <span className="text-neutral-200">Xüsusi Endirim 5 Dəqiqə Ərzində Bitir:</span>
-          <span className="bg-[#FF5B00] text-white px-2 py-0.5 rounded font-mono font-black tracking-wider text-xs shadow-xs">
+          <span className="bg-rose-600 text-white px-2 py-0.5 rounded font-mono font-black tracking-wider text-xs shadow-xs">
             {timerMinutes}:{timerSeconds}
           </span>
         </div>
@@ -497,7 +485,7 @@ Zəhmət olmasa sifarişimi qəbul edin və çatdırılmanı başladın.`;
               ========================================================================= */}
           <div className="bg-white border border-neutral-200 rounded-3xl p-4 sm:p-6 shadow-sm">
             <div className="mb-4">
-              <span className="text-[10px] font-mono uppercase tracking-widest text-[#FF5B00] font-black bg-orange-50 px-2.5 py-0.5 rounded-full border border-orange-200 inline-block mb-1">
+              <span className="text-[10px] font-mono uppercase tracking-widest text-slate-900 font-bold bg-slate-100 px-2.5 py-0.5 rounded-full border border-slate-200 inline-block mb-1">
                 Qapıda Ödəniş Formu
               </span>
               <h2 className="text-lg sm:text-xl font-black text-neutral-900 tracking-tight">
@@ -512,7 +500,7 @@ Zəhmət olmasa sifarişimi qəbul edin və çatdırılmanı başladın.`;
               {/* Adınız (Soyad tamamilə silindi) */}
               <div>
                 <label className="block text-[11px] font-bold text-neutral-700 mb-1">
-                  Adınız <span className="text-[#FF5B00]">*</span>
+                  Adınız <span className="text-rose-600">*</span>
                 </label>
                 <input
                   type="text"
@@ -520,14 +508,14 @@ Zəhmət olmasa sifarişimi qəbul edin və çatdırılmanı başladın.`;
                   placeholder="Məs: Rəşad"
                   value={firstName}
                   onChange={(e) => setFirstName(e.target.value)}
-                  className="w-full bg-white border border-neutral-200 focus:border-[#FF5B00] focus:ring-2 focus:ring-[#FF5B00]/20 rounded-xl h-11 px-3.5 text-xs sm:text-sm text-neutral-900 placeholder-neutral-400 focus:outline-none transition-all shadow-xs"
+                  className="w-full bg-white border border-neutral-200 focus:border-[#111827] focus:ring-2 focus:ring-[#111827]/15 rounded-xl h-11 px-3.5 text-xs sm:text-sm text-neutral-900 placeholder-neutral-400 focus:outline-none transition-all shadow-xs"
                 />
               </div>
 
               {/* Mobil Telefon Nömrəsi */}
               <div>
                 <label className="block text-[11px] font-bold text-neutral-700 mb-1">
-                  Mobil Telefon Nömrəsi <span className="text-[#FF5B00]">*</span>
+                  Mobil Telefon Nömrəsi <span className="text-rose-600">*</span>
                 </label>
                 <div className="relative">
                   <input
@@ -536,7 +524,7 @@ Zəhmət olmasa sifarişimi qəbul edin və çatdırılmanı başladın.`;
                     placeholder="Məs: 050 123 45 67"
                     value={phone}
                     onChange={(e) => setPhone(e.target.value)}
-                    className="w-full bg-white border border-neutral-200 focus:border-[#FF5B00] focus:ring-2 focus:ring-[#FF5B00]/20 rounded-xl h-11 pl-3.5 pr-10 text-xs sm:text-sm text-neutral-900 placeholder-neutral-400 focus:outline-none transition-all font-mono shadow-xs"
+                    className="w-full bg-white border border-neutral-200 focus:border-[#111827] focus:ring-2 focus:ring-[#111827]/15 rounded-xl h-11 pl-3.5 pr-10 text-xs sm:text-sm text-neutral-900 placeholder-neutral-400 focus:outline-none transition-all font-mono shadow-xs"
                   />
                   <PhoneCall className="w-4 h-4 text-neutral-400 absolute right-3.5 top-1/2 -translate-y-1/2 pointer-events-none" />
                 </div>
@@ -548,7 +536,7 @@ Zəhmət olmasa sifarişimi qəbul edin və çatdırılmanı başladın.`;
               {/* Şəhər / Rayon (Poçt indeksi tamamilə silindi) */}
               <div>
                 <label className="block text-[11px] font-bold text-neutral-700 mb-1 flex items-center justify-between">
-                  <span>Şəhər / Rayon <span className="text-[#FF5B00]">*</span></span>
+                  <span>Şəhər / Rayon <span className="text-rose-600">*</span></span>
                 </label>
                 <div className="relative">
                   <input
@@ -557,7 +545,7 @@ Zəhmət olmasa sifarişimi qəbul edin və çatdırılmanı başladın.`;
                     placeholder="Məs: Bakı, Gəncə, Sumqayıt..."
                     value={city}
                     onChange={(e) => handleCityChange(e.target.value)}
-                    className="w-full bg-white border border-neutral-200 focus:border-[#FF5B00] focus:ring-2 focus:ring-[#FF5B00]/20 rounded-xl h-11 pl-3.5 pr-9 text-xs sm:text-sm text-neutral-900 placeholder-neutral-400 focus:outline-none transition-all shadow-xs"
+                    className="w-full bg-white border border-neutral-200 focus:border-[#111827] focus:ring-2 focus:ring-[#111827]/15 rounded-xl h-11 pl-3.5 pr-9 text-xs sm:text-sm text-neutral-900 placeholder-neutral-400 focus:outline-none transition-all shadow-xs"
                   />
                   <Building className="w-4 h-4 text-neutral-400 absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none" />
                 </div>
@@ -567,7 +555,7 @@ Zəhmət olmasa sifarişimi qəbul edin və çatdırılmanı başladın.`;
               <div className="pt-2">
                 <div className="flex items-center justify-between mb-1.5">
                   <label className="block text-[11px] font-bold text-neutral-800 flex items-center gap-1.5">
-                    <Truck className="w-3.5 h-3.5 text-[#FF5B00]" />
+                    <Truck className="w-3.5 h-3.5 text-slate-900" />
                     <span>Çatdırılma Növü</span>
                   </label>
                   {isFreeShipping && (
@@ -580,7 +568,7 @@ Zəhmət olmasa sifarişimi qəbul edin və çatdırılmanı başladın.`;
 
                 {!hasCity ? (
                   <div className="p-3 rounded-xl bg-neutral-50 border border-neutral-200 text-[11px] text-neutral-500 flex items-center gap-2">
-                    <MapPin className="w-3.5 h-3.5 text-[#FF5B00] shrink-0" />
+                    <MapPin className="w-3.5 h-3.5 text-slate-900 shrink-0" />
                     <span>
                       Çatdırılma variantlarını görmək üçün yuxarıda <strong>Şəhər</strong> xanasını doldurun (Məs: Bakı).
                     </span>
@@ -592,7 +580,7 @@ Zəhmət olmasa sifarişimi qəbul edin və çatdırılmanı başladın.`;
                       onClick={() => setShippingOption('metro')}
                       className={`p-2.5 rounded-xl border flex items-center justify-between cursor-pointer transition-all ${
                         shippingOption === 'metro'
-                          ? 'bg-orange-50/70 border-[#FF5B00] ring-1 ring-[#FF5B00]'
+                          ? 'bg-slate-100/80 border-[#111827] ring-1 ring-[#111827]'
                           : 'bg-neutral-50 border-neutral-200 hover:border-neutral-300'
                       }`}
                     >
@@ -600,7 +588,7 @@ Zəhmət olmasa sifarişimi qəbul edin və çatdırılmanı başladın.`;
                         <div
                           className={`w-3.5 h-3.5 rounded-full border flex items-center justify-center shrink-0 ${
                             shippingOption === 'metro'
-                              ? 'border-[#FF5B00] bg-[#FF5B00]'
+                              ? 'border-[#111827] bg-[#111827]'
                               : 'border-neutral-400 bg-white'
                           }`}
                         >
@@ -639,7 +627,7 @@ Zəhmət olmasa sifarişimi qəbul edin və çatdırılmanı başladın.`;
                       onClick={() => setShippingOption('door')}
                       className={`p-2.5 rounded-xl border flex items-center justify-between cursor-pointer transition-all ${
                         shippingOption === 'door'
-                          ? 'bg-orange-50/70 border-[#FF5B00] ring-1 ring-[#FF5B00]'
+                          ? 'bg-slate-100/80 border-[#111827] ring-1 ring-[#111827]'
                           : 'bg-neutral-50 border-neutral-200 hover:border-neutral-300'
                       }`}
                     >
@@ -647,7 +635,7 @@ Zəhmət olmasa sifarişimi qəbul edin və çatdırılmanı başladın.`;
                         <div
                           className={`w-3.5 h-3.5 rounded-full border flex items-center justify-center shrink-0 ${
                             shippingOption === 'door'
-                              ? 'border-[#FF5B00] bg-[#FF5B00]'
+                              ? 'border-[#111827] bg-[#111827]'
                               : 'border-neutral-400 bg-white'
                           }`}
                         >
@@ -686,10 +674,10 @@ Zəhmət olmasa sifarişimi qəbul edin və çatdırılmanı başladın.`;
                   /* BAKI XARİCİ RAYONLAR */
                   <div
                     onClick={() => setShippingOption('post')}
-                    className="p-3 rounded-xl border bg-orange-50/70 border-[#FF5B00] ring-1 ring-[#FF5B00] flex items-center justify-between cursor-pointer transition-all"
+                    className="p-3 rounded-xl border bg-slate-100/80 border-[#111827] ring-1 ring-[#111827] flex items-center justify-between cursor-pointer transition-all"
                   >
                     <div className="flex items-center gap-2.5">
-                      <div className="w-3.5 h-3.5 rounded-full border border-[#FF5B00] bg-[#FF5B00] flex items-center justify-center shrink-0">
+                      <div className="w-3.5 h-3.5 rounded-full border border-[#111827] bg-[#111827] flex items-center justify-center shrink-0">
                         <div className="w-1 h-1 rounded-full bg-white" />
                       </div>
                       <div>
@@ -729,12 +717,12 @@ Zəhmət olmasa sifarişimi qəbul edin və çatdırılmanı başladın.`;
           <div className="bg-white border border-neutral-200 rounded-3xl p-4 sm:p-5 shadow-sm">
             <div className="flex items-center justify-between pb-2.5 mb-2.5 border-b border-neutral-200">
               <div className="flex items-center gap-2">
-                <ShoppingBag className="w-4 h-4 text-[#FF5B00]" />
+                <ShoppingBag className="w-4 h-4 text-slate-900" />
                 <h3 className="text-xs font-black text-neutral-900 uppercase tracking-wider">
                   Sifariş Olunacaq Məhsullar ({totalQuantity} ədəd)
                 </h3>
               </div>
-              <span className="text-xs font-mono font-black text-[#FF5B00]">
+              <span className="text-xs font-mono font-black text-slate-900">
                 {subtotal} AZN
               </span>
             </div>
@@ -823,7 +811,7 @@ Zəhmət olmasa sifarişimi qəbul edin və çatdırılmanı başladın.`;
                   </span>
                   <span className="text-[10px] text-neutral-500">Bütün xərclər daxildir</span>
                 </div>
-                <span className="font-black text-[#FF5B00] text-xl sm:text-2xl font-mono">
+                <span className="font-black text-[#111827] text-xl sm:text-2xl font-mono">
                   {totalAmount} AZN
                 </span>
               </div>
@@ -835,7 +823,7 @@ Zəhmət olmasa sifarişimi qəbul edin və çatdırılmanı başladın.`;
               ========================================================================= */}
           <div className="bg-white border border-neutral-200 rounded-3xl p-4 sm:p-5 shadow-sm space-y-3">
             {/* Qapıda Ödəniş Bildirişi (POS/Nağd seçimi ləğv edildi, rahat zəmanət qoyuldu) */}
-            <div className="p-3 rounded-2xl bg-orange-50/60 border border-orange-200/80 text-[11px] text-neutral-700 flex items-start gap-2.5">
+            <div className="p-3 rounded-2xl bg-slate-50 border border-slate-200/80 text-[11px] text-neutral-700 flex items-start gap-2.5">
               <ShieldCheck className="w-4 h-4 text-emerald-600 shrink-0 mt-0.5" />
               <div>
                 <strong className="text-neutral-900 block font-bold">
@@ -852,7 +840,7 @@ Zəhmət olmasa sifarişimi qəbul edin və çatdırılmanı başladın.`;
               type="button"
               onClick={handleSubmitOrder}
               disabled={isSubmitting}
-              className="w-full h-14 rounded-2xl bg-[#FF5B00] hover:bg-[#E64D00] text-white font-black text-sm sm:text-base uppercase tracking-wider flex items-center justify-center gap-2.5 shadow-xl shadow-[#FF5B00]/30 transition-all transform active:scale-[0.98] glow-orange disabled:opacity-50 cursor-pointer"
+              className="w-full h-14 rounded-2xl bg-[#111827] hover:bg-[#1f2937] text-white font-black text-sm sm:text-base uppercase tracking-wider flex items-center justify-center gap-2.5 shadow-xl shadow-slate-900/25 transition-all transform active:scale-[0.98] disabled:opacity-50 cursor-pointer"
             >
               <Zap className="w-5 h-5 fill-white text-white shrink-0" />
               <span>

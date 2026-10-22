@@ -4,7 +4,7 @@ import { PhoneCall, MessageCircle } from 'lucide-react';
 import FaqClient from '@/components/support/FaqClient';
 
 export const metadata = {
-  title: 'Müştəri Dəstəyi və FAQ | Electrolify.com',
+  title: 'Müştəri Dəstəyi və FAQ | Trendim — Seçilmiş Trend Məhsullar',
   description: 'Çatdırılma, qapıda nağd/kartla ödəniş, 14 gün şərtsiz iadə və zəmanət şərtləri haqqında bütün suallarınıza operativ cavablar.',
 };
 
@@ -14,7 +14,7 @@ export default function SupportPage() {
       <div className="max-w-4xl mx-auto px-4">
         {/* Başlıq Bloku (SSR) */}
         <div className="text-center max-w-2xl mx-auto mb-10">
-          <span className="text-xs font-mono uppercase tracking-widest text-[#FF5B00] font-black bg-[#FF5B00]/10 px-3 py-1 rounded-full">
+          <span className="text-xs font-mono uppercase tracking-widest text-slate-900 font-bold bg-slate-100 px-3 py-1 rounded-full border border-slate-200">
             Müştəri Xidmətləri
           </span>
           <h1 className="text-2xl sm:text-4xl font-black text-neutral-900 tracking-tight mt-3">
@@ -26,9 +26,9 @@ export default function SupportPage() {
         </div>
 
         {/* Canlı Əlaqə Kartı (SSR) */}
-        <div className="p-5 rounded-3xl bg-white border border-orange-200 flex flex-col sm:flex-row items-center justify-between gap-4 mb-8 shadow-sm">
+        <div className="p-5 rounded-3xl bg-white border border-slate-200 flex flex-col sm:flex-row items-center justify-between gap-4 mb-8 shadow-sm">
           <div className="flex items-center gap-3.5 text-center sm:text-left">
-            <div className="w-12 h-12 rounded-2xl bg-[#FF5B00]/15 text-[#FF5B00] flex items-center justify-center shrink-0">
+            <div className="w-12 h-12 rounded-2xl bg-slate-100 text-[#111827] flex items-center justify-center shrink-0">
               <PhoneCall className="w-6 h-6" />
             </div>
             <div>
@@ -46,7 +46,7 @@ export default function SupportPage() {
               href="tel:+994559031176"
               className="flex-1 sm:flex-initial py-2.5 px-4 rounded-xl bg-neutral-100 hover:bg-neutral-200 border border-neutral-200 text-xs font-bold text-neutral-900 flex items-center justify-center gap-2 transition-colors shadow-sm"
             >
-              <PhoneCall className="w-3.5 h-3.5 text-[#FF5B00]" />
+              <PhoneCall className="w-3.5 h-3.5 text-slate-900" />
               <span>055 903 11 76</span>
             </a>
 
