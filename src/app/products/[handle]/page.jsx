@@ -25,14 +25,14 @@ export async function generateMetadata({ params }) {
 
   if (!product) {
     return {
-      title: 'Məhsul Tapılmadı | Electrolify.com',
+      title: 'Məhsul Tapılmadı | Trendim',
     };
   }
 
   const price = product.priceRange?.minVariantPrice?.amount || '0.00';
 
   return {
-    title: `${product.title} - ${price} AZN | Qapıda Ödəniş | Electrolify.com`,
+    title: `${product.title} - ${price} AZN | Qapıda Ödəniş | Trendim`,
     description: product.description?.slice(0, 160) || '24 saat ərzində sürətli çatdırılma və qapıda nağd/kartla ödəniş.',
     openGraph: {
       title: product.title,
