@@ -76,27 +76,26 @@ export default function ProductPurchaseClient({ product, theme }) {
         theme={activeTheme}
       />
 
-      {/* Dinamik Qiymət Bloku - Shopify / Modern E-ticarət Standartı */}
+      {/* Dinamik Qiymət Bloku - Giriş səhifəsindəki kimi [Yeni Qiymət] [Köhnə Qiymət] [Kənarda -XX% ENDİRİM] */}
       <div className="py-2 sm:py-2.5 px-3.5 sm:px-4 rounded-xl sm:rounded-2xl bg-gray-50/50 border border-gray-100/80 flex items-center gap-2.5 sm:gap-3 flex-wrap">
         {/* 1. Yeni Qiymət */}
         <span className="text-3xl sm:text-4xl font-extrabold text-gray-900 tracking-tight shrink-0">
           {(Number(currentPrice) * quantity).toFixed(2)} AZN
         </span>
 
-        {/* 2. Endirim Nişanı və 3. Köhnə Qiymət Bloku (Yan-yana sətirdə) */}
-        <div className="flex items-center gap-1.5 sm:gap-2 shrink-0">
-          {discountPercent && discountPercent > 0 && (
-            <span className="bg-red-100 text-red-600 rounded-full px-2 sm:px-2.5 py-0.5 text-xs sm:text-sm font-bold tracking-tight inline-flex items-center shrink-0">
-              -{discountPercent}%
-            </span>
-          )}
+        {/* 2. Köhnə Qiymət (Üstündən xətt çəkilmiş) */}
+        {comparePrice && (
+          <span className="text-base sm:text-lg md:text-xl text-gray-400 line-through font-semibold shrink-0">
+            {(Number(comparePrice) * quantity).toFixed(2)} AZN
+          </span>
+        )}
 
-          {comparePrice && (
-            <span className="text-sm sm:text-base md:text-lg text-gray-400 line-through font-medium shrink-0">
-              {(Number(comparePrice) * quantity).toFixed(2)} AZN
-            </span>
-          )}
-        </div>
+        {/* 3. Kənarda Endirim Nişanı (Giriş səhifəsindəki kimi qırmızı fonda, ağ yazı -XX% ENDİRİM) */}
+        {discountPercent && discountPercent > 0 && (
+          <span className="bg-rose-600 text-white rounded-md px-2.5 py-0.5 text-xs sm:text-sm font-black tracking-tight inline-flex items-center shrink-0 shadow-xs uppercase">
+            -{discountPercent}% ENDİRİM
+          </span>
+        )}
 
         {/* Say 1-dən çox olduqda tək ədəd qiyməti */}
         {quantity > 1 && (
