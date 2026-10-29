@@ -806,18 +806,18 @@ Zəhmət olmasa sifarişimi qəbul edin və çatdırılmanı başladın.`;
                 </div>
               )}
 
-              {/* Yekun Qapıda Ödəniləcək Qutu */}
-              <div className="mt-3 p-4 sm:p-5 rounded-2xl bg-[#111827] text-white flex justify-between items-center gap-3 shadow-lg shadow-slate-900/20">
+              {/* Yekun Qapıda Ödəniləcək Qutu (Ağ Arxa Fon) */}
+              <div className="mt-3.5 p-4 sm:p-5 rounded-2xl bg-white border-2 border-slate-200 flex justify-between items-center gap-3 shadow-xs">
                 <div className="min-w-0 flex-1">
-                  <span className="font-black text-xs sm:text-sm block tracking-wide text-white">
+                  <span className="font-black text-sm sm:text-base block tracking-tight text-slate-900">
                     Qapıda Ödəniləcək:
                   </span>
-                  <span className="text-[11px] text-slate-300 font-medium block">
+                  <span className="text-xs text-slate-500 font-medium block mt-0.5">
                     Bütün xərclər daxildir • Kuryerə ödəniş
                   </span>
                 </div>
                 <div className="text-right shrink-0 whitespace-nowrap">
-                  <span className="font-black text-xl sm:text-2xl md:text-3xl font-mono text-white tracking-tight whitespace-nowrap">
+                  <span className="font-black text-2xl sm:text-3xl font-mono text-slate-900 tracking-tight whitespace-nowrap">
                     {totalAmount} AZN
                   </span>
                 </div>
