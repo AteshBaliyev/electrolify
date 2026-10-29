@@ -17,7 +17,6 @@ import {
   MapPin,
   Building,
   Clock,
-  Printer,
 } from 'lucide-react';
 import { useCart } from '@/context/CartContext';
 import { trackPurchase } from '@/lib/metaPixel';
@@ -26,14 +25,14 @@ import { trackShopifyPurchase } from '@/lib/shopifyAnalytics';
 export default function CheckoutPage() {
   const { items, subtotal, subtotalNumber, isFreeShipping, hasTwoOrMoreItems, clearCart } = useCart();
 
-  // Tələb olunan xanalar: Yalnız Ad, Mobil Nömrə, Şəhər/Rayon (Gmail, Soyad və Poçt İndeksi tamamilə silindi)
+  // Tələb olunan xanalar: Yalnız Ad, Mobil Nömrə, Şəhər/Rayon
   const [firstName, setFirstName] = useState('');
   const [phone, setPhone] = useState('');
   const [city, setCity] = useState('');
 
   // Çatdırılma seçimi: 'metro' | 'door' | 'post'
   const [shippingOption, setShippingOption] = useState('door');
-  const paymentType = 'Qapıda Nağd (COD)'; // Qapıda seçim silindi, defolt olaraq COD
+  const paymentType = 'Qapıda Nağd (COD)';
 
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [errorMsg, setErrorMsg] = useState('');
@@ -174,7 +173,7 @@ export default function CheckoutPage() {
         setOrderResult(data);
         clearCart();
 
-        // Meta Pixel Purchase Hadisəsi: Sifariş uğurla tamamlandıqda (yekun məbləğ və AZN valyutası ilə)
+        // Meta Pixel Purchase Hadisəsi
         trackPurchase({
           orderId: data.shopifyOrderName || data.orderNumber || `ORD-${Date.now()}`,
           value: totalAmount,
@@ -182,7 +181,7 @@ export default function CheckoutPage() {
           items: orderSnapshot.items,
         });
 
-        // Shopify Analytics Purchase Hadisəsi: Konversiyanı Shopify Storefront Analytics-ə qeyd edir
+        // Shopify Analytics Purchase Hadisəsi
         trackShopifyPurchase({
           orderNumber: data.shopifyOrderName || data.orderNumber,
           total: totalAmount,
@@ -200,7 +199,7 @@ export default function CheckoutPage() {
   };
 
   // =========================================================================
-  // 1. RƏSMİ SİFARİŞ ÇEKİ EKRANI (Sifariş Tamamlandıqda Pramoy Görsənən Yer)
+  // 1. RƏSMİ SİFARİŞ ÇEKİ EKRANI (Sifariş Tamamlandıqda Görsənən Ekran)
   // =========================================================================
   if (orderResult && submittedDetails) {
     const orderNumberDisplay =
@@ -232,117 +231,116 @@ Zəhmət olmasa sifarişimi qəbul edin və çatdırılmanı başladın.`;
     )}`;
 
     return (
-      <div className="min-h-screen bg-[#F4F5F7] text-neutral-900 py-6 sm:py-10 px-3 sm:px-4 flex items-center justify-center">
-        <div className="max-w-md w-full bg-white border border-neutral-200 rounded-3xl p-5 sm:p-7 shadow-2xl animate-in fade-in zoom-in-95 duration-300 relative">
+      <div className="min-h-screen bg-[#F1F5F9] text-slate-900 py-8 sm:py-12 px-3 sm:px-4 flex items-center justify-center font-sans">
+        <div className="max-w-md w-full bg-white border-2 border-slate-200 rounded-3xl p-6 sm:p-8 shadow-2xl animate-in fade-in zoom-in-95 duration-300 relative">
           
           {/* Uğur Başlığı */}
-          <div className="text-center pb-5 border-b border-dashed border-neutral-200">
-            <div className="w-16 h-16 rounded-2xl bg-emerald-100 text-emerald-600 flex items-center justify-center mx-auto mb-3 shadow-md shadow-emerald-500/20">
-              <CheckCircle2 className="w-9 h-9" />
+          <div className="text-center pb-6 border-b border-dashed border-slate-200">
+            <div className="w-16 h-16 rounded-2xl bg-emerald-500 text-white flex items-center justify-center mx-auto mb-3.5 shadow-lg shadow-emerald-500/30">
+              <CheckCircle2 className="w-9 h-9 stroke-[2.5]" />
             </div>
-            <span className="text-[11px] font-mono uppercase tracking-widest text-emerald-600 font-bold bg-emerald-50 px-3 py-1 rounded-full border border-emerald-200">
-              Sifarişiniz Uğurla Qeydə Alındı!
+            <span className="text-xs font-black uppercase tracking-wider text-emerald-800 bg-emerald-100 px-3.5 py-1 rounded-full border border-emerald-300 inline-block shadow-xs">
+              ✓ Sifarişiniz Uğurla Qeydə Alındı!
             </span>
-            <h1 className="text-xl sm:text-2xl font-black text-neutral-900 mt-2">
+            <h1 className="text-2xl sm:text-3xl font-black text-slate-900 mt-2.5 tracking-tight">
               Rəsmi Sifariş Çeki
             </h1>
-            <p className="text-xs text-neutral-500 mt-1">
+            <p className="text-xs font-medium text-slate-600 mt-1">
               Çatdırılmanın dərhal başlaması üçün WhatsApp ilə təsdiq edin
             </p>
           </div>
 
-          {/* ƏN ƏSAS VƏ BÖYÜK: WHATSAPP TƏSDİQ DÜYMƏSİ (İstifadəçinin dərhal basması üçün ən üstdə) */}
+          {/* WHATSAPP TƏSDİQ DÜYMƏSİ */}
           <div className="my-5">
             <a
               href={whatsappLink}
               target="_blank"
               rel="noopener noreferrer"
-              className="w-full py-4 px-5 rounded-2xl bg-[#25D366] hover:bg-[#20bd5a] text-white font-black text-xs sm:text-sm uppercase tracking-wide flex items-center justify-center gap-2.5 shadow-xl shadow-[#25D366]/30 transition-all transform active:scale-95 text-center"
+              className="w-full py-4 px-5 rounded-2xl bg-[#25D366] hover:bg-[#20bd5a] text-white font-black text-sm uppercase tracking-wide flex items-center justify-center gap-2.5 shadow-xl shadow-[#25D366]/35 transition-all transform active:scale-95 text-center cursor-pointer"
             >
               <MessageCircle className="w-5 h-5 fill-white shrink-0" />
               <span>WhatsApp İlə Sifarişi Təsdiqlə</span>
             </a>
-            <span className="text-[11px] text-neutral-500 text-center block mt-2">
+            <span className="text-xs text-slate-500 font-semibold text-center block mt-2">
               ⚡ Operatorumuzla birbaşa əlaqə saxlayaraq kuryeri təsdiqləyin
             </span>
           </div>
 
-          {/* ÇEK KARTI (Dizaynı Rəsmi Çek Formatında) */}
-          <div className="p-4 rounded-2xl bg-neutral-50 border border-neutral-200 text-xs space-y-3 font-sans">
-            {/* Çek Başlıq Məlumatları */}
-            <div className="flex justify-between items-center pb-2 border-b border-dashed border-neutral-300 text-[11px]">
-              <span className="text-neutral-500">Çek № / Kod:</span>
-              <span className="font-mono font-black text-neutral-900 bg-white px-2 py-0.5 rounded border border-neutral-200">
+          {/* ÇEK KARTI (Rəsmi Format) */}
+          <div className="p-4 sm:p-5 rounded-2xl bg-slate-50 border border-slate-200 text-xs space-y-3 font-sans">
+            <div className="flex justify-between items-center pb-2 border-b border-dashed border-slate-300 text-xs">
+              <span className="text-slate-500 font-semibold">Çek № / Kod:</span>
+              <span className="font-mono font-black text-slate-900 bg-white px-2.5 py-0.5 rounded-lg border border-slate-200 shadow-xs">
                 {orderNumberDisplay}
               </span>
             </div>
 
-            <div className="flex justify-between items-center pb-2 border-b border-dashed border-neutral-300 text-[11px]">
-              <span className="text-neutral-500">Tarix:</span>
-              <span className="font-semibold text-neutral-800">
+            <div className="flex justify-between items-center pb-2 border-b border-dashed border-slate-300 text-xs">
+              <span className="text-slate-500 font-semibold">Tarix:</span>
+              <span className="font-bold text-slate-900">
                 {submittedDetails.date}
               </span>
             </div>
 
-            <div className="flex justify-between items-center pb-2 border-b border-dashed border-neutral-300 text-[11px]">
-              <span className="text-neutral-500">Müştəri:</span>
-              <strong className="text-neutral-900">
+            <div className="flex justify-between items-center pb-2 border-b border-dashed border-slate-300 text-xs">
+              <span className="text-slate-500 font-semibold">Müştəri:</span>
+              <strong className="text-slate-900 font-extrabold">
                 {submittedDetails.customer.name}
               </strong>
             </div>
 
-            <div className="flex justify-between items-center pb-2 border-b border-dashed border-neutral-300 text-[11px]">
-              <span className="text-neutral-500">Əlaqə Nömrəsi:</span>
-              <strong className="text-neutral-900 font-mono">
+            <div className="flex justify-between items-center pb-2 border-b border-dashed border-slate-300 text-xs">
+              <span className="text-slate-500 font-semibold">Əlaqə Nömrəsi:</span>
+              <strong className="text-slate-900 font-mono font-bold">
                 {submittedDetails.customer.phone}
               </strong>
             </div>
 
-            <div className="flex justify-between items-center pb-2 border-b border-dashed border-neutral-300 text-[11px]">
-              <span className="text-neutral-500">Çatdırılma Ünvanı:</span>
-              <span className="text-neutral-800 font-medium text-right max-w-[200px] truncate">
+            <div className="flex justify-between items-center pb-2 border-b border-dashed border-slate-300 text-xs">
+              <span className="text-slate-500 font-semibold">Çatdırılma Ünvanı:</span>
+              <span className="text-slate-900 font-bold text-right max-w-[200px] truncate">
                 {submittedDetails.customer.city}
               </span>
             </div>
 
-            <div className="flex justify-between items-center pb-2 border-b border-dashed border-neutral-300 text-[11px]">
-              <span className="text-neutral-500">Çatdırılma Növü:</span>
-              <span className="text-emerald-700 font-bold">
+            <div className="flex justify-between items-center pb-2 border-b border-dashed border-slate-300 text-xs">
+              <span className="text-slate-500 font-semibold">Çatdırılma Növü:</span>
+              <span className="text-emerald-700 font-extrabold">
                 {submittedDetails.customer.shippingMethod}
               </span>
             </div>
 
             {/* Sifariş Edilən Məhsullar Siyahısı */}
             <div className="pt-1">
-              <span className="text-[10px] font-bold text-neutral-400 uppercase tracking-wider block mb-2">
+              <span className="text-[11px] font-black text-slate-500 uppercase tracking-wider block mb-2">
                 Sifariş Olunan Məhsullar:
               </span>
               <div className="space-y-2">
                 {submittedDetails.items.map((item) => (
                   <div
                     key={item.lineId}
-                    className="flex items-center justify-between gap-2 text-[11px] bg-white p-2 rounded-xl border border-neutral-200"
+                    className="flex items-center justify-between gap-2.5 text-xs bg-white p-2.5 rounded-xl border border-slate-200 shadow-xs"
                   >
-                    <div className="flex items-center gap-2 min-w-0">
-                      <div className="relative w-8 h-8 rounded-lg overflow-hidden bg-neutral-100 shrink-0 border border-neutral-200">
+                    <div className="flex items-center gap-2.5 min-w-0">
+                      <div className="relative w-9 h-9 rounded-lg overflow-hidden bg-slate-100 shrink-0 border border-slate-200">
                         <Image
                           src={item.image}
                           alt={item.title}
                           fill
-                          sizes="32px"
+                          sizes="36px"
                           className="object-cover"
                         />
                       </div>
                       <div className="min-w-0">
-                        <span className="font-bold text-neutral-900 truncate block">
+                        <span className="font-bold text-slate-900 truncate block">
                           {item.title}
                         </span>
-                        <span className="text-[10px] text-neutral-500 block">
+                        <span className="text-[11px] text-slate-500 font-medium block">
                           {item.variantTitle || 'Standart'} • {item.quantity} ədəd
                         </span>
                       </div>
                     </div>
-                    <span className="font-mono font-bold text-neutral-900 shrink-0">
+                    <span className="font-mono font-black text-slate-900 shrink-0">
                       {(item.price * item.quantity).toFixed(2)} AZN
                     </span>
                   </div>
@@ -351,26 +349,26 @@ Zəhmət olmasa sifarişimi qəbul edin və çatdırılmanı başladın.`;
             </div>
 
             {/* Yekun Qapıda Ödəniləcək Cəm */}
-            <div className="pt-2 border-t-2 border-dashed border-neutral-300 flex justify-between items-baseline">
+            <div className="pt-3 border-t-2 border-dashed border-slate-300 flex justify-between items-baseline">
               <div>
-                <span className="text-xs font-bold text-neutral-900 block">
-                  Qapıda Ödəniləcək Məbləğ:
+                <span className="text-xs font-black text-slate-900 block">
+                  Qapıda Ödəniləcək:
                 </span>
-                <span className="text-[10px] text-neutral-500">
-                  Nağd və ya POS terminal ilə
+                <span className="text-[11px] text-slate-500 font-medium">
+                  Nağd və ya kartla kuryerə
                 </span>
               </div>
-              <span className="text-xl font-mono font-black text-[#111827]">
+              <span className="text-2xl font-mono font-black text-slate-900">
                 {submittedDetails.total} AZN
               </span>
             </div>
           </div>
 
-          {/* Alt Düymələr */}
-          <div className="mt-5 flex flex-col gap-2">
+          {/* Alt Düymə */}
+          <div className="mt-5">
             <Link
               href="/"
-              className="w-full py-3 px-4 rounded-xl bg-neutral-100 hover:bg-neutral-200 border border-neutral-200 text-neutral-800 font-bold text-xs uppercase tracking-wide flex items-center justify-center transition-colors text-center"
+              className="w-full py-3.5 px-4 rounded-xl bg-slate-100 hover:bg-slate-200 border border-slate-200 text-slate-800 font-bold text-xs uppercase tracking-wider flex items-center justify-center transition-colors text-center"
             >
               Ana Səhifəyə Qayıt
             </Link>
@@ -385,36 +383,38 @@ Zəhmət olmasa sifarişimi qəbul edin və çatdırılmanı başladın.`;
   // =========================================================================
   if (items.length === 0) {
     return (
-      <div className="min-h-screen bg-[#F8F9FA] text-neutral-900 flex flex-col">
-        {/* Minimal Başlıq */}
-        <div className="bg-white border-b border-neutral-200 py-3 px-4">
+      <div className="min-h-screen bg-[#F1F5F9] text-slate-900 flex flex-col font-sans">
+        <div className="bg-white border-b border-slate-200 py-3.5 px-4 shadow-xs">
           <div className="max-w-xl mx-auto flex items-center justify-between">
-            <Link href="/" className="flex items-center gap-1.5 text-xs text-neutral-600">
+            <Link
+              href="/"
+              className="flex items-center gap-1.5 text-xs font-bold text-slate-700 hover:text-slate-950 transition-colors"
+            >
               <ArrowLeft className="w-4 h-4" />
-              <span>Geri</span>
+              <span>Geri qayıt</span>
             </Link>
             <Link href="/" className="flex items-center gap-2">
-              <div className="w-8 h-8 rounded-xl bg-[#111827] flex items-center justify-center text-white shadow-xs shrink-0">
+              <div className="w-8 h-8 rounded-xl bg-[#111827] flex items-center justify-center text-white shadow-xs">
                 <ShoppingBag className="w-4 h-4 stroke-[2.2]" />
               </div>
-              <span className="font-black text-sm tracking-wider text-neutral-900">TRENDİM</span>
+              <span className="font-black text-sm tracking-wider text-slate-900">TRENDİM</span>
             </Link>
             <div className="w-10" />
           </div>
         </div>
 
         <div className="flex-1 flex items-center justify-center px-4 py-12">
-          <div className="max-w-md w-full bg-white border border-neutral-200 rounded-3xl p-8 text-center shadow-sm">
-            <div className="w-16 h-16 rounded-2xl bg-slate-100 text-[#111827] flex items-center justify-center mx-auto mb-4">
+          <div className="max-w-md w-full bg-white border-2 border-slate-200 rounded-3xl p-8 text-center shadow-lg">
+            <div className="w-16 h-16 rounded-2xl bg-slate-100 text-slate-900 flex items-center justify-center mx-auto mb-4 border border-slate-200 shadow-xs">
               <ShoppingBag className="w-8 h-8" />
             </div>
-            <h2 className="text-xl font-black text-neutral-900">Səbətiniz Boşdur</h2>
-            <p className="text-xs text-neutral-500 mt-2 mb-6">
+            <h2 className="text-xl font-black text-slate-900">Səbətiniz Boşdur</h2>
+            <p className="text-xs text-slate-600 font-medium mt-2 mb-6">
               Sifariş vermək üçün zəhmət olmasa bəyəndiyiniz məhsulu seçin.
             </p>
             <Link
               href="/"
-              className="w-full py-3.5 px-6 rounded-xl bg-[#111827] text-white font-black text-xs uppercase tracking-wider inline-flex items-center justify-center shadow-md hover:bg-[#1f2937] transition-colors"
+              className="w-full py-4 px-6 rounded-2xl bg-[#111827] text-white font-black text-xs uppercase tracking-wider inline-flex items-center justify-center shadow-md hover:bg-[#1f2937] transition-all active:scale-95"
             >
               Məhsullara Bax
             </Link>
@@ -425,16 +425,16 @@ Zəhmət olmasa sifarişimi qəbul edin və çatdırılmanı başladın.`;
   }
 
   // =========================================================================
-  // 3. ƏSAS SİFARİŞ SƏHİFƏSİ (FORM ƏN YUXARIDA, KOMPAKT MƏHSUL VƏ QAPIDA COD)
+  // 3. ƏSAS SİFARİŞ SƏHİFƏSİ
   // =========================================================================
   return (
-    <div className="min-h-screen bg-[#F8F9FA] text-neutral-900 flex flex-col">
-      {/* 1. Yalnız Sifariş Üçün Minimal Başlıq (Başqa Heç Nə Olmasın) */}
-      <header className="bg-white border-b border-neutral-200 sticky top-0 z-30 shadow-xs">
+    <div className="min-h-screen bg-[#F1F5F9] text-slate-900 flex flex-col font-sans">
+      {/* 1. Minimal Üst Başlıq */}
+      <header className="bg-white/95 backdrop-blur-md border-b border-slate-200 sticky top-0 z-30 shadow-xs">
         <div className="max-w-xl mx-auto px-4 h-14 flex items-center justify-between">
           <Link
             href="/"
-            className="flex items-center gap-1 text-xs font-semibold text-neutral-600 hover:text-[#111827] transition-colors"
+            className="flex items-center gap-1.5 text-xs font-bold text-slate-700 hover:text-slate-950 transition-colors"
           >
             <ArrowLeft className="w-4 h-4" />
             <span className="hidden xs:inline">Alış-verişə qayıt</span>
@@ -444,78 +444,79 @@ Zəhmət olmasa sifarişimi qəbul edin və çatdırılmanı başladın.`;
             <div className="w-8 h-8 rounded-xl bg-[#111827] flex items-center justify-center text-white shadow-xs shrink-0">
               <ShoppingBag className="w-4 h-4 stroke-[2.2]" />
             </div>
-            <span className="font-black text-sm tracking-wider text-neutral-900">TRENDİM</span>
+            <span className="font-black text-sm tracking-wider text-slate-900">TRENDİM</span>
           </Link>
 
-          <div className="flex items-center gap-1 text-[11px] font-bold text-emerald-700 bg-emerald-50 px-2.5 py-1 rounded-full border border-emerald-200">
-            <Lock className="w-3 h-3 text-emerald-600" />
+          <div className="flex items-center gap-1.5 text-xs font-extrabold text-emerald-800 bg-emerald-100 border border-emerald-300 px-3 py-1 rounded-full shadow-xs">
+            <Lock className="w-3.5 h-3.5 text-emerald-700 stroke-[2.5]" />
             <span>Təhlükəsiz</span>
           </div>
         </div>
       </header>
 
-      {/* 2. GERİ SAYIM ZOLAĞI (Xüsusi Endirim 5 Dəqiqə Ərzində Bitir) */}
-      <div className="bg-gradient-to-r from-neutral-950 via-neutral-900 to-neutral-950 text-white py-2 px-3 sm:px-4 text-center border-b border-neutral-800 shadow-sm">
+      {/* 2. GERİ SAYIM ZOLAĞI (Endirim Taymeri) */}
+      <div className="bg-slate-950 text-white py-2.5 px-3 sm:px-4 text-center border-b border-slate-800 shadow-xs">
         <div className="max-w-xl mx-auto flex items-center justify-center gap-2 text-xs font-bold">
           <span className="relative flex h-2 w-2">
-            <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-rose-600 opacity-75"></span>
-            <span className="relative inline-flex rounded-full h-2 w-2 bg-rose-600"></span>
+            <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-rose-500 opacity-75"></span>
+            <span className="relative inline-flex rounded-full h-2 w-2 bg-rose-500"></span>
           </span>
-          <span className="text-neutral-200">Xüsusi Endirim 5 Dəqiqə Ərzində Bitir:</span>
-          <span className="bg-rose-600 text-white px-2 py-0.5 rounded font-mono font-black tracking-wider text-xs shadow-xs">
+          <span className="text-slate-200 font-bold">Xüsusi Endirim 5 Dəqiqə Ərzində Bitir:</span>
+          <span className="bg-rose-600 text-white px-2.5 py-0.5 rounded-md font-mono font-black tracking-wider text-xs shadow-xs">
             {timerMinutes}:{timerSeconds}
           </span>
         </div>
       </div>
 
-      {/* 3. ƏSAS MƏZMUN: TƏMİZ VƏ DİQQƏT YAYINDIRMAYAN VAHİD SÜTUN */}
+      {/* 3. ƏSAS MƏZMUN */}
       <main className="flex-1 py-4 sm:py-6 px-3 sm:px-4">
         <div className="max-w-xl mx-auto space-y-4">
           
           {/* XƏTA BİLDİRİŞİ (Varsa) */}
           {errorMsg && (
-            <div className="p-3.5 rounded-2xl bg-red-50 border border-red-200 text-xs text-red-600 font-semibold flex items-center gap-2">
-              <span>⚠️</span>
+            <div className="p-4 rounded-2xl bg-red-50 border-2 border-red-200 text-xs text-red-700 font-bold flex items-center gap-2 shadow-xs">
+              <span className="text-base">⚠️</span>
               <span>{errorMsg}</span>
             </div>
           )}
 
           {/* =========================================================================
-              A. FORM ƏN YUXARIDA (Ad, Soyad, Mobil, Şəhər, Poçt İndeksi)
+              A. ƏLAQƏ VƏ ÇATDIRILMA FORMU
               ========================================================================= */}
-          <div className="bg-white border border-neutral-200 rounded-3xl p-4 sm:p-6 shadow-sm">
-            <div className="mb-4">
-              <span className="text-[10px] font-mono uppercase tracking-widest text-slate-900 font-bold bg-slate-100 px-2.5 py-0.5 rounded-full border border-slate-200 inline-block mb-1">
+          <div className="bg-white border-2 border-slate-200/90 rounded-3xl p-5 sm:p-7 shadow-lg shadow-slate-200/60">
+            <div className="mb-4 pb-3 border-b border-slate-100">
+              <span className="text-[11px] font-black uppercase tracking-wider text-white bg-[#111827] px-3 py-1 rounded-full inline-flex items-center gap-1.5 mb-2 shadow-xs">
+                <Truck className="w-3.5 h-3.5 text-white" />
                 Qapıda Ödəniş Formu
               </span>
-              <h2 className="text-lg sm:text-xl font-black text-neutral-900 tracking-tight">
+              <h2 className="text-xl sm:text-2xl font-black text-slate-900 tracking-tight">
                 Çatdırılma və Əlaqə Məlumatları
               </h2>
-              <p className="text-[11px] text-neutral-500 mt-0.5">
+              <p className="text-xs text-slate-600 font-medium mt-1 leading-relaxed">
                 Zəhmət olmasa məlumatları doldurun. Əvvəlcədən heç bir ödəniş tələb olunmur.
               </p>
             </div>
 
-            <form id="checkout-form" onSubmit={handleSubmitOrder} className="space-y-3.5">
-              {/* Adınız (Soyad tamamilə silindi) */}
+            <form id="checkout-form" onSubmit={handleSubmitOrder} className="space-y-4">
+              {/* Adınız */}
               <div>
-                <label className="block text-[11px] font-bold text-neutral-700 mb-1">
-                  Adınız <span className="text-rose-600">*</span>
+                <label className="block text-xs font-black text-slate-900 mb-1.5 flex items-center justify-between">
+                  <span>Adınız <span className="text-rose-600">*</span></span>
                 </label>
                 <input
                   type="text"
                   required
-                  placeholder="Məs: Rəşad"
+                  placeholder="Məs: Rəşad Məmmədov"
                   value={firstName}
                   onChange={(e) => setFirstName(e.target.value)}
-                  className="w-full bg-white border border-neutral-200 focus:border-[#111827] focus:ring-2 focus:ring-[#111827]/15 rounded-xl h-11 px-3.5 text-xs sm:text-sm text-neutral-900 placeholder-neutral-400 focus:outline-none transition-all shadow-xs"
+                  className="w-full bg-slate-50/60 border-2 border-slate-200 focus:bg-white focus:border-slate-900 focus:ring-4 focus:ring-slate-900/10 rounded-2xl h-12 px-4 text-sm font-bold text-slate-900 placeholder-slate-400 focus:outline-none transition-all shadow-xs"
                 />
               </div>
 
               {/* Mobil Telefon Nömrəsi */}
               <div>
-                <label className="block text-[11px] font-bold text-neutral-700 mb-1">
-                  Mobil Telefon Nömrəsi <span className="text-rose-600">*</span>
+                <label className="block text-xs font-black text-slate-900 mb-1.5 flex items-center justify-between">
+                  <span>Mobil Telefon Nömrəsi <span className="text-rose-600">*</span></span>
                 </label>
                 <div className="relative">
                   <input
@@ -524,18 +525,18 @@ Zəhmət olmasa sifarişimi qəbul edin və çatdırılmanı başladın.`;
                     placeholder="Məs: 050 123 45 67"
                     value={phone}
                     onChange={(e) => setPhone(e.target.value)}
-                    className="w-full bg-white border border-neutral-200 focus:border-[#111827] focus:ring-2 focus:ring-[#111827]/15 rounded-xl h-11 pl-3.5 pr-10 text-xs sm:text-sm text-neutral-900 placeholder-neutral-400 focus:outline-none transition-all font-mono shadow-xs"
+                    className="w-full bg-slate-50/60 border-2 border-slate-200 focus:bg-white focus:border-slate-900 focus:ring-4 focus:ring-slate-900/10 rounded-2xl h-12 pl-4 pr-11 text-sm font-mono font-bold text-slate-900 placeholder-slate-400 focus:outline-none transition-all shadow-xs"
                   />
-                  <PhoneCall className="w-4 h-4 text-neutral-400 absolute right-3.5 top-1/2 -translate-y-1/2 pointer-events-none" />
+                  <PhoneCall className="w-4 h-4 text-slate-600 absolute right-4 top-1/2 -translate-y-1/2 pointer-events-none" />
                 </div>
-                <span className="text-[10px] text-neutral-500 mt-1 block">
+                <span className="text-xs text-slate-500 font-medium mt-1.5 block">
                   Kuryer çatdırılmadan əvvəl bu nömrəyə zəng edəcək.
                 </span>
               </div>
 
-              {/* Şəhər / Rayon (Poçt indeksi tamamilə silindi) */}
+              {/* Şəhər / Rayon */}
               <div>
-                <label className="block text-[11px] font-bold text-neutral-700 mb-1 flex items-center justify-between">
+                <label className="block text-xs font-black text-slate-900 mb-1.5 flex items-center justify-between">
                   <span>Şəhər / Rayon <span className="text-rose-600">*</span></span>
                 </label>
                 <div className="relative">
@@ -545,62 +546,62 @@ Zəhmət olmasa sifarişimi qəbul edin və çatdırılmanı başladın.`;
                     placeholder="Məs: Bakı, Gəncə, Sumqayıt..."
                     value={city}
                     onChange={(e) => handleCityChange(e.target.value)}
-                    className="w-full bg-white border border-neutral-200 focus:border-[#111827] focus:ring-2 focus:ring-[#111827]/15 rounded-xl h-11 pl-3.5 pr-9 text-xs sm:text-sm text-neutral-900 placeholder-neutral-400 focus:outline-none transition-all shadow-xs"
+                    className="w-full bg-slate-50/60 border-2 border-slate-200 focus:bg-white focus:border-slate-900 focus:ring-4 focus:ring-slate-900/10 rounded-2xl h-12 pl-4 pr-11 text-sm font-bold text-slate-900 placeholder-slate-400 focus:outline-none transition-all shadow-xs"
                   />
-                  <Building className="w-4 h-4 text-neutral-400 absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none" />
+                  <Building className="w-4 h-4 text-slate-600 absolute right-4 top-1/2 -translate-y-1/2 pointer-events-none" />
                 </div>
               </div>
 
-              {/* DİNAMİK ÇATDIRILMA SEÇİMİ */}
+              {/* ÇATDIRILMA SEÇİMİ */}
               <div className="pt-2">
-                <div className="flex items-center justify-between mb-1.5">
-                  <label className="block text-[11px] font-bold text-neutral-800 flex items-center gap-1.5">
-                    <Truck className="w-3.5 h-3.5 text-slate-900" />
+                <div className="flex items-center justify-between mb-2">
+                  <label className="text-xs font-black text-slate-900 flex items-center gap-1.5">
+                    <Truck className="w-4 h-4 text-slate-900" />
                     <span>Çatdırılma Növü</span>
                   </label>
                   {isFreeShipping && (
-                    <span className="text-[10px] font-bold text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded-full flex items-center gap-1 border border-emerald-200">
-                      <Sparkles className="w-3 h-3 text-emerald-600" />
+                    <span className="text-xs font-black text-emerald-800 bg-emerald-100 px-2.5 py-0.5 rounded-full flex items-center gap-1 border border-emerald-300">
+                      <Sparkles className="w-3.5 h-3.5 text-emerald-600" />
                       {hasTwoOrMoreItems ? '2 Məhsul: PULSUZ' : '50 AZN+: PULSUZ'}
                     </span>
                   )}
                 </div>
 
                 {!hasCity ? (
-                  <div className="p-3 rounded-xl bg-neutral-50 border border-neutral-200 text-[11px] text-neutral-500 flex items-center gap-2">
-                    <MapPin className="w-3.5 h-3.5 text-slate-900 shrink-0" />
+                  <div className="p-3.5 rounded-2xl bg-slate-100 border border-slate-200 text-xs text-slate-700 flex items-center gap-2.5">
+                    <MapPin className="w-4 h-4 text-slate-900 shrink-0" />
                     <span>
                       Çatdırılma variantlarını görmək üçün yuxarıda <strong>Şəhər</strong> xanasını doldurun (Məs: Bakı).
                     </span>
                   </div>
                 ) : isBaku ? (
                   /* BAKI ÜÇÜN SEÇİMLƏR */
-                  <div className="grid grid-cols-2 gap-2">
+                  <div className="grid grid-cols-2 gap-2.5">
                     <div
                       onClick={() => setShippingOption('metro')}
-                      className={`p-2.5 rounded-xl border flex items-center justify-between cursor-pointer transition-all ${
+                      className={`p-3 rounded-2xl border-2 flex items-center justify-between cursor-pointer transition-all ${
                         shippingOption === 'metro'
-                          ? 'bg-slate-100/80 border-[#111827] ring-1 ring-[#111827]'
-                          : 'bg-neutral-50 border-neutral-200 hover:border-neutral-300'
+                          ? 'bg-slate-900 text-white border-slate-900 shadow-md ring-2 ring-slate-900/20'
+                          : 'bg-slate-50 border-slate-200 hover:border-slate-300 text-slate-800'
                       }`}
                     >
                       <div className="flex items-center gap-2 min-w-0">
                         <div
-                          className={`w-3.5 h-3.5 rounded-full border flex items-center justify-center shrink-0 ${
+                          className={`w-4 h-4 rounded-full border-2 flex items-center justify-center shrink-0 ${
                             shippingOption === 'metro'
-                              ? 'border-[#111827] bg-[#111827]'
-                              : 'border-neutral-400 bg-white'
+                              ? 'border-white bg-white'
+                              : 'border-slate-400 bg-white'
                           }`}
                         >
                           {shippingOption === 'metro' && (
-                            <div className="w-1 h-1 rounded-full bg-white" />
+                            <div className="w-1.5 h-1.5 rounded-full bg-slate-900" />
                           )}
                         </div>
                         <div className="min-w-0">
-                          <span className="text-[11px] font-bold text-neutral-900 block truncate">
+                          <span className={`text-xs font-black block truncate ${shippingOption === 'metro' ? 'text-white' : 'text-slate-900'}`}>
                             Metroya
                           </span>
-                          <span className="text-[9px] text-neutral-500 block truncate">
+                          <span className={`text-[10px] block truncate font-medium ${shippingOption === 'metro' ? 'text-slate-300' : 'text-slate-500'}`}>
                             Metrostansiyaya
                           </span>
                         </div>
@@ -608,15 +609,15 @@ Zəhmət olmasa sifarişimi qəbul edin və çatdırılmanı başladın.`;
                       <div className="text-right shrink-0">
                         {isFreeShipping ? (
                           <div className="flex flex-col items-end leading-none">
-                            <span className="text-[9px] text-neutral-400 line-through font-mono">
+                            <span className="text-[10px] text-slate-400 line-through font-mono">
                               2.00 AZN
                             </span>
-                            <span className="text-[11px] font-black text-emerald-600">
+                            <span className="text-xs font-black text-emerald-400">
                               Pulsuz
                             </span>
                           </div>
                         ) : (
-                          <span className="text-xs font-black text-neutral-900 font-mono">
+                          <span className={`text-xs font-black font-mono ${shippingOption === 'metro' ? 'text-white' : 'text-slate-900'}`}>
                             2 AZN
                           </span>
                         )}
@@ -625,29 +626,29 @@ Zəhmət olmasa sifarişimi qəbul edin və çatdırılmanı başladın.`;
 
                     <div
                       onClick={() => setShippingOption('door')}
-                      className={`p-2.5 rounded-xl border flex items-center justify-between cursor-pointer transition-all ${
+                      className={`p-3 rounded-2xl border-2 flex items-center justify-between cursor-pointer transition-all ${
                         shippingOption === 'door'
-                          ? 'bg-slate-100/80 border-[#111827] ring-1 ring-[#111827]'
-                          : 'bg-neutral-50 border-neutral-200 hover:border-neutral-300'
+                          ? 'bg-slate-900 text-white border-slate-900 shadow-md ring-2 ring-slate-900/20'
+                          : 'bg-slate-50 border-slate-200 hover:border-slate-300 text-slate-800'
                       }`}
                     >
                       <div className="flex items-center gap-2 min-w-0">
                         <div
-                          className={`w-3.5 h-3.5 rounded-full border flex items-center justify-center shrink-0 ${
+                          className={`w-4 h-4 rounded-full border-2 flex items-center justify-center shrink-0 ${
                             shippingOption === 'door'
-                              ? 'border-[#111827] bg-[#111827]'
-                              : 'border-neutral-400 bg-white'
+                              ? 'border-white bg-white'
+                              : 'border-slate-400 bg-white'
                           }`}
                         >
                           {shippingOption === 'door' && (
-                            <div className="w-1 h-1 rounded-full bg-white" />
+                            <div className="w-1.5 h-1.5 rounded-full bg-slate-900" />
                           )}
                         </div>
                         <div className="min-w-0">
-                          <span className="text-[11px] font-bold text-neutral-900 block truncate">
+                          <span className={`text-xs font-black block truncate ${shippingOption === 'door' ? 'text-white' : 'text-slate-900'}`}>
                             Qapıya
                           </span>
-                          <span className="text-[9px] text-neutral-500 block truncate">
+                          <span className={`text-[10px] block truncate font-medium ${shippingOption === 'door' ? 'text-slate-300' : 'text-slate-500'}`}>
                             Birbaşa ünvana
                           </span>
                         </div>
@@ -655,15 +656,15 @@ Zəhmət olmasa sifarişimi qəbul edin və çatdırılmanı başladın.`;
                       <div className="text-right shrink-0">
                         {isFreeShipping ? (
                           <div className="flex flex-col items-end leading-none">
-                            <span className="text-[9px] text-neutral-400 line-through font-mono">
+                            <span className="text-[10px] text-slate-400 line-through font-mono">
                               5.00 AZN
                             </span>
-                            <span className="text-[11px] font-black text-emerald-600">
+                            <span className="text-xs font-black text-emerald-400">
                               Pulsuz
                             </span>
                           </div>
                         ) : (
-                          <span className="text-xs font-black text-neutral-900 font-mono">
+                          <span className={`text-xs font-black font-mono ${shippingOption === 'door' ? 'text-white' : 'text-slate-900'}`}>
                             5 AZN
                           </span>
                         )}
@@ -674,17 +675,17 @@ Zəhmət olmasa sifarişimi qəbul edin və çatdırılmanı başladın.`;
                   /* BAKI XARİCİ RAYONLAR */
                   <div
                     onClick={() => setShippingOption('post')}
-                    className="p-3 rounded-xl border bg-slate-100/80 border-[#111827] ring-1 ring-[#111827] flex items-center justify-between cursor-pointer transition-all"
+                    className="p-3.5 rounded-2xl border-2 bg-slate-900 text-white border-slate-900 shadow-md flex items-center justify-between cursor-pointer transition-all"
                   >
                     <div className="flex items-center gap-2.5">
-                      <div className="w-3.5 h-3.5 rounded-full border border-[#111827] bg-[#111827] flex items-center justify-center shrink-0">
-                        <div className="w-1 h-1 rounded-full bg-white" />
+                      <div className="w-4 h-4 rounded-full border-2 border-white bg-white flex items-center justify-center shrink-0">
+                        <div className="w-1.5 h-1.5 rounded-full bg-slate-900" />
                       </div>
                       <div>
-                        <span className="text-xs font-bold text-neutral-900 block">
+                        <span className="text-xs font-black text-white block">
                           Poçtla Çatdırılma (Bütün Rayonlar)
                         </span>
-                        <span className="text-[10px] text-neutral-500">
+                        <span className="text-[11px] text-slate-300 font-medium">
                           Azərpoçt və ya rayon kuryeri ilə 2-3 günə təhvil
                         </span>
                       </div>
@@ -692,15 +693,15 @@ Zəhmət olmasa sifarişimi qəbul edin və çatdırılmanı başladın.`;
                     <div className="text-right shrink-0">
                       {isFreeShipping ? (
                         <div className="flex flex-col items-end leading-none">
-                          <span className="text-[9px] text-neutral-400 line-through font-mono">
+                          <span className="text-[10px] text-slate-400 line-through font-mono">
                             4.00 AZN
                           </span>
-                          <span className="text-xs font-black text-emerald-600">
+                          <span className="text-xs font-black text-emerald-400">
                             0 AZN (Pulsuz)
                           </span>
                         </div>
                       ) : (
-                        <span className="text-xs font-black text-neutral-900 font-mono">
+                        <span className="text-xs font-black text-white font-mono">
                           4.00 AZN
                         </span>
                       )}
@@ -712,52 +713,54 @@ Zəhmət olmasa sifarişimi qəbul edin və çatdırılmanı başladın.`;
           </div>
 
           {/* =========================================================================
-              B. SİFARİŞ OLUNACAQ MALLAR (KOMPAKT ŞƏKİLDƏ)
+              B. SİFARİŞ OLUNACAQ MƏHSULLAR VƏ HESABAT
               ========================================================================= */}
-          <div className="bg-white border border-neutral-200 rounded-3xl p-4 sm:p-5 shadow-sm">
-            <div className="flex items-center justify-between pb-2.5 mb-2.5 border-b border-neutral-200">
-              <div className="flex items-center gap-2">
-                <ShoppingBag className="w-4 h-4 text-slate-900" />
-                <h3 className="text-xs font-black text-neutral-900 uppercase tracking-wider">
+          <div className="bg-white border-2 border-slate-200/90 rounded-3xl p-5 sm:p-7 shadow-lg shadow-slate-200/60 space-y-4">
+            <div className="flex items-center justify-between pb-3 border-b border-slate-200">
+              <div className="flex items-center gap-2.5">
+                <div className="w-7 h-7 rounded-lg bg-slate-900 flex items-center justify-center text-white shrink-0">
+                  <ShoppingBag className="w-3.5 h-3.5 stroke-[2.2]" />
+                </div>
+                <h3 className="text-xs sm:text-sm font-black text-slate-900 uppercase tracking-wider">
                   Sifariş Olunacaq Məhsullar ({totalQuantity} ədəd)
                 </h3>
               </div>
-              <span className="text-xs font-mono font-black text-slate-900">
+              <span className="text-sm font-mono font-black text-slate-900">
                 {subtotal} AZN
               </span>
             </div>
 
             {/* Kompakt Məhsul Siyahısı */}
-            <div className="divide-y divide-neutral-100 space-y-2">
+            <div className="divide-y divide-slate-100 space-y-2.5">
               {items.map((item) => (
                 <div
                   key={item.lineId}
-                  className="pt-2 first:pt-0 flex items-center justify-between gap-3"
+                  className="pt-2.5 first:pt-0 flex items-center justify-between gap-3"
                 >
-                  <div className="flex items-center gap-2.5 min-w-0">
-                    <div className="relative w-11 h-11 rounded-xl bg-neutral-100 border border-neutral-200 overflow-hidden shrink-0">
+                  <div className="flex items-center gap-3 min-w-0">
+                    <div className="relative w-12 h-12 rounded-xl bg-slate-50 border border-slate-200 overflow-hidden shrink-0 shadow-xs">
                       <Image
                         src={item.image}
                         alt={item.title}
                         fill
-                        sizes="44px"
+                        sizes="48px"
                         className="object-cover"
                       />
-                      <span className="absolute bottom-0 right-0 bg-neutral-900 text-white text-[9px] font-black px-1 rounded-tl-md font-mono">
+                      <span className="absolute bottom-0 right-0 bg-slate-900 text-white text-[10px] font-black px-1.5 py-0.2 rounded-tl-md font-mono">
                         x{item.quantity}
                       </span>
                     </div>
                     <div className="min-w-0">
-                      <h4 className="text-xs font-bold text-neutral-900 truncate max-w-[180px] sm:max-w-xs">
+                      <h4 className="text-xs sm:text-sm font-extrabold text-slate-900 truncate max-w-[190px] sm:max-w-xs leading-tight">
                         {item.title}
                       </h4>
-                      <span className="text-[10px] text-neutral-500 block truncate">
+                      <span className="text-xs text-slate-500 font-semibold block truncate mt-0.5">
                         {item.variantTitle || 'Standart'} • {item.quantity} ədəd
                       </span>
                     </div>
                   </div>
 
-                  <span className="text-xs font-black text-neutral-900 font-mono shrink-0">
+                  <span className="text-sm font-black text-slate-900 font-mono shrink-0">
                     {(item.price * item.quantity).toFixed(2)} AZN
                   </span>
                 </div>
@@ -765,36 +768,36 @@ Zəhmət olmasa sifarişimi qəbul edin və çatdırılmanı başladın.`;
             </div>
 
             {/* Məbləğ Detalları */}
-            <div className="mt-3 pt-3 border-t border-neutral-200 space-y-1.5 text-xs text-neutral-600">
-              <div className="flex justify-between">
-                <span>Məhsulların Məbləği:</span>
-                <span className="font-mono font-bold text-neutral-900">{subtotal} AZN</span>
+            <div className="mt-4 pt-3.5 border-t border-slate-200 space-y-2 text-xs text-slate-700">
+              <div className="flex justify-between items-center">
+                <span className="font-bold text-slate-600">Məhsulların Məbləği:</span>
+                <span className="font-mono font-black text-slate-900 text-sm">{subtotal} AZN</span>
               </div>
               <div className="flex justify-between items-center">
-                <span>Çatdırılma:</span>
+                <span className="font-bold text-slate-600">Çatdırılma:</span>
                 <div>
                   {isFreeShipping ? (
                     <div className="flex items-center gap-1.5">
-                      <span className="text-neutral-400 line-through font-mono text-[11px]">
+                      <span className="text-slate-400 line-through font-mono text-xs">
                         {(baseShippingFee > 0 ? baseShippingFee : 5.0).toFixed(2)} AZN
                       </span>
-                      <span className="text-emerald-700 font-black text-xs uppercase bg-emerald-50 px-1.5 py-0.5 rounded border border-emerald-200">
+                      <span className="text-emerald-700 font-black text-xs uppercase bg-emerald-100 px-2 py-0.5 rounded-md border border-emerald-300">
                         Pulsuz
                       </span>
                     </div>
                   ) : effectiveShippingFee > 0 ? (
-                    <span className="font-mono font-bold text-neutral-900">
+                    <span className="font-mono font-black text-slate-900 text-sm">
                       {effectiveShippingFee.toFixed(2)} AZN
                     </span>
                   ) : (
-                    <span className="text-neutral-400 italic text-[11px]">Şəhər seçin</span>
+                    <span className="text-slate-400 italic font-medium">Şəhər seçin</span>
                   )}
                 </div>
               </div>
 
               {isFreeShipping && (
-                <div className="p-2 rounded-xl bg-emerald-50 border border-emerald-200 text-emerald-800 text-[11px] font-semibold flex items-center gap-1.5 mt-1">
-                  <Sparkles className="w-3.5 h-3.5 text-emerald-600 shrink-0" />
+                <div className="p-3 rounded-2xl bg-emerald-600 text-white text-xs font-bold flex items-center gap-2 shadow-sm mt-1.5">
+                  <Sparkles className="w-4 h-4 text-emerald-200 shrink-0" />
                   <span>
                     {hasTwoOrMoreItems
                       ? '🎉 2 ədəd məhsul aksiyası: Karqo tamamilə PULSUZDUR!'
@@ -803,15 +806,17 @@ Zəhmət olmasa sifarişimi qəbul edin və çatdırılmanı başladın.`;
                 </div>
               )}
 
-              {/* Yekun Məbləğ */}
-              <div className="pt-2.5 border-t border-neutral-200 flex justify-between items-baseline">
+              {/* Yekun Qapıda Ödəniləcək Qutu */}
+              <div className="mt-3 p-4 sm:p-5 rounded-2xl bg-[#111827] text-white flex justify-between items-center shadow-lg shadow-slate-900/20">
                 <div>
-                  <span className="font-black text-neutral-900 text-sm block">
+                  <span className="font-black text-xs sm:text-sm block tracking-wide text-white">
                     Qapıda Ödəniləcək:
                   </span>
-                  <span className="text-[10px] text-neutral-500">Bütün xərclər daxildir</span>
+                  <span className="text-[11px] text-slate-300 font-medium">
+                    Bütün xərclər daxildir • Kuryerə ödəniş
+                  </span>
                 </div>
-                <span className="font-black text-[#111827] text-xl sm:text-2xl font-mono">
+                <span className="font-black text-2xl sm:text-3xl font-mono text-white tracking-tight">
                   {totalAmount} AZN
                 </span>
               </div>
@@ -819,17 +824,17 @@ Zəhmət olmasa sifarişimi qəbul edin və çatdırılmanı başladın.`;
           </div>
 
           {/* =========================================================================
-              C. QAPIDA ÖDƏNİŞ ZƏMANƏTİ VƏ ƏSAS TƏSDİQ DÜYMƏSİ
+              C. GÜVƏN VƏ SİFARİŞİ TƏSDİQLƏ DÜYMƏSİ
               ========================================================================= */}
-          <div className="bg-white border border-neutral-200 rounded-3xl p-4 sm:p-5 shadow-sm space-y-3">
-            {/* Qapıda Ödəniş Bildirişi (POS/Nağd seçimi ləğv edildi, rahat zəmanət qoyuldu) */}
-            <div className="p-3 rounded-2xl bg-slate-50 border border-slate-200/80 text-[11px] text-neutral-700 flex items-start gap-2.5">
-              <ShieldCheck className="w-4 h-4 text-emerald-600 shrink-0 mt-0.5" />
+          <div className="bg-white border-2 border-slate-200/90 rounded-3xl p-5 sm:p-7 shadow-lg shadow-slate-200/60 space-y-4">
+            {/* Qapıda Ödəniş Zəmanəti Qutusu */}
+            <div className="p-4 rounded-2xl bg-emerald-50/90 border border-emerald-200/90 text-slate-800 flex items-start gap-3 shadow-xs">
+              <ShieldCheck className="w-5 h-5 text-emerald-600 shrink-0 mt-0.5" />
               <div>
-                <strong className="text-neutral-900 block font-bold">
-                  Qapıda Təhvil və Ödəniş
+                <strong className="text-xs sm:text-sm font-black text-slate-900 block">
+                  Qapıda Təhvil və Ödəniş Zəmanəti
                 </strong>
-                <span>
+                <span className="text-xs text-slate-700 font-medium leading-relaxed mt-0.5 block">
                   Əvvəlcədən kart və ya ödəniş tələb olunmur. Məhsulu qapıda kuryerdən təhvil alarkən nağd və ya kartla ödəyə bilərsiniz.
                 </span>
               </div>
@@ -840,19 +845,19 @@ Zəhmət olmasa sifarişimi qəbul edin və çatdırılmanı başladın.`;
               type="button"
               onClick={handleSubmitOrder}
               disabled={isSubmitting}
-              className="w-full h-14 rounded-2xl bg-[#111827] hover:bg-[#1f2937] text-white font-black text-sm sm:text-base uppercase tracking-wider flex items-center justify-center gap-2.5 shadow-xl shadow-slate-900/25 transition-all transform active:scale-[0.98] disabled:opacity-50 cursor-pointer"
+              className="w-full h-15 rounded-2xl bg-[#111827] hover:bg-[#1f2937] text-white font-black text-sm sm:text-base uppercase tracking-wider flex items-center justify-center gap-3 shadow-xl shadow-slate-900/30 transition-all transform active:scale-[0.98] disabled:opacity-50 cursor-pointer"
             >
-              <Zap className="w-5 h-5 fill-white text-white shrink-0" />
+              <Zap className="w-5 h-5 fill-yellow-400 text-yellow-400 shrink-0" />
               <span>
                 {isSubmitting
                   ? 'SİFARİŞ GÖNDƏRİLİR...'
-                  : 'QAPIDA ÖDƏNİŞLƏ SİFARİŞİ TAMAMLA'}
+                  : 'QAPIDA ÖDƏNİŞLƏ SİFARİŞİ TƏSDİQLƏ'}
               </span>
             </button>
 
-            <div className="text-center">
-              <span className="text-[10px] text-neutral-400">
-                🔒 256-Bit SSL Şifrələnmə • 100% Təhlükəsiz Qapıda Sifariş
+            <div className="text-center pt-1">
+              <span className="text-xs font-bold text-slate-500">
+                🔒 256-Bit SSL Şifrələnmə • 100% Təhlükəsiz Qapıda Sifariş • 14 Gün Zəmanət
               </span>
             </div>
           </div>
