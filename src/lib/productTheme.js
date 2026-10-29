@@ -85,6 +85,33 @@ export const PRODUCT_THEMES = {
     accentBadgeBorder: 'border-[#C7D2FE]',
   },
 
+  // Glowify Pro - Ağıllı Rəngarəng Atmosfer və Hava Nəmləndirici (Canlı Kiber Siyan / Neon Okean RGB Mövzusu)
+  glowify: {
+    id: 'glowify',
+    name: 'Glowify Pro Ambient Cyan',
+    primary: '#0891B2',              // cyan-600
+    primaryHover: '#0E7490',         // cyan-700
+    primaryActive: '#155E75',        // cyan-800
+    primaryLight: '#ECFEFF',         // cyan-50
+    primaryLightHover: '#CFFAFE',    // cyan-100
+    primaryBorder: '#A5F3FC',        // cyan-200
+    primaryBorderStrong: '#0891B2',
+    primaryText: '#0891B2',
+    primaryGlow: 'rgba(8, 145, 178, 0.35)',
+    ring: 'rgba(8, 145, 178, 0.25)',
+    gradient: 'from-[#06B6D4] via-[#0891B2] to-[#0E7490]',
+    urgencyBg: 'bg-cyan-50/80',
+    urgencyBorder: 'border-cyan-200/90',
+    urgencyText: 'text-cyan-950',
+    urgencyIcon: 'text-[#0891B2]',
+    tickerBadgeBg: 'bg-[#0891B2]/20',
+    tickerBadgeText: 'text-[#0891B2]',
+    tickerStar: 'text-[#0891B2]',
+    accentBadgeBg: 'bg-[#ECFEFF]',
+    accentBadgeText: 'text-[#0891B2]',
+    accentBadgeBorder: 'border-[#A5F3FC]',
+  },
+
   // Standart / Fallback Trendim
   default: {
     id: 'default',
@@ -128,6 +155,20 @@ export function getProductTheme(productOrHandle) {
   const title = (
     typeof productOrHandle === 'object' ? productOrHandle?.title || '' : ''
   ).toLowerCase();
+
+  // Glowify Pro Ağıllı Hava Nəmləndirici (Canlı Kiber Siyan / RGB Atmosfer)
+  if (
+    handle.includes('glowify') ||
+    handle.includes('nemlendirici') ||
+    handle.includes('nəmləndirici') ||
+    handle.includes('humidifier') ||
+    handle.includes('diffuzor') ||
+    title.includes('glowify') ||
+    title.includes('nəmləndirici') ||
+    title.includes('hava')
+  ) {
+    return PRODUCT_THEMES.glowify;
+  }
 
   // Lumify Pro Sehrli Bayram İşıqları (Sehrli İndiqo / Bənövşəyi tonu)
   if (

@@ -17,6 +17,7 @@ import ProductCrossSell from '@/components/product/ProductCrossSell';
 import CustomerSalesBadge from '@/components/product/CustomerSalesBadge';
 import ClarifyComparisonSection from '@/components/product/ClarifyComparisonSection';
 import LumifyComparisonSection from '@/components/product/LumifyComparisonSection';
+import GlowifyComparisonSection from '@/components/product/GlowifyComparisonSection';
 import { getProductTheme } from '@/lib/productTheme';
 
 export async function generateMetadata({ params }) {
@@ -65,7 +66,7 @@ export default async function ProductPage({ params }) {
     (p) => String(p.id) !== String(product.id) && p.handle !== product.handle
   );
 
-  // Məhsulun xüsusi rəng və dizayn mövzusu (Məs: Clarify Pro üçün canlı "50% ENDİRİM" magenta rəngi)
+  // Məhsulun xüsusi rəng və dizayn mövzusu (Məs: Clarify Pro üçün canlı "50% ENDİRİM" magenta rəngi, Glowify üçün Neon Cyan)
   const theme = getProductTheme(product);
 
   // Clarify Pro vakum cihazı üçün xüsusi Qarşılaşdırma və Əvvəl / Sonra bölməsi
@@ -88,6 +89,18 @@ export default async function ProductPage({ params }) {
     String(product.title || '').toLowerCase().includes('lumify') ||
     String(product.title || '').toLowerCase().includes('bayram') ||
     String(product.title || '').toLowerCase().includes('işıq');
+
+  // Glowify Pro nəmləndirici üçün xüsusi Qarşılaşdırma və Vizual Bölmə
+  const isGlowifyPro =
+    String(handle).toLowerCase().includes('glowify') ||
+    String(handle).toLowerCase().includes('nemlendirici') ||
+    String(handle).toLowerCase().includes('nəmləndirici') ||
+    String(handle).toLowerCase().includes('humidifier') ||
+    String(handle).toLowerCase().includes('diffuzor') ||
+    String(product.handle || '').toLowerCase().includes('glowify') ||
+    String(product.title || '').toLowerCase().includes('glowify') ||
+    String(product.title || '').toLowerCase().includes('nəmləndirici') ||
+    String(product.title || '').toLowerCase().includes('nemlendirici');
 
   return (
     <div
@@ -188,6 +201,11 @@ export default async function ProductPage({ params }) {
         {/* Lumify Pro üçün Xüsusi Qarşılaşdırma və Vizual Xüsusiyyət Bölməsi */}
         {isLumifyPro && (
           <LumifyComparisonSection product={product} theme={theme} />
+        )}
+
+        {/* Glowify Pro üçün Xüsusi Qarşılaşdırma və Vizual Xüsusiyyət Bölməsi */}
+        {isGlowifyPro && (
+          <GlowifyComparisonSection product={product} theme={theme} />
         )}
 
         {/* Bununla Birlikdə Tez-tez Alınırlar (Mağazanın digər real məhsullarından ibarət dəst) */}

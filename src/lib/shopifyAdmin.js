@@ -20,6 +20,7 @@ const API_VERSION = process.env.SHOPIFY_API_VERSION || '2024-04';
 
 // Real Shopify Mağazasının Məhsul Variant ID-ləri (Shopify inventarı ilə birbaşa əlaqələndirmə üçün)
 const KNOWN_SHOPIFY_VARIANTS = {
+  glowifypro: 50832151445760,
   clarifypro: 49547097932032,
   istiel: 49192144306432,
   lumifypro: 50691530293504,
@@ -90,6 +91,9 @@ function resolveVariantId(item) {
   }
 
   const searchKey = `${item.handle || ''} ${item.title || ''}`.toLowerCase();
+  if (searchKey.includes('glowify') || searchKey.includes('nemlendirici') || searchKey.includes('nəmləndirici') || searchKey.includes('hava') || searchKey.includes('humidifier')) {
+    return KNOWN_SHOPIFY_VARIANTS.glowifypro;
+  }
   if (searchKey.includes('clarify') || searchKey.includes('vakum') || searchKey.includes('qara')) {
     return KNOWN_SHOPIFY_VARIANTS.clarifypro;
   }

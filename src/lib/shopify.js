@@ -337,6 +337,9 @@ export async function getProductByHandle(handle) {
     return (
       pHandle === decodedHandle ||
       String(p.id) === String(handle) ||
+      (decodedHandle.includes('glowify') && (pHandle.includes('glowify') || pTitle.includes('glowify'))) ||
+      ((decodedHandle.includes('nemlendirici') || decodedHandle.includes('nəmləndirici') || decodedHandle.includes('humidifier') || decodedHandle.includes('hava')) &&
+        (pHandle.includes('glowify') || pTitle.includes('glowify') || pTitle.includes('nəmləndirici'))) ||
       (decodedHandle.includes('clarify') && (pHandle.includes('clarify') || pTitle.includes('clarify'))) ||
       (decodedHandle.includes('lumify') && (pHandle.includes('lumify') || pTitle.includes('lumify'))) ||
       ((decodedHandle.includes('bayram') || decodedHandle.includes('isiq') || decodedHandle.includes('işıq')) &&
@@ -369,6 +372,9 @@ export async function getProductsByCategory(categorySlug, first = 20) {
     if (slug.includes('bayram') || slug.includes('isiq') || slug.includes('işıq') || slug.includes('dekor')) {
       return handle.includes('lumify') || handle.includes('bayram') || handle.includes('isiq') || title.includes('lumify');
     }
+    if (slug.includes('hava') || slug.includes('nemlendirici') || slug.includes('nəmləndirici') || slug.includes('atmosfer') || slug.includes('ev')) {
+      return handle.includes('glowify') || handle.includes('nemlendirici') || handle.includes('nəmləndirici') || title.includes('glowify');
+    }
     return true;
   });
 
@@ -393,6 +399,68 @@ export async function createCart(lines = []) {
 // Real Shopify Mağazası Məlumatları (Yalnız Admin Paneldə olan məhsullar)
 // -------------------------------------------------------------
 export const MOCK_PRODUCTS = [
+  {
+    id: '10264817926400',
+    title: 'Glowify Pro™ – Rəngarəng Atmosfer və Ağıllı Hava Nəmləndirici',
+    handle: 'glowify-pro™-rəngarəng-atmosfer-və-agilli-hava-nəmləndirici',
+    description:
+      'Evinizdə və ofisinizdə quru havadan xilas olun, eyni zamanda vizual zövq yaşayın! 6 güclü sprey buxar çıxışı, musiqi və səsə reaksiya verən dinamik RGB ritmik işıq şousu, 900ml böyük su çəni və Type-C şarjlı naqilsiz dizayn. Suya sevdiyiniz efir yağlarını damladaraq aromaterapiya təcrübəsi əldə edin. Ultra-səssiz ultrasəs işləmə rejimi ilə yuxunuzu pozmaz.',
+    availableForSale: true,
+    priceRange: {
+      minVariantPrice: { amount: '28.99', currencyCode: 'AZN' },
+      maxVariantPrice: { amount: '28.99', currencyCode: 'AZN' },
+    },
+    compareAtPriceRange: {
+      minVariantPrice: { amount: '46.99', currencyCode: 'AZN' },
+    },
+    images: {
+      edges: [
+        {
+          node: {
+            url: 'https://cdn.shopify.com/s/files/1/0852/9418/6752/files/R_ngar_ngBuxarEffektliDiffuzor.png?v=1793287963',
+            altText: 'Glowify Pro™ Rəngarəng Buxar Effektli Diffuzor',
+          },
+        },
+        {
+          node: {
+            url: 'https://cdn.shopify.com/s/files/1/0852/9418/6752/files/S_ssizN_ml_ndirm_RahatMuhit.png?v=1793287964',
+            altText: 'Glowify Pro™ Səssiz Nəmləndirmə və Rahat Mühit',
+          },
+        },
+        {
+          node: {
+            url: 'https://cdn.shopify.com/s/files/1/0852/9418/6752/files/GLOWIFY_PRO___R_ngar_ng_N_ml_ndirici.png?v=1793287977',
+            altText: 'Glowify Pro™ Rəngarəng Nəmləndirici və Ritmik RGB',
+          },
+        },
+        {
+          node: {
+            url: 'https://cdn.shopify.com/s/files/1/0852/9418/6752/files/R_ngliAtmosfer_GLOWIFYPRO.png?v=1793287963',
+            altText: 'Glowify Pro™ Rəngli Atmosfer və Aromaterapiya',
+          },
+        },
+        {
+          node: {
+            url: 'https://cdn.shopify.com/s/files/1/0852/9418/6752/files/GLOWIFYPROTamD_stHumidifikator.png?v=1793287963',
+            altText: 'Glowify Pro™ Tam Dəst Humidifikator və Type-C Kabel',
+          },
+        },
+      ],
+    },
+    variants: {
+      edges: [
+        {
+          node: {
+            id: '50832151445760',
+            title: 'Standart',
+            availableForSale: true,
+            price: { amount: '28.99', currencyCode: 'AZN' },
+            compareAtPrice: { amount: '46.99', currencyCode: 'AZN' },
+          },
+        },
+      ],
+    },
+  },
   {
     id: '10234502316288',
     title: 'Lumify Pro – Sehrli Bayram İşıqları! 🎄',

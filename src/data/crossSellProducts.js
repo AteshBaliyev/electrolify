@@ -41,4 +41,16 @@ export const CROSS_SELL_PRODUCTS = [
     description: '16 fərqli naxışlı və 270° fırlanan sehrli bayram proyeksiya işıqları.',
     handle: 'lumify-pro-sehrli-bayram-i̇siqlari-🎄',
   },
+  {
+    id: 'store-glowifypro',
+    title: 'Glowify Pro™ – Rəngarəng Atmosfer və Ağıllı Hava Nəmləndirici',
+    category: 'Ağıllı Ev & Nəmləndirici',
+    price: 28.99,
+    compareAtPrice: 46.99,
+    discount: '-38%',
+    image:
+      'https://cdn.shopify.com/s/files/1/0852/9418/6752/files/R_ngar_ngBuxarEffektliDiffuzor.png?v=1793287963',
+    description: '6 sprey nozulu və ritmik RGB işıqlı 900ml böyük hava nəmləndirici diffuzor.',
+    handle: 'glowify-pro™-rəngarəng-atmosfer-və-agilli-hava-nəmləndirici',
+  },
 ];
