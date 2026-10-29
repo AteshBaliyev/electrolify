@@ -61,6 +61,12 @@ export default async function AllProductsPage({ searchParams }) {
               Hamısı ({products.length})
             </Link>
             <Link
+              href="/category/hava-nemlendirici"
+              className="px-4 py-2 rounded-xl bg-neutral-100 hover:bg-neutral-200 text-neutral-700 font-semibold whitespace-nowrap transition-colors"
+            >
+              💨 Hava Nəmləndirici
+            </Link>
+            <Link
               href="/category/deri-qullugu"
               className="px-4 py-2 rounded-xl bg-neutral-100 hover:bg-neutral-200 text-neutral-700 font-semibold whitespace-nowrap transition-colors"
             >

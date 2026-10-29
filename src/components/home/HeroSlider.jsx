@@ -45,21 +45,35 @@ const SLIDES = [
     ctaText: 'İndi Al, Qapıda Ödə',
     bgGradient: 'from-slate-50 via-white to-neutral-50',
   },
+  {
+    id: 4,
+    badge: '💨 YENİ NƏSİL HAVA NƏMLƏNDİRİCİ',
+    title: 'Glowify Pro™ – Rəngarəng Nəmləndirici',
+    subtitle: '6 güclü sprey buxar çıxışı, musiqiyə həssas ritmik RGB işıq şousu və 900ml böyük su çəni.',
+    discount: '-38% ENDİRİM',
+    price: '28.99 AZN',
+    comparePrice: '46.99 AZN',
+    link: '/products/glowify-pro™-rəngarəng-atmosfer-və-agilli-hava-nəmləndirici',
+    image: 'https://cdn.shopify.com/s/files/1/0852/9418/6752/files/R_ngar_ngBuxarEffektliDiffuzor.png?v=1793287963',
+    ctaText: 'İndi Al, Qapıda Ödə',
+    bgGradient: 'from-cyan-50/80 via-white to-slate-50',
+  },
 ];
 
 export default function HeroSlider({ products = [] }) {
   // Əgər real Shopify məhsulları varsa, onlardan avtomatik dinamik slaydlar yarat
   const slides = React.useMemo(() => {
     if (products && products.length > 0) {
-      return products.slice(0, 3).map((prod, index) => {
+      return products.slice(0, 4).map((prod, index) => {
         const imgUrl = prod.images?.edges?.[0]?.node?.url || SLIDES[index % SLIDES.length].image;
         const price = prod.priceRange?.minVariantPrice?.amount || '0.00';
         const comparePrice = prod.compareAtPriceRange?.minVariantPrice?.amount;
-        const badges = ['🔥 HƏFTƏNİN MEQA FÜRSƏTİ', '⚡ ÇOX SATAN MƏHSUL', '✨ YENİ GƏLƏN'];
+        const badges = ['🔥 HƏFTƏNİN MEQA FÜRSƏTİ', '⚡ ÇOX SATAN MƏHSUL', '✨ YENİ GƏLƏN', '💨 YENİ HAVA NƏMLƏNDİRİCİ'];
         const gradients = [
           'from-slate-50 via-white to-neutral-50',
           'from-sky-50/90 via-white to-neutral-50',
           'from-slate-100/70 via-white to-slate-50',
+          'from-cyan-50/80 via-white to-slate-50',
         ];
         let discount = 'XÜSUSİ TƏKLİF';
         if (comparePrice && parseFloat(comparePrice) > parseFloat(price)) {

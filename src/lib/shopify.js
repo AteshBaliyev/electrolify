@@ -289,7 +289,7 @@ export async function fetchLiveShopifyProducts() {
 }
 
 /**
- * Mağazadakı məhsulları əldə edir (YALNIZ Shopify Admin Panelində olan real məhsullar)
+ * Mağazadakı məhsulları əldə edir (MOCK və canlı Shopify məlumatlarını birləşdirərək heç bir məhsulun itməməsini təmin edir)
  */
 export async function getProducts(first = 20) {
   if (isShopifyConfigured()) {
@@ -302,21 +302,51 @@ export async function getProducts(first = 20) {
     }
   }
 
-  // Shopify mağazasından yalnız real məhsulları çək
+  // Shopify mağazasından canlı məhsulları çək
   const live = await fetchLiveShopifyProducts();
-  if (live && live.length > 0) {
-    return live.slice(0, first);
+  const liveList = Array.isArray(live) ? live : [];
+
+  // MOCK_PRODUCTS ilə başlayırıq (bütün 4 məhsul: Glowify Pro, Lumify Pro, Clarify Pro, İstiƏl)
+  const result = [...MOCK_PRODUCTS];
+
+  // Əgər live-da hər hansı məhsul varsa, qiymət və id-ni canlı Shopify məlumatları ilə yenilə
+  for (const liveProd of liveList) {
+    const existingIndex = result.findIndex((p) => {
+      const pHandle = (p.handle || '').toLowerCase();
+      const lHandle = (liveProd.handle || '').toLowerCase();
+      const pTitle = (p.title || '').toLowerCase();
+      const lTitle = (liveProd.title || '').toLowerCase();
+      return (
+        String(p.id) === String(liveProd.id) ||
+        pHandle === lHandle ||
+        (pHandle.includes('glowify') && (lHandle.includes('glowify') || lTitle.includes('glowify'))) ||
+        (pHandle.includes('clarify') && (lHandle.includes('clarify') || lTitle.includes('clarify'))) ||
+        (pHandle.includes('lumify') && (lHandle.includes('lumify') || lTitle.includes('lumify'))) ||
+        (pHandle.includes('isti') && (lHandle.includes('isti') || lTitle.includes('masaj')))
+      );
+    });
+
+    if (existingIndex >= 0) {
+      result[existingIndex] = {
+        ...result[existingIndex],
+        id: String(liveProd.id || result[existingIndex].id),
+        availableForSale: liveProd.availableForSale,
+        priceRange: liveProd.priceRange || result[existingIndex].priceRange,
+        compareAtPriceRange: liveProd.compareAtPriceRange || result[existingIndex].compareAtPriceRange,
+      };
+    } else {
+      result.push(liveProd);
+    }
   }
 
-  // Fallback olaraq yalnız real mağaza məhsulları
-  return MOCK_PRODUCTS.slice(0, first);
+  return result.slice(0, first);
 }
 
 /**
  * Handle əsasında tək məhsul məlumatını əldə edir
  */
 export async function getProductByHandle(handle) {
-  const decodedHandle = decodeURIComponent(handle || '').toLowerCase();
+  const decodedHandle = decodeURIComponent(handle || '').toLowerCase().trim();
 
   if (isShopifyConfigured()) {
     const { data, error } = await shopifyFetch({
@@ -328,8 +358,8 @@ export async function getProductByHandle(handle) {
     }
   }
 
-  const live = await fetchLiveShopifyProducts();
-  const productList = live && live.length > 0 ? live : MOCK_PRODUCTS;
+  // Bütün birləşdirilmiş məhsullar arasından axtar (həm live, həm mock)
+  const productList = await getProducts(50);
 
   const match = productList.find((p) => {
     const pHandle = decodeURIComponent(p.handle || '').toLowerCase();
@@ -338,7 +368,7 @@ export async function getProductByHandle(handle) {
       pHandle === decodedHandle ||
       String(p.id) === String(handle) ||
       (decodedHandle.includes('glowify') && (pHandle.includes('glowify') || pTitle.includes('glowify'))) ||
-      ((decodedHandle.includes('nemlendirici') || decodedHandle.includes('nəmləndirici') || decodedHandle.includes('humidifier') || decodedHandle.includes('hava')) &&
+      ((decodedHandle.includes('nemlendirici') || decodedHandle.includes('nəmləndirici') || decodedHandle.includes('humidifier') || decodedHandle.includes('hava') || decodedHandle.includes('diffuzor')) &&
         (pHandle.includes('glowify') || pTitle.includes('glowify') || pTitle.includes('nəmləndirici'))) ||
       (decodedHandle.includes('clarify') && (pHandle.includes('clarify') || pTitle.includes('clarify'))) ||
       (decodedHandle.includes('lumify') && (pHandle.includes('lumify') || pTitle.includes('lumify'))) ||
