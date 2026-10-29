@@ -79,27 +79,27 @@ export default function ProductPurchaseClient({ product, theme }) {
       {/* Dinamik Qiymət Bloku - Giriş səhifəsindəki kimi [Yeni Qiymət] [Köhnə Qiymət] [Kənarda -XX% ENDİRİM] */}
       <div className="py-2 sm:py-2.5 px-3.5 sm:px-4 rounded-xl sm:rounded-2xl bg-gray-50/50 border border-gray-100/80 flex items-center gap-2.5 sm:gap-3 flex-wrap">
         {/* 1. Yeni Qiymət */}
-        <span className="text-3xl sm:text-4xl font-extrabold text-gray-900 tracking-tight shrink-0">
+        <span className="text-3xl sm:text-4xl font-extrabold text-gray-900 tracking-tight shrink-0 whitespace-nowrap">
           {(Number(currentPrice) * quantity).toFixed(2)} AZN
         </span>
 
         {/* 2. Köhnə Qiymət (Üstündən xətt çəkilmiş) */}
         {comparePrice && (
-          <span className="text-base sm:text-lg md:text-xl text-gray-400 line-through font-semibold shrink-0">
+          <span className="text-base sm:text-lg md:text-xl text-gray-400 line-through font-semibold shrink-0 whitespace-nowrap">
             {(Number(comparePrice) * quantity).toFixed(2)} AZN
           </span>
         )}
 
         {/* 3. Kənarda Endirim Nişanı (Giriş səhifəsindəki kimi qırmızı fonda, ağ yazı -XX% ENDİRİM) */}
         {discountPercent && discountPercent > 0 && (
-          <span className="bg-rose-600 text-white rounded-md px-2.5 py-0.5 text-xs sm:text-sm font-black tracking-tight inline-flex items-center shrink-0 shadow-xs uppercase">
+          <span className="bg-rose-600 text-white rounded-md px-2.5 py-0.5 text-xs sm:text-sm font-black tracking-tight inline-flex items-center shrink-0 shadow-xs uppercase whitespace-nowrap">
             -{discountPercent}% ENDİRİM
           </span>
         )}
 
         {/* Say 1-dən çox olduqda tək ədəd qiyməti */}
         {quantity > 1 && (
-          <span className="text-xs text-gray-500 font-semibold ml-auto sm:ml-0 shrink-0">
+          <span className="text-xs text-gray-500 font-semibold ml-auto sm:ml-0 shrink-0 whitespace-nowrap">
             ({Number(currentPrice).toFixed(2)} AZN / ədəd)
           </span>
         )}

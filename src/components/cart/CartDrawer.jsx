@@ -273,12 +273,12 @@ export default function CartDrawer() {
                               </div>
 
                               {/* Qiymət */}
-                              <div className="text-right">
-                                <span className="text-xs font-black text-[#111827] block">
+                              <div className="text-right shrink-0 whitespace-nowrap">
+                                <span className="text-xs font-black text-[#111827] block whitespace-nowrap">
                                   {(item.price * item.quantity).toFixed(2)} AZN
                                 </span>
                                 {item.compareAtPrice > item.price && (
-                                  <span className="text-[10px] text-neutral-400 line-through">
+                                  <span className="text-[10px] text-neutral-400 line-through block whitespace-nowrap">
                                     {(item.compareAtPrice * item.quantity).toFixed(2)} AZN
                                   </span>
                                 )}
@@ -446,9 +446,9 @@ export default function CartDrawer() {
                       <span className="text-neutral-700 font-bold">5.00 AZN</span>
                     )}
                   </div>
-                  <div className="flex justify-between items-baseline pt-2 border-t border-neutral-200">
+                  <div className="flex justify-between items-baseline pt-2 border-t border-neutral-200 gap-2">
                     <span className="font-bold text-neutral-900 text-sm">Yekun Məbləğ:</span>
-                    <span className="font-black text-[#111827] text-xl">
+                    <span className="font-black text-[#111827] text-xl shrink-0 whitespace-nowrap">
                       {finalTotal} AZN
                     </span>
                   </div>

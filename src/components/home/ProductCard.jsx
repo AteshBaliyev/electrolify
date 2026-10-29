@@ -105,12 +105,12 @@ export default function ProductCard({ product, badge = null, discount = null }) 
 
         <div>
           {/* Qiymət Bloku */}
-          <div className="flex items-baseline gap-1.5 sm:gap-2 pt-1 border-t border-neutral-100">
-            <span className="text-sm sm:text-lg md:text-xl font-bold text-[#111827]">
+          <div className="flex items-baseline gap-1.5 sm:gap-2 pt-1 border-t border-neutral-100 flex-wrap">
+            <span className="text-sm sm:text-lg md:text-xl font-bold text-[#111827] whitespace-nowrap shrink-0">
               {currentPrice} AZN
             </span>
             {comparePrice && (
-              <span className="text-[10px] sm:text-xs text-neutral-400 line-through font-medium">
+              <span className="text-[10px] sm:text-xs text-neutral-400 line-through font-medium whitespace-nowrap shrink-0">
                 {comparePrice} AZN
               </span>
             )}

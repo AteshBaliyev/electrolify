@@ -40,11 +40,11 @@ export default function StickyAddToCart({ product, selectedVariant, onOrderClick
                     {selectedVariant.title}
                   </span>
                 )}
-              <span className="text-xs sm:text-sm font-black" style={{ color: activeTheme.primary }}>
+              <span className="text-xs sm:text-sm font-black whitespace-nowrap shrink-0" style={{ color: activeTheme.primary }}>
                 {currentPrice} AZN
               </span>
               {comparePrice && (
-                <span className="hidden sm:inline-block text-[11px] text-neutral-400 line-through">
+                <span className="hidden sm:inline-block text-[11px] text-neutral-400 line-through whitespace-nowrap shrink-0">
                   {comparePrice} AZN
                 </span>
               )}

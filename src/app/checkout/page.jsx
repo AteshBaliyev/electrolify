@@ -340,7 +340,7 @@ Zəhmət olmasa sifarişimi qəbul edin və çatdırılmanı başladın.`;
                         </span>
                       </div>
                     </div>
-                    <span className="font-mono font-black text-slate-900 shrink-0">
+                    <span className="font-mono font-black text-slate-900 shrink-0 whitespace-nowrap">
                       {(item.price * item.quantity).toFixed(2)} AZN
                     </span>
                   </div>
@@ -349,16 +349,16 @@ Zəhmət olmasa sifarişimi qəbul edin və çatdırılmanı başladın.`;
             </div>
 
             {/* Yekun Qapıda Ödəniləcək Cəm */}
-            <div className="pt-3 border-t-2 border-dashed border-slate-300 flex justify-between items-baseline">
-              <div>
-                <span className="text-xs font-black text-slate-900 block">
+            <div className="pt-3 border-t-2 border-dashed border-slate-300 flex justify-between items-baseline gap-3">
+              <div className="min-w-0">
+                <span className="text-xs font-black text-slate-900 block truncate">
                   Qapıda Ödəniləcək:
                 </span>
-                <span className="text-[11px] text-slate-500 font-medium">
+                <span className="text-[11px] text-slate-500 font-medium block truncate">
                   Nağd və ya kartla kuryerə
                 </span>
               </div>
-              <span className="text-2xl font-mono font-black text-slate-900">
+              <span className="text-xl sm:text-2xl font-mono font-black text-slate-900 shrink-0 whitespace-nowrap">
                 {submittedDetails.total} AZN
               </span>
             </div>
@@ -606,18 +606,18 @@ Zəhmət olmasa sifarişimi qəbul edin və çatdırılmanı başladın.`;
                           </span>
                         </div>
                       </div>
-                      <div className="text-right shrink-0">
+                      <div className="text-right shrink-0 whitespace-nowrap">
                         {isFreeShipping ? (
                           <div className="flex flex-col items-end leading-none">
-                            <span className="text-[10px] text-slate-400 line-through font-mono">
+                            <span className="text-[10px] text-slate-400 line-through font-mono whitespace-nowrap">
                               2.00 AZN
                             </span>
-                            <span className="text-xs font-black text-emerald-400">
+                            <span className="text-xs font-black text-emerald-400 whitespace-nowrap">
                               Pulsuz
                             </span>
                           </div>
                         ) : (
-                          <span className={`text-xs font-black font-mono ${shippingOption === 'metro' ? 'text-white' : 'text-slate-900'}`}>
+                          <span className={`text-xs font-black font-mono whitespace-nowrap ${shippingOption === 'metro' ? 'text-white' : 'text-slate-900'}`}>
                             2 AZN
                           </span>
                         )}
@@ -653,18 +653,18 @@ Zəhmət olmasa sifarişimi qəbul edin və çatdırılmanı başladın.`;
                           </span>
                         </div>
                       </div>
-                      <div className="text-right shrink-0">
+                      <div className="text-right shrink-0 whitespace-nowrap">
                         {isFreeShipping ? (
                           <div className="flex flex-col items-end leading-none">
-                            <span className="text-[10px] text-slate-400 line-through font-mono">
+                            <span className="text-[10px] text-slate-400 line-through font-mono whitespace-nowrap">
                               5.00 AZN
                             </span>
-                            <span className="text-xs font-black text-emerald-400">
+                            <span className="text-xs font-black text-emerald-400 whitespace-nowrap">
                               Pulsuz
                             </span>
                           </div>
                         ) : (
-                          <span className={`text-xs font-black font-mono ${shippingOption === 'door' ? 'text-white' : 'text-slate-900'}`}>
+                          <span className={`text-xs font-black font-mono whitespace-nowrap ${shippingOption === 'door' ? 'text-white' : 'text-slate-900'}`}>
                             5 AZN
                           </span>
                         )}
@@ -690,18 +690,18 @@ Zəhmət olmasa sifarişimi qəbul edin və çatdırılmanı başladın.`;
                         </span>
                       </div>
                     </div>
-                    <div className="text-right shrink-0">
+                    <div className="text-right shrink-0 whitespace-nowrap">
                       {isFreeShipping ? (
                         <div className="flex flex-col items-end leading-none">
-                          <span className="text-[10px] text-slate-400 line-through font-mono">
+                          <span className="text-[10px] text-slate-400 line-through font-mono whitespace-nowrap">
                             4.00 AZN
                           </span>
-                          <span className="text-xs font-black text-emerald-400">
+                          <span className="text-xs font-black text-emerald-400 whitespace-nowrap">
                             0 AZN (Pulsuz)
                           </span>
                         </div>
                       ) : (
-                        <span className="text-xs font-black text-white font-mono">
+                        <span className="text-xs font-black text-white font-mono whitespace-nowrap">
                           4.00 AZN
                         </span>
                       )}
@@ -716,16 +716,16 @@ Zəhmət olmasa sifarişimi qəbul edin və çatdırılmanı başladın.`;
               B. SİFARİŞ OLUNACAQ MƏHSULLAR VƏ HESABAT
               ========================================================================= */}
           <div className="bg-white border-2 border-slate-200/90 rounded-3xl p-5 sm:p-7 shadow-lg shadow-slate-200/60 space-y-4">
-            <div className="flex items-center justify-between pb-3 border-b border-slate-200">
-              <div className="flex items-center gap-2.5">
+            <div className="flex items-center justify-between gap-3 pb-3 border-b border-slate-200">
+              <div className="flex items-center gap-2 min-w-0">
                 <div className="w-7 h-7 rounded-lg bg-slate-900 flex items-center justify-center text-white shrink-0">
                   <ShoppingBag className="w-3.5 h-3.5 stroke-[2.2]" />
                 </div>
-                <h3 className="text-xs sm:text-sm font-black text-slate-900 uppercase tracking-wider">
+                <h3 className="text-xs sm:text-sm font-black text-slate-900 uppercase tracking-wider truncate">
                   Sifariş Olunacaq Məhsullar ({totalQuantity} ədəd)
                 </h3>
               </div>
-              <span className="text-sm font-mono font-black text-slate-900">
+              <span className="text-sm font-mono font-black text-slate-900 shrink-0 whitespace-nowrap">
                 {subtotal} AZN
               </span>
             </div>
@@ -760,7 +760,7 @@ Zəhmət olmasa sifarişimi qəbul edin və çatdırılmanı başladın.`;
                     </div>
                   </div>
 
-                  <span className="text-sm font-black text-slate-900 font-mono shrink-0">
+                  <span className="text-sm font-black text-slate-900 font-mono shrink-0 whitespace-nowrap">
                     {(item.price * item.quantity).toFixed(2)} AZN
                   </span>
                 </div>
@@ -769,28 +769,28 @@ Zəhmət olmasa sifarişimi qəbul edin və çatdırılmanı başladın.`;
 
             {/* Məbləğ Detalları */}
             <div className="mt-4 pt-3.5 border-t border-slate-200 space-y-2 text-xs text-slate-700">
-              <div className="flex justify-between items-center">
+              <div className="flex justify-between items-center gap-2">
                 <span className="font-bold text-slate-600">Məhsulların Məbləği:</span>
-                <span className="font-mono font-black text-slate-900 text-sm">{subtotal} AZN</span>
+                <span className="font-mono font-black text-slate-900 text-sm shrink-0 whitespace-nowrap">{subtotal} AZN</span>
               </div>
-              <div className="flex justify-between items-center">
+              <div className="flex justify-between items-center gap-2">
                 <span className="font-bold text-slate-600">Çatdırılma:</span>
-                <div>
+                <div className="shrink-0 whitespace-nowrap">
                   {isFreeShipping ? (
-                    <div className="flex items-center gap-1.5">
-                      <span className="text-slate-400 line-through font-mono text-xs">
+                    <div className="flex items-center gap-1.5 whitespace-nowrap">
+                      <span className="text-slate-400 line-through font-mono text-xs whitespace-nowrap">
                         {(baseShippingFee > 0 ? baseShippingFee : 5.0).toFixed(2)} AZN
                       </span>
-                      <span className="text-emerald-700 font-black text-xs uppercase bg-emerald-100 px-2 py-0.5 rounded-md border border-emerald-300">
+                      <span className="text-emerald-700 font-black text-xs uppercase bg-emerald-100 px-2 py-0.5 rounded-md border border-emerald-300 whitespace-nowrap">
                         Pulsuz
                       </span>
                     </div>
                   ) : effectiveShippingFee > 0 ? (
-                    <span className="font-mono font-black text-slate-900 text-sm">
+                    <span className="font-mono font-black text-slate-900 text-sm whitespace-nowrap">
                       {effectiveShippingFee.toFixed(2)} AZN
                     </span>
                   ) : (
-                    <span className="text-slate-400 italic font-medium">Şəhər seçin</span>
+                    <span className="text-slate-400 italic font-medium whitespace-nowrap">Şəhər seçin</span>
                   )}
                 </div>
               </div>
@@ -807,18 +807,20 @@ Zəhmət olmasa sifarişimi qəbul edin və çatdırılmanı başladın.`;
               )}
 
               {/* Yekun Qapıda Ödəniləcək Qutu */}
-              <div className="mt-3 p-4 sm:p-5 rounded-2xl bg-[#111827] text-white flex justify-between items-center shadow-lg shadow-slate-900/20">
-                <div>
+              <div className="mt-3 p-4 sm:p-5 rounded-2xl bg-[#111827] text-white flex justify-between items-center gap-3 shadow-lg shadow-slate-900/20">
+                <div className="min-w-0 flex-1">
                   <span className="font-black text-xs sm:text-sm block tracking-wide text-white">
                     Qapıda Ödəniləcək:
                   </span>
-                  <span className="text-[11px] text-slate-300 font-medium">
+                  <span className="text-[11px] text-slate-300 font-medium block">
                     Bütün xərclər daxildir • Kuryerə ödəniş
                   </span>
                 </div>
-                <span className="font-black text-2xl sm:text-3xl font-mono text-white tracking-tight">
-                  {totalAmount} AZN
-                </span>
+                <div className="text-right shrink-0 whitespace-nowrap">
+                  <span className="font-black text-xl sm:text-2xl md:text-3xl font-mono text-white tracking-tight whitespace-nowrap">
+                    {totalAmount} AZN
+                  </span>
+                </div>
               </div>
             </div>
           </div>
