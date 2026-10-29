@@ -64,9 +64,11 @@ export async function POST(request) {
       paymentType = 'Qapıda Nağd',
     } = body;
 
-    const firstName = customer.firstName?.trim() || 'Müştəri';
-    const lastName = customer.lastName?.trim() || '';
-    const customerFullName = `${firstName} ${lastName}`.trim();
+    const rawName = (customer.name || customer.firstName || '').trim();
+    const nameParts = rawName.split(/\s+/).filter(Boolean);
+    const firstName = nameParts[0] || 'Müştəri';
+    const lastName = nameParts.slice(1).join(' ') || customer.lastName?.trim() || '-';
+    const customerFullName = `${firstName} ${lastName === '-' ? '' : lastName}`.trim();
     const phone = customer.phone?.trim() || '';
     const city = customer.city?.trim() || '';
     const postalCode = customer.postalCode?.trim() || '';
@@ -124,7 +126,14 @@ export async function POST(request) {
         shopifyOrderName = shopifyResult.shopifyOrderName;
         console.log(`[Shopify İnteqrasiyası]: Sifariş ${shopifyOrderName} (ID: ${shopifyOrderId}) panelə düşdü!`);
       } else {
-        console.warn('[Shopify İnteqrasiyası Xəbərdarlıq]:', shopifyResult.error);
+        console.error('[Shopify İnteqrasiyası XƏTASI]: Sifariş Shopify panelinə düşmədi:', shopifyResult.error);
+        return NextResponse.json(
+          {
+            success: false,
+            error: 'Shopify sistemi sifarişi qəbul etmədi: ' + (typeof shopifyResult.error === 'string' ? shopifyResult.error : JSON.stringify(shopifyResult.error)),
+          },
+          { status: 502 }
+        );
       }
     } catch (shopifyErr) {
       console.error('[Shopify İnteqrasiya Xətası]:', shopifyErr.message);

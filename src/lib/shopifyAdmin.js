@@ -201,9 +201,11 @@ export async function createShopifyAdminOrder({
     };
   }
 
-  const firstName = customer.firstName?.trim() || 'Müştəri';
-  const lastName = customer.lastName?.trim() || '';
-  const customerFullName = `${firstName} ${lastName}`.trim();
+  const rawName = (customer.name || customer.firstName || '').trim();
+  const nameParts = rawName.split(/\s+/).filter(Boolean);
+  const firstName = nameParts[0] || 'Müştəri';
+  const lastName = nameParts.slice(1).join(' ') || customer.lastName?.trim() || '-';
+  const customerFullName = `${firstName} ${lastName === '-' ? '' : lastName}`.trim();
   const phone = formatPhone(customer.phone);
   const city = customer.city?.trim() || 'Bakı';
   const postalCode = customer.postalCode?.trim() || 'AZ1000';
@@ -242,14 +244,14 @@ export async function createShopifyAdminOrder({
       // Eyni nömrədən başqa şəxs sifariş edirsə, köhnə profilin adını korlamamaq üçün yeni müstəqil profil yarat
       customerPayload = {
         first_name: firstName,
-        last_name: lastName,
+        last_name: lastName || '-',
       };
     }
   } else {
     // Tamamilə yeni müştəri: Müstəqil ad, soyad və nömrə
     customerPayload = {
       first_name: firstName,
-      last_name: lastName,
+      last_name: lastName || '-',
       ...(phone && phone !== '+994500000000' ? { phone } : {}),
       ...(isRealCustomerEmail ? { email: rawEmail } : {}),
     };
@@ -279,7 +281,7 @@ export async function createShopifyAdminOrder({
       customer: customerPayload,
       shipping_address: {
         first_name: firstName,
-        last_name: lastName,
+        last_name: lastName || '-',
         address1: fullAddress,
         city: city,
         zip: postalCode,
@@ -289,7 +291,7 @@ export async function createShopifyAdminOrder({
       },
       billing_address: {
         first_name: firstName,
-        last_name: lastName,
+        last_name: lastName || '-',
         address1: fullAddress,
         city: city,
         zip: postalCode,
@@ -355,8 +357,19 @@ export async function createShopifyAdminOrder({
       data = retryAuth.data;
     }
 
-    // 2. Əgər customer.phone artıq bazada varsa və ziddiyyət yaradırsa, phone-u customer obyektindən çıxararaq təkrarla (ünvanda və sifarişdə telefon qalır)
-    if (!res.ok && data.errors && (data.errors['customer.phone_number'] || data.errors.phone)) {
+    // 2. Əgər last_name xətası çıxarsa (can't be blank)
+    if (!res.ok && data.errors && JSON.stringify(data.errors).includes('last_name')) {
+      console.log('[Shopify Admin API]: last_name xətası, last_name "-" olaraq düzəldilib təkrar göndərilir...');
+      if (payload.order.customer) payload.order.customer.last_name = '-';
+      if (payload.order.shipping_address) payload.order.shipping_address.last_name = '-';
+      if (payload.order.billing_address) payload.order.billing_address.last_name = '-';
+      const retryLn = await sendOrder(token, payload);
+      res = retryLn.res;
+      data = retryLn.data;
+    }
+
+    // 3. Əgər customer.phone artıq bazada varsa və ziddiyyət yaradırsa, phone-u customer obyektindən çıxararaq təkrarla
+    if (!res.ok && data.errors && (JSON.stringify(data.errors).includes('phone') || JSON.stringify(data.errors).includes('phone_number'))) {
       console.log('[Shopify Admin API]: Telefon dublikat xətası, customer-dən phone çıxarılaraq təkrar göndərilir...');
       if (payload.order.customer) {
         delete payload.order.customer.phone;
@@ -366,8 +379,8 @@ export async function createShopifyAdminOrder({
       data = retryPhone.data;
     }
 
-    // 3. Əgər digər müştəri sahəsi xətası çıxarsa, customer obyektini çıxararaq təkrarla
-    if (!res.ok && data.errors && (data.errors.customer || data.errors.email)) {
+    // 4. Əgər digər müştəri sahəsi xətası çıxarsa, customer obyektini çıxararaq təkrarla
+    if (!res.ok && data.errors && (JSON.stringify(data.errors).includes('customer') || JSON.stringify(data.errors).includes('email'))) {
       console.log('[Shopify Admin API]: Müştəri sahəsi xətası, customer çıxarılaraq təkrar göndərilir...');
       delete payload.order.customer;
       const retryCust = await sendOrder(token, payload);
@@ -375,8 +388,8 @@ export async function createShopifyAdminOrder({
       data = retryCust.data;
     }
 
-    // 4. Əgər variant_id xətası çıxarsa, variant_id-ləri çıxarıb yalnız ad/qiymət ilə təkrarla
-    if (!res.ok && data.errors && (data.errors.line_items || JSON.stringify(data.errors).includes('variant'))) {
+    // 5. Əgər variant_id xətası çıxarsa, variant_id-ləri çıxarıb yalnız ad/qiymət ilə təkrarla
+    if (!res.ok && data.errors && (JSON.stringify(data.errors).includes('line_items') || JSON.stringify(data.errors).includes('variant'))) {
       console.log('[Shopify Admin API]: Variant xətası, variant_id çıxarılaraq təkrar göndərilir...');
       payload.order.line_items = payload.order.line_items.map(({ variant_id, ...rest }) => rest);
       const retryVar = await sendOrder(token, payload);
