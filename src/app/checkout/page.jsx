@@ -483,7 +483,7 @@ Zəhmət olmasa sifarişimi qəbul edin və çatdırılmanı başladın.`;
           {/* =========================================================================
               A. ƏLAQƏ VƏ ÇATDIRILMA FORMU
               ========================================================================= */}
-          <div className="bg-white border-2 border-slate-200/90 rounded-3xl p-5 sm:p-7 shadow-lg shadow-slate-200/60">
+          <div className="bg-white border-2 border-slate-200/90 rounded-3xl p-4 sm:p-7 shadow-lg shadow-slate-200/60">
             <div className="mb-4 pb-3 border-b border-slate-100">
               <span className="text-[11px] font-black uppercase tracking-wider text-white bg-[#111827] px-3 py-1 rounded-full inline-flex items-center gap-1.5 mb-2 shadow-xs">
                 <Truck className="w-3.5 h-3.5 text-white" />
@@ -715,7 +715,7 @@ Zəhmət olmasa sifarişimi qəbul edin və çatdırılmanı başladın.`;
           {/* =========================================================================
               B. SİFARİŞ OLUNACAQ MƏHSULLAR VƏ HESABAT
               ========================================================================= */}
-          <div className="bg-white border-2 border-slate-200/90 rounded-3xl p-5 sm:p-7 shadow-lg shadow-slate-200/60 space-y-4">
+          <div className="bg-white border-2 border-slate-200/90 rounded-3xl p-4 sm:p-7 shadow-lg shadow-slate-200/60 space-y-4">
             <div className="flex items-center justify-between gap-3 pb-3 border-b border-slate-200">
               <div className="flex items-center gap-2 min-w-0">
                 <div className="w-7 h-7 rounded-lg bg-slate-900 flex items-center justify-center text-white shrink-0">
@@ -828,7 +828,7 @@ Zəhmət olmasa sifarişimi qəbul edin və çatdırılmanı başladın.`;
           {/* =========================================================================
               C. GÜVƏN VƏ SİFARİŞİ TƏSDİQLƏ DÜYMƏSİ
               ========================================================================= */}
-          <div className="bg-white border-2 border-slate-200/90 rounded-3xl p-5 sm:p-7 shadow-lg shadow-slate-200/60 space-y-4">
+          <div className="bg-white border-2 border-slate-200/90 rounded-3xl p-4 sm:p-7 shadow-lg shadow-slate-200/60 space-y-4">
             {/* Qapıda Ödəniş Zəmanəti Qutusu */}
             <div className="p-4 rounded-2xl bg-emerald-50/90 border border-emerald-200/90 text-slate-800 flex items-start gap-3 shadow-xs">
               <ShieldCheck className="w-5 h-5 text-emerald-600 shrink-0 mt-0.5" />
@@ -847,10 +847,10 @@ Zəhmət olmasa sifarişimi qəbul edin və çatdırılmanı başladın.`;
               type="button"
               onClick={handleSubmitOrder}
               disabled={isSubmitting}
-              className="w-full h-15 rounded-2xl bg-[#111827] hover:bg-[#1f2937] text-white font-black text-sm sm:text-base uppercase tracking-wider flex items-center justify-center gap-3 shadow-xl shadow-slate-900/30 transition-all transform active:scale-[0.98] disabled:opacity-50 cursor-pointer"
+              className="w-full min-h-[58px] sm:min-h-[64px] py-4.5 sm:py-5 px-5 sm:px-6 rounded-2xl bg-[#111827] hover:bg-[#1f2937] active:bg-black text-white font-black text-sm sm:text-base uppercase tracking-wider flex items-center justify-center gap-2.5 sm:gap-3 shadow-xl shadow-slate-900/30 transition-all transform active:scale-[0.98] disabled:opacity-50 cursor-pointer"
             >
               <Zap className="w-5 h-5 fill-yellow-400 text-yellow-400 shrink-0" />
-              <span>
+              <span className="text-center leading-snug">
                 {isSubmitting
                   ? 'SİFARİŞ GÖNDƏRİLİR...'
                   : 'QAPIDA ÖDƏNİŞLƏ SİFARİŞİ TƏSDİQLƏ'}
