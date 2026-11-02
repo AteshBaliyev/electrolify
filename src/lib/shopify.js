@@ -333,6 +333,10 @@ export async function getProducts(first = 20) {
         availableForSale: liveProd.availableForSale,
         priceRange: liveProd.priceRange || result[existingIndex].priceRange,
         compareAtPriceRange: liveProd.compareAtPriceRange || result[existingIndex].compareAtPriceRange,
+        images:
+          liveProd.images?.edges?.length > 0
+            ? liveProd.images
+            : result[existingIndex].images,
       };
     } else {
       result.push(liveProd);
@@ -573,6 +577,32 @@ export const MOCK_PRODUCTS = [
           node: {
             url: 'https://cdn.shopify.com/s/files/1/0852/9418/6752/files/ChatGPTImage26Agu202603_24_34.png?v=1787700289',
             altText: 'ClarifyPro - Qara Nöqtə Təmizləyici Vakum Cihazı',
+            width: 1254,
+            height: 1254,
+          },
+        },
+        {
+          node: {
+            url: 'https://cdn.shopify.com/s/files/1/0852/9418/6752/files/ChatGPT_Image_26_Agu_2026_03_39_34.png?v=1787701205',
+            altText: 'ClarifyPro Məsamə və Qara Nöqtə Təmizləyici Başlıq',
+            width: 1254,
+            height: 1254,
+          },
+        },
+        {
+          node: {
+            url: 'https://cdn.shopify.com/s/files/1/0852/9418/6752/files/ChatGPT_Image_26_Agu_2026_04_10_54.png?v=1787703103',
+            altText: 'ClarifyPro 3 Rejimli Güclü Sovurma Vakum Aparatı',
+            width: 1254,
+            height: 1254,
+          },
+        },
+        {
+          node: {
+            url: 'https://cdn.shopify.com/s/files/1/0852/9418/6752/files/ChatGPT_Image_26_Agu_2026_04_11_01.png?v=1787703102',
+            altText: 'ClarifyPro Dəyişdirilə Bilən Ucluqlar və Tam Dəst',
+            width: 1254,
+            height: 1254,
           },
         },
       ],
