@@ -5,9 +5,9 @@
  * və E-ticarət Konversiyaları) istifadəçilərin real-time görünməsini təmin edir.
  */
 
-export const SHOPIFY_SHOP_ID = 85294186752;
+export const SHOPIFY_SHOP_ID = 84166508695;
 export const SHOPIFY_THEME_ID = 165263671552;
-export const SHOPIFY_STORE_DOMAIN = 'zi73g2-zx.myshopify.com';
+export const SHOPIFY_STORE_DOMAIN = 'isai5j-wn.myshopify.com';
 export const MONORAIL_PRODUCE_URL = 'https://monorail-edge.shopifysvc.com/v1/produce';
 
 /**

@@ -3,8 +3,8 @@
  * Shopify Storefront GraphQL API ilə əlaqə qurur və məhsul/səbət əməliyyatlarını idarə edir.
  */
 
-const domain = process.env.SHOPIFY_STORE_DOMAIN || '';
-const storefrontAccessToken = process.env.SHOPIFY_STOREFRONT_ACCESS_TOKEN || '';
+const domain = process.env.SHOPIFY_STORE_DOMAIN || 'isai5j-wn.myshopify.com';
+const storefrontAccessToken = process.env.SHOPIFY_STOREFRONT_ACCESS_TOKEN || 'ed6ef01c094ee087e5d5731f4c7aafff';
 const apiVersion = process.env.SHOPIFY_API_VERSION || '2024-04';
 
 // Real API konfiqurasiyasının olub-olmadığını yoxlayır
@@ -269,7 +269,7 @@ export function transformShopifyJsonProduct(p) {
 export async function fetchLiveShopifyProducts() {
   try {
     const rawStoreDomain =
-      process.env.SHOPIFY_STORE_DOMAIN || 'zi73g2-zx.myshopify.com';
+      process.env.SHOPIFY_STORE_DOMAIN || 'isai5j-wn.myshopify.com';
     const cleanDomain = rawStoreDomain.replace(/^https?:\/\//, '').replace(/\/$/, '');
     const res = await fetch(`https://${cleanDomain}/products.json?limit=250`, {
       next: { revalidate: 60, tags: ['products'] },
@@ -434,7 +434,7 @@ export async function createCart(lines = []) {
 // -------------------------------------------------------------
 export const MOCK_PRODUCTS = [
   {
-    id: '10264817926400',
+    id: '15483328233623',
     title: 'Glowify Pro™ – Rəngarəng Atmosfer və Ağıllı Hava Nəmləndirici',
     handle: 'glowify-pro™-rəngarəng-atmosfer-və-agilli-hava-nəmləndirici',
     description:
@@ -485,7 +485,7 @@ export const MOCK_PRODUCTS = [
       edges: [
         {
           node: {
-            id: '50832151445760',
+            id: '68287262949527',
             title: 'Standart',
             availableForSale: true,
             price: { amount: '28.99', currencyCode: 'AZN' },
@@ -496,7 +496,7 @@ export const MOCK_PRODUCTS = [
     },
   },
   {
-    id: '10234502316288',
+    id: '15483329151127',
     title: 'Lumify Pro – Sehrli Bayram İşıqları! 🎄',
     handle: 'lumify-pro-sehrli-bayram-i̇siqlari-🎄',
     description:
@@ -547,7 +547,7 @@ export const MOCK_PRODUCTS = [
       edges: [
         {
           node: {
-            id: '50691530293504',
+            id: '68287268159639',
             title: 'Standart',
             availableForSale: true,
             price: { amount: '24.90', currencyCode: 'AZN' },
@@ -558,7 +558,7 @@ export const MOCK_PRODUCTS = [
     },
   },
   {
-    id: '9625190498560',
+    id: '15483327447191',
     title: 'ClarifyPro - Qara Nöqtə Təmizləyici Vakum Cihazı',
     handle: 'clarifypro-qara-noktə-təmizləyici-vakum-cihazi',
     description:
@@ -611,7 +611,7 @@ export const MOCK_PRODUCTS = [
       edges: [
         {
           node: {
-            id: '49547097932032',
+            id: '68287251382423',
             title: 'Standart',
             availableForSale: true,
             price: { amount: '24.99', currencyCode: 'AZN' },
@@ -622,7 +622,7 @@ export const MOCK_PRODUCTS = [
     },
   },
   {
-    id: '9612405702912',
+    id: '15483330396311',
     title: 'İstiƏl — İstilikli Boyun, Bel və Çiyin Masajı',
     handle:
       'i̇stiəl-masaj-aparati-i̇stilikli-verən-və-avtomatik-sixaraq-masaj-edən-boyun-bel-və-ciyin-masaj-cihazi',
@@ -650,7 +650,7 @@ export const MOCK_PRODUCTS = [
       edges: [
         {
           node: {
-            id: '49192144306432',
+            id: '68287276220567',
             title: 'Standart',
             availableForSale: true,
             price: { amount: '45.00', currencyCode: 'AZN' },

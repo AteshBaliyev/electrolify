@@ -3,27 +3,24 @@
  * Avtomatik OAuth Client Credentials Token Yenilənməsi və Sifariş Yaradılması
  */
 
-const STORE_DOMAIN = (process.env.SHOPIFY_STORE_DOMAIN || 'zi73g2-zx.myshopify.com')
+const STORE_DOMAIN = (process.env.SHOPIFY_STORE_DOMAIN || 'isai5j-wn.myshopify.com')
   .replace(/^https?:\/\//, '')
   .replace(/\/$/, '');
 
 // Fallback dəyərlər (Vercel-də env dəyişənləri yazılmasa belə birbaşa işləməsi üçün)
-const DEFAULT_CLIENT_ID = 'fa5d73c3080c35f60228c31f904094b6';
-const DEFAULT_CLIENT_SECRET = Buffer.from(
-  'c2hwc3NfZmIwNTNlYzMyZjExYWUwYTA3NjEzYTNlYTg0NWVjZmU=',
-  'base64'
-).toString('utf8');
+const DEFAULT_CLIENT_ID = process.env.SHOPIFY_CLIENT_ID || '';
+const DEFAULT_CLIENT_SECRET = process.env.SHOPIFY_CLIENT_SECRET || '';
 
 const CLIENT_ID = process.env.SHOPIFY_CLIENT_ID || DEFAULT_CLIENT_ID;
 const CLIENT_SECRET = process.env.SHOPIFY_CLIENT_SECRET || DEFAULT_CLIENT_SECRET;
 const API_VERSION = process.env.SHOPIFY_API_VERSION || '2024-04';
 
-// Real Shopify Mağazasının Məhsul Variant ID-ləri (Shopify inventarı ilə birbaşa əlaqələndirmə üçün)
+// Real Shopify Mağazasının Məhsul Variant ID-ləri (Shopify inventarı ilə birbaşa əlaqələndirmə üçün - isai5j-wn.myshopify.com)
 const KNOWN_SHOPIFY_VARIANTS = {
-  glowifypro: 50832151445760,
-  clarifypro: 49547097932032,
-  istiel: 49192144306432,
-  lumifypro: 50691530293504,
+  glowifypro: 68287262949527,
+  clarifypro: 68287251382423,
+  istiel: 68287276220567,
+  lumifypro: 68287268159639,
 };
 
 // Yaddaşda saxlanılan token və etibarlılıq vaxtı

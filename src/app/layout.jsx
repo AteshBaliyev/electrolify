@@ -97,7 +97,7 @@ export default function RootLayout({ children }) {
                   }
 
                   window.Shopify = window.Shopify || {};
-                  window.Shopify.shop = 'zi73g2-zx.myshopify.com';
+                  window.Shopify.shop = 'isai5j-wn.myshopify.com';
                   window.Shopify.currency = { active: 'AZN', rate: '1.0' };
                   window.ShopifyAnalytics = window.ShopifyAnalytics || {};
                   window.ShopifyAnalytics.meta = window.ShopifyAnalytics.meta || {};
@@ -125,7 +125,7 @@ export default function RootLayout({ children }) {
                       "appName": "storefront",
                       "development": false,
                       "defaultAttributes": {
-                        "shopId": 85294186752,
+                        "shopId": 84166508695,
                         "isMerchantRequest": null,
                         "themeId": 165263671552,
                         "themeCityHash": "15481927197172546807",
