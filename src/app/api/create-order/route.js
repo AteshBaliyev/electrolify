@@ -1,5 +1,15 @@
 import { NextResponse } from 'next/server';
-import { createShopifyAdminOrder } from '@/lib/shopifyAdmin';
+import { createShopifyAdminOrder, getShopifyAdminAccessToken } from '@/lib/shopifyAdmin';
+
+export async function GET() {
+  const token = await getShopifyAdminAccessToken();
+  return NextResponse.json({
+    status: 'ok',
+    buildId: 'test-deploy-v100',
+    envDomain: process.env.SHOPIFY_STORE_DOMAIN || 'none',
+    tokenPrefix: token ? token.slice(0, 10) : 'none',
+  });
+}
 
 /**
  * WhatsApp Bildiriş Funksiyası
