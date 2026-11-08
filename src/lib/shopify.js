@@ -3,8 +3,18 @@
  * Shopify Storefront GraphQL API ilə əlaqə qurur və məhsul/səbət əməliyyatlarını idarə edir.
  */
 
-const domain = process.env.SHOPIFY_STORE_DOMAIN || 'isai5j-wn.myshopify.com';
-const storefrontAccessToken = process.env.SHOPIFY_STOREFRONT_ACCESS_TOKEN || 'ed6ef01c094ee087e5d5731f4c7aafff';
+const rawDomain = (process.env.SHOPIFY_STORE_DOMAIN || '')
+  .replace(/^https?:\/\//, '')
+  .replace(/\/$/, '');
+const domain = (rawDomain && !rawDomain.includes('zi73g2') && !rawDomain.includes('electrolify'))
+  ? rawDomain
+  : 'isai5j-wn.myshopify.com';
+
+const rawStorefrontToken = process.env.SHOPIFY_STOREFRONT_ACCESS_TOKEN || '';
+const storefrontAccessToken = (rawStorefrontToken && !rawStorefrontToken.includes('0825e365'))
+  ? rawStorefrontToken
+  : 'ed6ef01c094ee087e5d5731f4c7aafff';
+
 const apiVersion = process.env.SHOPIFY_API_VERSION || '2024-04';
 
 // Real API konfiqurasiyasının olub-olmadığını yoxlayır

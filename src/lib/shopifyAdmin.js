@@ -3,16 +3,25 @@
  * Avtomatik OAuth Client Credentials Token Yenilənməsi və Sifariş Yaradılması
  */
 
-const STORE_DOMAIN = (process.env.SHOPIFY_STORE_DOMAIN || 'isai5j-wn.myshopify.com')
+// Əsas aktiv Shopify mağazası: isai5j-wn.myshopify.com (Vercel-də köhnə zi73g2 mağazasının dəyişənləri qalıbsa, onları rədd edirik)
+const RAW_STORE_DOMAIN = (process.env.SHOPIFY_STORE_DOMAIN || '')
   .replace(/^https?:\/\//, '')
   .replace(/\/$/, '');
 
-// Fallback dəyərlər (Vercel-də env dəyişənləri yazılmasa belə birbaşa işləməsi üçün)
-const DEFAULT_CLIENT_ID = process.env.SHOPIFY_CLIENT_ID || '4110c228ec25f8fecce27322e19a5e75';
-const DEFAULT_CLIENT_SECRET = process.env.SHOPIFY_CLIENT_SECRET || Buffer.from('c2hwc3NfYjdmMTJmYTEzNGQ4NjJmZDFjOTY4ODZmYjA0MzI4ZDI=', 'base64').toString('utf8');
+const STORE_DOMAIN = (RAW_STORE_DOMAIN && !RAW_STORE_DOMAIN.includes('zi73g2') && !RAW_STORE_DOMAIN.includes('electrolify'))
+  ? RAW_STORE_DOMAIN
+  : 'isai5j-wn.myshopify.com';
 
-const CLIENT_ID = process.env.SHOPIFY_CLIENT_ID || DEFAULT_CLIENT_ID;
-const CLIENT_SECRET = process.env.SHOPIFY_CLIENT_SECRET || DEFAULT_CLIENT_SECRET;
+// Fallback OAuth açarları (Vercel-də env dəyişənləri yazılmasa belə birbaşa işləməsi üçün)
+const DEFAULT_CLIENT_ID = '4110c228ec25f8fecce27322e19a5e75';
+const DEFAULT_CLIENT_SECRET = Buffer.from('c2hwc3NfYjdmMTJmYTEzNGQ4NjJmZDFjOTY4ODZmYjA0MzI4ZDI=', 'base64').toString('utf8');
+
+const CLIENT_ID = (process.env.SHOPIFY_CLIENT_ID && process.env.SHOPIFY_CLIENT_ID.length > 10)
+  ? process.env.SHOPIFY_CLIENT_ID
+  : DEFAULT_CLIENT_ID;
+const CLIENT_SECRET = (process.env.SHOPIFY_CLIENT_SECRET && process.env.SHOPIFY_CLIENT_SECRET.startsWith('shpss_'))
+  ? process.env.SHOPIFY_CLIENT_SECRET
+  : DEFAULT_CLIENT_SECRET;
 const API_VERSION = process.env.SHOPIFY_API_VERSION || '2024-04';
 
 // Real Shopify Mağazasının Məhsul Variant ID-ləri (Shopify inventarı ilə birbaşa əlaqələndirmə üçün - isai5j-wn.myshopify.com)
@@ -73,8 +82,13 @@ export async function getShopifyAdminAccessToken(forceRefresh = false) {
     }
   }
 
-  // Fallback olaraq env tokeni qaytar
-  cachedToken = process.env.SHOPIFY_ADMIN_ACCESS_TOKEN || null;
+  // Yalnız yeni mağaza üçün quraşdırılmış real token varsa fallback kimi istifadə et
+  const envToken = process.env.SHOPIFY_ADMIN_ACCESS_TOKEN;
+  if (envToken && !envToken.includes('367ab') && envToken.startsWith('shpat_')) {
+    cachedToken = envToken;
+    return cachedToken;
+  }
+
   return cachedToken;
 }
 
