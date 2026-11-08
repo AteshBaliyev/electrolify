@@ -3,26 +3,14 @@
  * Avtomatik OAuth Client Credentials Token Yenilənməsi və Sifariş Yaradılması
  */
 
-// Əsas aktiv Shopify mağazası: isai5j-wn.myshopify.com (Vercel-də köhnə zi73g2 mağazasının dəyişənləri qalıbsa, onları rədd edirik)
-const RAW_STORE_DOMAIN = (process.env.SHOPIFY_STORE_DOMAIN || '')
-  .replace(/^https?:\/\//, '')
-  .replace(/\/$/, '');
+// Əsas aktiv Shopify mağazası: isai5j-wn.myshopify.com
+export const STORE_DOMAIN = 'isai5j-wn.myshopify.com';
 
-const STORE_DOMAIN = (RAW_STORE_DOMAIN && !RAW_STORE_DOMAIN.includes('zi73g2') && !RAW_STORE_DOMAIN.includes('electrolify'))
-  ? RAW_STORE_DOMAIN
-  : 'isai5j-wn.myshopify.com';
+// Yeni Mağazanın Düzgün və Təsdiqlənmiş OAuth Parametrləri (Köhnə mağazanın Vercel env dəyişənlərini tamamilə nəzərə almırıq)
+const APP_CLIENT_ID = '4110c228ec25f8fecce27322e19a5e75';
+const APP_CLIENT_SECRET = Buffer.from('c2hwc3NfYjdmMTJmYTEzNGQ4NjJmZDFjOTY4ODZmYjA0MzI4ZDI=', 'base64').toString('utf8');
 
-// Fallback OAuth açarları (Vercel-də env dəyişənləri yazılmasa belə birbaşa işləməsi üçün)
-const DEFAULT_CLIENT_ID = '4110c228ec25f8fecce27322e19a5e75';
-const DEFAULT_CLIENT_SECRET = Buffer.from('c2hwc3NfYjdmMTJmYTEzNGQ4NjJmZDFjOTY4ODZmYjA0MzI4ZDI=', 'base64').toString('utf8');
-
-const CLIENT_ID = (process.env.SHOPIFY_CLIENT_ID && process.env.SHOPIFY_CLIENT_ID.length > 10)
-  ? process.env.SHOPIFY_CLIENT_ID
-  : DEFAULT_CLIENT_ID;
-const CLIENT_SECRET = (process.env.SHOPIFY_CLIENT_SECRET && process.env.SHOPIFY_CLIENT_SECRET.startsWith('shpss_'))
-  ? process.env.SHOPIFY_CLIENT_SECRET
-  : DEFAULT_CLIENT_SECRET;
-const API_VERSION = process.env.SHOPIFY_API_VERSION || '2024-04';
+const API_VERSION = '2024-04';
 
 // Real Shopify Mağazasının Məhsul Variant ID-ləri (Shopify inventarı ilə birbaşa əlaqələndirmə üçün - isai5j-wn.myshopify.com)
 const KNOWN_SHOPIFY_VARIANTS = {
@@ -46,47 +34,35 @@ export async function getShopifyAdminAccessToken(forceRefresh = false) {
     return cachedToken;
   }
 
-  const clientId = process.env.SHOPIFY_CLIENT_ID || CLIENT_ID;
-  const clientSecret = process.env.SHOPIFY_CLIENT_SECRET || CLIENT_SECRET;
+  try {
+    const tokenUrl = `https://${STORE_DOMAIN}/admin/oauth/access_token`;
+    const res = await fetch(tokenUrl, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        client_id: APP_CLIENT_ID,
+        client_secret: APP_CLIENT_SECRET,
+        grant_type: 'client_credentials',
+      }),
+    });
 
-  if (clientId && clientSecret) {
-    try {
-      const tokenUrl = `https://${STORE_DOMAIN}/admin/oauth/access_token`;
-      const res = await fetch(tokenUrl, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          client_id: clientId,
-          client_secret: clientSecret,
-          grant_type: 'client_credentials',
-        }),
-      });
-
-      if (res.ok) {
-        const data = await res.json();
-        if (data.access_token) {
-          cachedToken = data.access_token;
-          const expiresInSec = data.expires_in || 86400;
-          tokenExpiresAt = Date.now() + expiresInSec * 1000;
-          console.log('[Shopify Admin Auth]: Yeni Access Token uğurla generasiya olundu.');
-          return cachedToken;
-        }
-      } else {
-        const errText = await res.text();
-        console.warn('[Shopify Admin Auth Xəbərdarlıq]:', res.status, errText);
+    if (res.ok) {
+      const data = await res.json();
+      if (data.access_token) {
+        cachedToken = data.access_token;
+        const expiresInSec = data.expires_in || 86400;
+        tokenExpiresAt = Date.now() + expiresInSec * 1000;
+        console.log('[Shopify Admin Auth]: Yeni Access Token uğurla generasiya olundu:', cachedToken.slice(0, 10));
+        return cachedToken;
       }
-    } catch (err) {
-      console.error('[Shopify Admin Auth Xətası]:', err.message);
+    } else {
+      const errText = await res.text();
+      console.warn('[Shopify Admin Auth Xəbərdarlıq]:', res.status, errText);
     }
-  }
-
-  // Yalnız yeni mağaza üçün quraşdırılmış real token varsa fallback kimi istifadə et
-  const envToken = process.env.SHOPIFY_ADMIN_ACCESS_TOKEN;
-  if (envToken && !envToken.includes('367ab') && envToken.startsWith('shpat_')) {
-    cachedToken = envToken;
-    return cachedToken;
+  } catch (err) {
+    console.error('[Shopify Admin Auth Xətası]:', err.message);
   }
 
   return cachedToken;

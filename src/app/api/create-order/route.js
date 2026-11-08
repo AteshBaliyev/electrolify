@@ -2,38 +2,12 @@ import { NextResponse } from 'next/server';
 import { createShopifyAdminOrder, getShopifyAdminAccessToken } from '@/lib/shopifyAdmin';
 
 export async function GET() {
-  const STORE_DOMAIN = 'isai5j-wn.myshopify.com';
-  const DEFAULT_CLIENT_ID = '4110c228ec25f8fecce27322e19a5e75';
-  const DEFAULT_CLIENT_SECRET = Buffer.from('c2hwc3NfYjdmMTJmYTEzNGQ4NjJmZDFjOTY4ODZmYjA0MzI4ZDI=', 'base64').toString('utf8');
-
-  let oauthStatus = null;
-  let oauthBody = null;
-  try {
-    const res = await fetch(`https://${STORE_DOMAIN}/admin/oauth/access_token`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        client_id: DEFAULT_CLIENT_ID,
-        client_secret: DEFAULT_CLIENT_SECRET,
-        grant_type: 'client_credentials'
-      })
-    });
-    oauthStatus = res.status;
-    oauthBody = await res.text();
-  } catch (e) {
-    oauthBody = e.message;
-  }
-
   const token = await getShopifyAdminAccessToken();
   return NextResponse.json({
     status: 'ok',
-    buildId: 'test-deploy-v101',
-    envDomain: process.env.SHOPIFY_STORE_DOMAIN || 'none',
-    envClientId: process.env.SHOPIFY_CLIENT_ID || 'none',
-    envAdminTokenPrefix: process.env.SHOPIFY_ADMIN_ACCESS_TOKEN ? process.env.SHOPIFY_ADMIN_ACCESS_TOKEN.slice(0, 10) : 'none',
-    oauthStatus,
-    oauthBody: oauthBody ? oauthBody.slice(0, 200) : null,
-    finalTokenPrefix: token ? token.slice(0, 10) : 'none',
+    storeDomain: 'isai5j-wn.myshopify.com',
+    authConnected: !!token,
+    timestamp: new Date().toISOString(),
   });
 }
 
