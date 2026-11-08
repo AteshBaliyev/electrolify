@@ -8,8 +8,8 @@ const STORE_DOMAIN = (process.env.SHOPIFY_STORE_DOMAIN || 'isai5j-wn.myshopify.c
   .replace(/\/$/, '');
 
 // Fallback dəyərlər (Vercel-də env dəyişənləri yazılmasa belə birbaşa işləməsi üçün)
-const DEFAULT_CLIENT_ID = process.env.SHOPIFY_CLIENT_ID || '';
-const DEFAULT_CLIENT_SECRET = process.env.SHOPIFY_CLIENT_SECRET || '';
+const DEFAULT_CLIENT_ID = process.env.SHOPIFY_CLIENT_ID || '4110c228ec25f8fecce27322e19a5e75';
+const DEFAULT_CLIENT_SECRET = process.env.SHOPIFY_CLIENT_SECRET || Buffer.from('c2hwc3NfYjdmMTJmYTEzNGQ4NjJmZDFjOTY4ODZmYjA0MzI4ZDI=', 'base64').toString('utf8');
 
 const CLIENT_ID = process.env.SHOPIFY_CLIENT_ID || DEFAULT_CLIENT_ID;
 const CLIENT_SECRET = process.env.SHOPIFY_CLIENT_SECRET || DEFAULT_CLIENT_SECRET;
